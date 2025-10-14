@@ -1,0 +1,27 @@
+@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
+@import "tailwindcss";
+/* Custom Colors */
+:root {
+  --komorebi-black: #282828;
+  --komorebi-gray: #D9D9D9;
+  --komorebi-yellow: #F9B81F;
+  --komorebi-offwhite: #F9F8F5;
+    --komorebi-green: #295647;
+}
+
+/* Utility Classes */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--komorebi-offwhite);
+}
+
+button {
+  cursor: pointer;
+}
+
+input {
+  outline: none;
+}
+

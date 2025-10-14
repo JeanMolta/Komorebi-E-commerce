@@ -59,7 +59,7 @@ const Footer: React.FC<FooterProps> = ({ komorebi, year }) => {
   ];
 
   return (
-    <footer className="bg-[var(--komorebi-green)] text-[var(--komorebi-offwhite)] px-6 py-10 md:px-16 md:py-12">
+    <footer className="bg-[var(--komorebi-pink)] text-[var(--komorebi-offwhite)] px-6 py-10 md:px-16 md:py-12">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-8 lg:gap-16">
 
         <div className="col-span-1">

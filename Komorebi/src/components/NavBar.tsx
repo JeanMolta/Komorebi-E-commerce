@@ -1,12 +1,20 @@
 import { Search, Heart, Bell, ShoppingCart, User } from "lucide-react";
+import { useNavigate } from "react-router";
 
 export default function Navbar() {
+  const navigate = useNavigate();
+
   return (
     <nav className="bg-[var(--komorebi-offwhite)] border-b border-[var(--komorebi-gray)]">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
         {/* Left side */}
         <div className="flex items-center gap-6">
-          <h1 className="text-[var(--komorebi-yellow)] text-2xl font-bold">Komorebi</h1>
+          <button
+            className="text-[var(--komorebi-yellow)] text-2xl font-bold hover:text-[var(--komorebi-black)] transition-colors"
+            onClick={() => navigate("/")}
+          >
+            Komorebi
+          </button>
 
           <div className="hidden sm:flex items-center gap-4 text-sm text-[var(--komorebi-black)]">
             <button className="hover:text-[var(--komorebi-yellow)] transition-colors">Categories</button>

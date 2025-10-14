@@ -8,6 +8,7 @@ export default {
           gray: '#D9D9D9',
           yellow: '#F9B81F',
           offwhite: '#F9F8F5',
+          green: '#295647',
         },
       },
     },

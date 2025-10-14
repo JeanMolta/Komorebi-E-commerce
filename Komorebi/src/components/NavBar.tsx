@@ -5,7 +5,7 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   return (
-    <nav className="bg-[var(--komorebi-offwhite)] border-b border-[var(--komorebi-gray)]">
+    <nav className="p-2 bg-[var(--komorebi-offwhite)] border-b border-[var(--komorebi-gray)]">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
         {/* Left side */}
         <div className="flex items-center gap-6">

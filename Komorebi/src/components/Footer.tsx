@@ -18,7 +18,6 @@ interface FooterColumnProps {
 
 
 const FooterColumn: React.FC<FooterColumnProps> = ({ title, links }) => (
-  // El texto dentro de las columnas se centrará con 'text-center' en móvil.
   <div className="mb-8 md:mb-0 text-center md:text-left"> 
     <h3 className="text-white font-bold mb-4 uppercase tracking-wider text-sm">{title}</h3>
     <ul className="space-y-2">
@@ -95,7 +94,6 @@ const Footer: React.FC<FooterProps> = ({ komorebi, year }) => {
           </div>
         </div>
 
-        {/* CONTENEDOR DE LINKS: Se mantiene 'justify-items-center' para centrar las columnas. */}
         <div className="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center md:justify-items-start"> 
             <FooterColumn title="About us" links={aboutLinks} />
             <FooterColumn title="Shop" links={shopLinks} />
@@ -105,7 +103,6 @@ const Footer: React.FC<FooterProps> = ({ komorebi, year }) => {
 
       <hr className="border-t border-[#4a665e] my-8 max-w-7xl mx-auto" />
 
-      {/* Sección de Copyright y Legal Links */}
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-center md:justify-between items-center text-xs">
         
         <p className="order-2 md:order-1 mt-4 md:mt-0 text-sm md:text-xs text-center md:text-left">

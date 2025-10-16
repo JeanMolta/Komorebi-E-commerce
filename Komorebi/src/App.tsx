@@ -1,8 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
-import HeroSection from './components/HeroSection';
-import Navbar from './components/NavBar';
+import HeroSection from './components/homepage/HeroSection';
+import Navbar from './components/homepage/NavBar';
 import './index.css'
-import Footer from './components/Footer';
+import Footer from './components/homepage/Footer';
 
 function App() {
   return (

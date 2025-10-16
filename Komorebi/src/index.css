@@ -44,3 +44,11 @@ html::-webkit-scrollbar,
 body::-webkit-scrollbar {
   display: none;            
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .transition-all,
+  .transition-transform,
+  .transition-opacity {
+    transition: none !important;
+  }
+}

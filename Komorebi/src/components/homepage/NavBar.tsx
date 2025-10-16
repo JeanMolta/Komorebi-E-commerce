@@ -1,11 +1,38 @@
-import { Search, Heart, Bell, ShoppingCart, User } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Search, Heart, ShoppingCart, User } from "lucide-react";
 import { useNavigate } from "react-router";
 import NotificationMenu from "./NotificationMenu";
+
 export default function Navbar() {
   const navigate = useNavigate();
 
+  // 🟡 Estado para detectar si la navbar debe fijarse
+  const [isSticky, setIsSticky] = useState(false);
+
+  // 🟡 Escuchar scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 80) {
+        setIsSticky(true);
+      } else {
+        setIsSticky(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <nav className="absolute top-0 left-0 w-full bg-transparent z-10">
+    // 🟡 Cambiamos las clases según si está sticky o no
+    <nav
+  className={`${
+    isSticky
+      ? "fixed top-0 left-0 w-full z-50 bg-white/30 backdrop-blur-md border-b border-white/30 shadow-sm transform translate-y-0 opacity-100 transition-all duration-300 ease-out"
+      : "absolute top-0 left-0 w-full bg-transparent border-b border-white/0 z-10 transform -translate-y-0.5 opacity-90 transition-all duration-300 ease-out"
+  }`}
+>
+
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
         {/* Left side */}
         <div className="flex items-center gap-6">
@@ -18,9 +45,13 @@ export default function Navbar() {
             </button>
           </div>
 
-          <div className="hidden sm:flex items-center gap-4 text-sm text-[var(--komorebi-black)] ml-10">
-            <button className="hover:text-[var(--komorebi-yellow)] transition-colors font-medium">Categories</button>
-            <button className="hover:text-[var(--komorebi-yellow)] transition-colors font-medium">Sell</button>
+          <div className="hidden sm:flex items-center gap-4 text-sm text-[var(--komorebi-black)] ml-12">
+            <button className="hover:text-[var(--komorebi-yellow)] transition-colors font-medium">
+              Categories
+            </button>
+            <button className="hover:text-[var(--komorebi-yellow)] transition-colors font-medium">
+              Sell
+            </button>
           </div>
         </div>
 

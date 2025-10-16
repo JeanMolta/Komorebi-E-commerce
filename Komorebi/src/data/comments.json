@@ -1,0 +1,122 @@
+[
+  {
+    "id": "c_001",
+    "productId": "prod_001",
+    "userId": "u_buyer_001",
+    "rating": 5,
+    "content": "El onigiri de salmón tenía buen sabor y el arroz estaba perfecto. Llegó en buen estado.",
+    "createdAt": "2025-09-28T10:15:00.000Z"
+  },
+  {
+    "id": "c_002",
+    "productId": "prod_002",
+    "userId": "u_buyer_002",
+    "rating": 4,
+    "content": "Picante pero balanceado. Recomiendo para los que les gusta el sabor fuerte.",
+    "createdAt": "2025-09-30T14:22:00.000Z"
+  },
+  {
+    "id": "c_003",
+    "productId": "prod_004",
+    "userId": "u_buyer_003",
+    "rating": 5,
+    "content": "Mochi suave y con el toque perfecto de té verde, muy auténtico.",
+    "createdAt": "2025-10-01T09:03:00.000Z"
+  },
+  {
+    "id": "c_004",
+    "productId": "prod_005",
+    "userId": "u_buyer_004",
+    "rating": 4,
+    "content": "Pocky siempre es un acierto. Buen tamaño y empaques individuales.",
+    "createdAt": "2025-10-02T17:40:00.000Z"
+  },
+  {
+    "id": "c_005",
+    "productId": "prod_011",
+    "userId": "u_buyer_005",
+    "rating": 3,
+    "content": "Los ositos estaban bien, aunque un poco duros en comparación con otros lotes.",
+    "createdAt": "2025-10-03T13:10:00.000Z"
+  },
+  {
+    "id": "c_006",
+    "productId": "prod_014",
+    "userId": "u_buyer_006",
+    "rating": 5,
+    "content": "Clásico Chocoramo, nunca falla para merienda rápida.",
+    "createdAt": "2025-10-04T11:05:00.000Z"
+  },
+  {
+    "id": "c_007",
+    "productId": "prod_016",
+    "userId": "u_buyer_007",
+    "rating": 5,
+    "content": "Galletas Biscoff perfectas con café. Empaque venido de importación, buen sabor.",
+    "createdAt": "2025-10-05T08:30:00.000Z"
+  },
+  {
+    "id": "c_008",
+    "productId": "prod_019",
+    "userId": "u_buyer_008",
+    "rating": 4,
+    "content": "Ramen de calidad premium. Recomiendo cocinar según instrucciones para mejor resultado.",
+    "createdAt": "2025-10-06T20:12:00.000Z"
+  },
+  {
+    "id": "c_009",
+    "productId": "prod_003",
+    "userId": "u_buyer_001",
+    "rating": 4,
+    "content": "Umeboshi con buen balance ácido, ideal para probar sabores tradicionales.",
+    "createdAt": "2025-10-07T12:00:00.000Z"
+  },
+  {
+    "id": "c_010",
+    "productId": "prod_013",
+    "userId": "u_buyer_002",
+    "rating": 4,
+    "content": "Cheetos Flamin’ Hot bien picantes, buen snack para ver partido.",
+    "createdAt": "2025-10-08T16:45:00.000Z"
+  },
+  {
+    "id": "c_011",
+    "productId": "prod_006",
+    "userId": "u_buyer_003",
+    "rating": 5,
+    "content": "KitKat Matcha sorprendentemente delicado, buen balance de té y chocolate.",
+    "createdAt": "2025-10-09T10:20:00.000Z"
+  },
+  {
+    "id": "c_012",
+    "productId": "prod_010",
+    "userId": "u_buyer_004",
+    "rating": 4,
+    "content": "KitKat negro con buena intensidad de cacao, recomiendo probar con café.",
+    "createdAt": "2025-10-10T09:50:00.000Z"
+  },
+  {
+    "id": "c_013",
+    "productId": "prod_008",
+    "userId": "u_buyer_005",
+    "rating": 3,
+    "content": "Chocolate clásico, pero esperaba algo distinto del empaquetado local.",
+    "createdAt": "2025-10-11T15:33:00.000Z"
+  },
+  {
+    "id": "c_014",
+    "productId": "prod_015",
+    "userId": "u_buyer_006",
+    "rating": 4,
+    "content": "Takis con buen crunch y mucho sabor. Empaque grande, comparte con amigos.",
+    "createdAt": "2025-10-12T19:00:00.000Z"
+  },
+  {
+    "id": "c_015",
+    "productId": "prod_017",
+    "userId": "u_buyer_007",
+    "rating": 5,
+    "content": "Kinder Bueno perfecto para regalo. Delicado y no empalaga.",
+    "createdAt": "2025-10-13T07:25:00.000Z"
+  }
+]

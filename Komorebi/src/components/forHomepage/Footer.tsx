@@ -103,7 +103,7 @@ const Footer: React.FC<FooterProps> = ({ komorebi, year }) => {
         </div>
       </div>
 
-      <hr className="border-t border-[#4a665e] my-8" />
+      <hr className="border-t border-[var(--komorebi-gray)] my-8" />
 
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-xs">
         <p className="order-2 md:order-1 mt-4 md:mt-0">

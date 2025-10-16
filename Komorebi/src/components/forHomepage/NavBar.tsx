@@ -9,16 +9,18 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
         {/* Left side */}
         <div className="flex items-center gap-6">
-          <button
-            className="text-[var(--komorebi-yellow)] text-2xl font-bold hover:text-[var(--komorebi-black)] transition-colors"
-            onClick={() => navigate("/")}
-          >
-            Komorebi
-          </button>
+          <div>
+            <button
+              className="text-[var(--komorebi-yellow)] text-2xl font-bold hover:text-[var(--komorebi-black)] transition-colors"
+              onClick={() => navigate("/")}
+            >
+              Komorebi
+            </button>
+          </div>
 
-          <div className="hidden sm:flex items-center gap-4 text-sm text-[var(--komorebi-black)]">
-            <button className="hover:text-[var(--komorebi-yellow)] transition-colors">Categories</button>
-            <button className="hover:text-[var(--komorebi-yellow)] transition-colors">Sell</button>
+          <div className="hidden sm:flex items-center gap-4 text-sm text-[var(--komorebi-black)] ml-10">
+            <button className="hover:text-[var(--komorebi-yellow)] transition-colors font-medium">Categories</button>
+            <button className="hover:text-[var(--komorebi-yellow)] transition-colors font-medium">Sell</button>
           </div>
         </div>
 

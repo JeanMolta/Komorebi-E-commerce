@@ -1,0 +1,21 @@
+[
+  { "id": "u_vendor_001", "name": "Sakura Onigiri Co.", "type": "vendor", "avatar": "/avatars/sakura.png" },
+  { "id": "u_vendor_002", "name": "ZenRice Snacks", "type": "vendor", "avatar": "/avatars/zenrice.png" },
+  { "id": "u_vendor_003", "name": "Mochi Mágico", "type": "vendor", "avatar": "/avatars/mochi.png" },
+  { "id": "u_vendor_004", "name": "Glico International", "type": "vendor", "avatar": "/avatars/glico.png" },
+  { "id": "u_vendor_005", "name": "Nestlé Japón", "type": "vendor", "avatar": "/avatars/nestlejp.png" },
+  { "id": "u_vendor_006", "name": "Dora Snacks", "type": "vendor", "avatar": "/avatars/dora.png" },
+  { "id": "u_vendor_007", "name": "Hershey’s Colombia", "type": "vendor", "avatar": "/avatars/hershey.png" },
+  { "id": "u_vendor_008", "name": "Mars International", "type": "vendor", "avatar": "/avatars/mars.png" },
+  { "id": "u_vendor_009", "name": "Productos Ramo", "type": "vendor", "avatar": "/avatars/ramo.png" },
+  { "id": "u_vendor_010", "name": "Lotus Biscoff", "type": "vendor", "avatar": "/avatars/lotus.png" },
+
+  { "id": "u_buyer_001", "name": "Ana Rodríguez", "type": "buyer", "avatar": "/avatars/ana.png", "location": "Bogotá, CO" },
+  { "id": "u_buyer_002", "name": "Juan Pérez", "type": "buyer", "avatar": "/avatars/juan.png", "location": "Medellín, CO" },
+  { "id": "u_buyer_003", "name": "Camila Gómez", "type": "buyer", "avatar": "/avatars/camila.png", "location": "Cali, CO" },
+  { "id": "u_buyer_004", "name": "Mateo Torres", "type": "buyer", "avatar": "/avatars/mateo.png", "location": "Barranquilla, CO" },
+  { "id": "u_buyer_005", "name": "Sofía Martínez", "type": "buyer", "avatar": "/avatars/sofia.png", "location": "Bucaramanga, CO" },
+  { "id": "u_buyer_006", "name": "Diego López", "type": "buyer", "avatar": "/avatars/diego.png", "location": "Pereira, CO" },
+  { "id": "u_buyer_007", "name": "Laura Ruiz", "type": "buyer", "avatar": "/avatars/laura.png", "location": "Manizales, CO" },
+  { "id": "u_buyer_008", "name": "Pedro Castillo", "type": "buyer", "avatar": "/avatars/pedro.png", "location": "Bucaramanga, CO" }
+]

@@ -1,23 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Bell } from "lucide-react";
 
-/**
- * NotificationsMenu
- * - Genera notificaciones dinámicamente a partir de mockSales + mockComments (y enlaza users/products).
- * - Persiste estado "read" en localStorage (clave 'komorebi_notis_read') para simular read/unread.
- * - Glass effect con Tailwind (bg white/20 + backdrop-blur).
- *
- * Requisito: tener en src/data/
- * - products.json
- * - mockUsers.json
- * - mockComments.json
- * - mockSales.json
- */
-
-import productsData from "../data/products.json";
-import usersData from "../data/users.json";
-import commentsData from "../data/comments.json";
-import salesData from "../src/data/sales.json";
+import commentsData from "../../data/comments.json";
+import productsData from "../../data/products.json";
+import salesData from "../../data/sales.json";
+import usersData from "../../data/users.json";
 
 type User = {
   id: string;
@@ -109,7 +96,6 @@ export default function NotificationsMenu() {
       };
     });
 
-    // Combine and sort by date (desc), limit to recent 10
     const combined = [...salesNotis, ...commentsNotis].sort(
       (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
@@ -156,23 +142,24 @@ export default function NotificationsMenu() {
   const unreadCount = notis.reduce((acc, n) => (readMap[n.id] ? acc : acc + 1), 0);
 
   return (
-    <div className="relative" ref={wrapperRef}>
+    <div className="relative relative inline-flex items-center" ref={wrapperRef}>
       {/* Bell button */}
       <button
-        aria-label="Open notifications"
-        onClick={() => setOpen((v) => !v)}
-        className="relative"
-      >
-        <Bell
-          size={22}
-          className="cursor-pointer hover:text-[var(--komorebi-yellow)] transition-colors"
-        />
-        {unreadCount > 0 && (
-          <span className="absolute -top-1 -right-2 inline-flex items-center justify-center h-4 min-w-[1rem] px-1 rounded-full text-xs text-white bg-[var(--komorebi-yellow)] font-medium">
-            {unreadCount}
-          </span>
-        )}
-      </button>
+  aria-label="Open notifications"
+  onClick={() => setOpen((v) => !v)}
+  className="relative inline-flex items-center justify-center h-6 w-6"
+>
+  <Bell
+    size={22}
+    className="cursor-pointer hover:text-[var(--komorebi-yellow)] transition-colors"
+  />
+  {unreadCount > 0 && (
+    <span className="absolute -top-1 -right-2 inline-flex items-center justify-center h-4 min-w-[1rem] px-1 rounded-full text-xs text-white bg-[var(--komorebi-yellow)] font-medium">
+      {unreadCount}
+    </span>
+  )}
+</button>
+
 
       {/* Dropdown */}
       {open && (
@@ -182,7 +169,7 @@ export default function NotificationsMenu() {
           className="absolute top-full right-0 mt-3 w-80 max-w-sm z-50"
         >
           {/* Glass card */}
-          <div className="bg-white/20 backdrop-blur-md border border-white/30 shadow-lg rounded-xl overflow-hidden">
+          <div className="bg-white/20 backdrop-blur-md border border-white/30 shadow-lg rounded-3xl overflow-hidden">
             <div className="px-4 py-3 border-b border-white/10">
               <div className="flex items-center justify-between">
                 <h4 className="text-lg font-semibold">Notifications</h4>
@@ -195,7 +182,7 @@ export default function NotificationsMenu() {
               </div>
             </div>
 
-            <ul className="max-h-72 overflow-auto">
+            <ul className="max-h-72 overflow-auto notifications-list">
               {notis.length === 0 && (
                 <li className="p-3 text-sm text-[var(--komorebi-black)]/60">No notifications</li>
               )}

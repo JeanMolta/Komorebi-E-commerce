@@ -1,6 +1,6 @@
 import { Search, Heart, Bell, ShoppingCart, User } from "lucide-react";
 import { useNavigate } from "react-router";
-
+import NotificationMenu from "./NotificationMenu";
 export default function Navbar() {
   const navigate = useNavigate();
 
@@ -40,10 +40,8 @@ export default function Navbar() {
             size={22}
             className="cursor-pointer hover:text-[var(--komorebi-yellow)] transition-colors"
           />
-          <Bell
-            size={22}
-            className="cursor-pointer hover:text-[var(--komorebi-yellow)] transition-colors"
-          />
+          <NotificationMenu />
+
           <ShoppingCart
             size={22}
             className="cursor-pointer hover:text-[var(--komorebi-yellow)] transition-colors"

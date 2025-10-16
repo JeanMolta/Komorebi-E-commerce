@@ -101,7 +101,7 @@ const Footer: React.FC<FooterProps> = ({ komorebi, year }) => {
         </div>
       </div>
 
-      <hr className="border-t border-[#4a665e] my-8 max-w-7xl mx-auto" />
+      <hr className="border-t border-[var(--komorebi-offwhite)] my-8 max-w-7xl mx-auto" />
 
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-center md:justify-between items-center text-xs">
         

@@ -41,7 +41,7 @@ export default function Navbar() {
             </button>
 
             <div className="hidden sm:flex items-center gap-4 text-sm text-[var(--komorebi-black)] ml-12">
-              <NavLink  to="/Categories">"
+              <NavLink  to="/categories">
               <button className="hover:text-[var(--komorebi-yellow)] transition-colors font-medium">
                 Categories
               </button>

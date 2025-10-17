@@ -6,12 +6,15 @@ import NotificationMenu from "./NotificationMenu";
 export default function Navbar() {
   const navigate = useNavigate();
 
-  
+  // Track if navbar should be sticky (fixed position)
   const [isSticky, setIsSticky] = useState(false);
 
+  // Control mobile menu visibility
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  // Control mobile search bar visibility
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
+  // Add scroll listener to toggle sticky navbar
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 80) setIsSticky(true);
@@ -24,6 +27,7 @@ export default function Navbar() {
 
   return (
     <>
+      {/* Main navbar with conditional sticky styling */}
       <nav
         className={`${
           isSticky
@@ -32,7 +36,9 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 py-3 relative">
+          {/* Left section: Logo and navigation links */}
           <div className="flex items-center gap-4">
+            {/* Logo button */}
             <button
               className="text-[var(--komorebi-yellow)] text-2xl font-bold hover:text-[var(--komorebi-black)] transition-colors"
               onClick={() => navigate("/")}
@@ -40,12 +46,12 @@ export default function Navbar() {
               Komorebi
             </button>
 
+            {/* Desktop navigation links */}
             <div className="hidden sm:flex items-center gap-4 text-sm text-[var(--komorebi-black)] ml-12">
-              <NavLink  to="/categories">
-
-              <button className="hover:text-[var(--komorebi-yellow)] transition-colors font-medium">
-                Categories
-              </button>
+              <NavLink to="/categories">
+                <button className="hover:text-[var(--komorebi-yellow)] transition-colors font-medium">
+                  Categories
+                </button>
               </NavLink>
               <button className="hover:text-[var(--komorebi-yellow)] transition-colors font-medium">
                 Sell
@@ -53,6 +59,7 @@ export default function Navbar() {
             </div>
           </div>
 
+          {/* Center section: Desktop search bar */}
           <div className="hidden sm:flex items-center bg-white/50 backdrop-blur-sm rounded-full px-4 py-2 w-1/2 sm:w-1/3">
             <Search size={18} className="text-[var(--komorebi-black)]/70" />
             <input
@@ -62,7 +69,9 @@ export default function Navbar() {
             />
           </div>
 
+          {/* Right section: User actions and mobile buttons */}
           <div className="flex items-center gap-3">
+            {/* Desktop user action icons */}
             <div className="hidden sm:flex items-center gap-5 text-[var(--komorebi-black)]">
               <Heart
                 size={22}
@@ -79,6 +88,7 @@ export default function Navbar() {
               />
             </div>
 
+            {/* Mobile search toggle button */}
             <button
               className="sm:hidden inline-flex items-center justify-center h-8 w-8 rounded-md text-[var(--komorebi-black)] hover:text-[var(--komorebi-yellow)] transition-colors"
               aria-label="Open search"
@@ -90,6 +100,7 @@ export default function Navbar() {
               <Search size={18} />
             </button>
 
+            {/* Mobile menu toggle button (hamburger icon) */}
             <button
               className="sm:hidden inline-flex items-center justify-center h-8 w-8 rounded-md text-[var(--komorebi-black)] hover:text-[var(--komorebi-yellow)] transition-colors"
               aria-label="Open menu"
@@ -106,7 +117,7 @@ export default function Navbar() {
             </button>
           </div>
 
-          
+          {/* Mobile search bar (appears when search is toggled) */}
           {mobileSearchOpen && (
             <div
               className="sm:hidden absolute top-1/2 left-40 right-30 transform -translate-y-1/2"
@@ -129,6 +140,7 @@ export default function Navbar() {
           )}
         </div>
 
+        {/* Mobile menu dropdown (appears below navbar when toggled) */}
         <div
           className={`sm:hidden absolute top-full left-0 w-full z-40 transition-transform duration-200 ${
             mobileMenuOpen ? "transform translate-y-0 opacity-100" : "transform -translate-y-2 opacity-0 pointer-events-none"
@@ -136,6 +148,7 @@ export default function Navbar() {
         >
           <div className="bg-white/20 backdrop-blur-md border-t border-white/30 shadow-lg">
             <div className="px-3 py-3">
+              {/* Horizontal scrollable menu with all navigation options */}
               <div className="flex items-center justify-between gap-4 overflow-x-auto whitespace-nowrap scrollbar-hidden">
                 <button className="text-left text-base font-medium text-[var(--komorebi-black)] hover:text-[var(--komorebi-yellow)] mr-4">
                   Categories
@@ -144,8 +157,10 @@ export default function Navbar() {
                   Sell
                 </button>
 
+                {/* Vertical divider */}
                 <div className="h-6 border-l border-white/10 mx-2" />
 
+                {/* Mobile user action buttons */}
                 <button className="inline-flex items-center gap-2 text-[var(--komorebi-black)] hover:text-[var(--komorebi-yellow)] mr-4">
                   <Heart size={20} /> 
                 </button>

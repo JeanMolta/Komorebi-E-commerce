@@ -16,7 +16,7 @@ interface FooterColumnProps {
   links: FooterLink[];
 }
 
-
+/* Small presentational component: renders a column of footer links */
 const FooterColumn: React.FC<FooterColumnProps> = ({ title, links }) => (
   <div className="mb-8 md:mb-0 text-center md:text-left"> 
     <h3 className="text-white font-bold mb-4 uppercase tracking-wider text-sm">{title}</h3>
@@ -35,8 +35,8 @@ const FooterColumn: React.FC<FooterColumnProps> = ({ title, links }) => (
   </div>
 );
 
-
 const Footer: React.FC<FooterProps> = ({ komorebi, year }) => {
+  /* Column link data used to render FooterColumn instances */
   const aboutLinks: FooterLink[] = [
     { label: 'Who we are', url: '/about/who' },
     { label: 'Our History', url: '/about/history' },
@@ -62,7 +62,7 @@ const Footer: React.FC<FooterProps> = ({ komorebi, year }) => {
     <footer className="bg-[var(--komorebi-pink)] text-[var(--komorebi-offwhite)] px-6 py-10 md:px-16 md:py-12">
       
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-8 lg:gap-16">
-
+        {/* Brand column: logo, description, social icons */}
         <div className="col-span-1 text-center md:text-left"> 
           <button className="text-[var(--komorebi-yellow)] text-3xl sm:text-2xl font-bold hover:text-[var(--komorebi-offwhite)] transition-colors mb-4">
             {komorebi}
@@ -94,6 +94,7 @@ const Footer: React.FC<FooterProps> = ({ komorebi, year }) => {
           </div>
         </div>
 
+        {/* Links columns rendered via FooterColumn */}
         <div className="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center md:justify-items-start"> 
             <FooterColumn title="About us" links={aboutLinks} />
             <FooterColumn title="Shop" links={shopLinks} />
@@ -101,8 +102,10 @@ const Footer: React.FC<FooterProps> = ({ komorebi, year }) => {
         </div>
       </div>
 
+      {/* Divider */}
       <hr className="border-t border-[var(--komorebi-offwhite)] my-8 max-w-7xl mx-auto" />
 
+      {/* Bottom row: copyright + quick links */}
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-center md:justify-between items-center text-xs">
         
         <p className="order-2 md:order-1 mt-4 md:mt-0 text-sm md:text-xs text-center md:text-left">

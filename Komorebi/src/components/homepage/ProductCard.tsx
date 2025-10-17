@@ -79,11 +79,11 @@ const styles: Record<string, React.CSSProperties> = {
   },
   
   button: {
-    backgroundColor: '#FFD464', 
-    color: '#282828',
+    backgroundColor: 'var(--komorebi-yellow)', 
+    color: 'var(--komorebi-black)',
     border: 'none',
     padding: '10px',
-    borderRadius: '4px',
+    borderRadius: '3rem',
     cursor: 'pointer',
     fontSize: '16px',
     fontWeight: '600',

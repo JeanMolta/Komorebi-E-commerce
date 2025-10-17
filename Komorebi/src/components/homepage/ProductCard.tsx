@@ -79,7 +79,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
   
   button: {
-    backgroundColor: '#388e3c', 
+    backgroundColor: '#FFD464', 
     color: 'white',
     border: 'none',
     padding: '10px',

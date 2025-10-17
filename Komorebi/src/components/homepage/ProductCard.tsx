@@ -14,81 +14,39 @@ const formatPrice = (price: number): string => {
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const imageUrl = 'https://via.placeholder.com/300x200?text=' + product.name.split(' ')[0];
+  const imageUrl = product.image ?? `/images/products/${product.id}.jpg`;
+  const fallback = '/images/products/placeholder.jpg';
 
   return (
-    <div style={styles.card}>
-      <img src={imageUrl} alt={product.name} style={styles.image} />
-      <div style={styles.content}>
-        <h3 style={styles.name}>{product.name}</h3>
-        <p style={styles.vendor}>{product.vendor}</p>
-        <p style={styles.price}>{formatPrice(product.price)}</p>
-        <button style={styles.button} onClick={() => alert(`Añadido: ${product.name}`)}>
-          Add to Cart 🛒
-        </button>
+    <div className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col transition-transform transform hover:-translate-y-1">
+      <div className="w-full h-48 bg-gray-100">
+        <img
+          src={imageUrl}
+          alt={product.name}
+          loading="lazy"
+          onError={(e) => ((e.target as HTMLImageElement).src = fallback)}
+          className="w-full h-full object-cover"
+        />
+      </div>
+
+      <div className="p-4 flex-1 flex flex-col justify-between">
+        <div>
+          <h3 className="text-lg font-semibold text-gray-800">{product.name}</h3>
+          <p className="text-sm text-gray-500">{product.vendor}</p>
+        </div>
+
+        <div className="mt-4 flex items-center justify-between">
+          <span className="text-xl font-bold text-[var(--komorebi-black)]">{formatPrice(product.price)}</span>
+          <button
+            onClick={() => alert(`Añadido: ${product.name}`)}
+            className="bg-[var(--komorebi-yellow)] text-[var(--komorebi-black)] px-4 py-2 rounded-full font-semibold hover:brightness-95"
+          >
+            Add
+          </button>
+        </div>
       </div>
     </div>
   );
-};
-
-const styles: Record<string, React.CSSProperties> = {
-  card: {
-    border: '1px solid #eee',
-    borderRadius: '20px',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    overflow: 'hidden', 
-    backgroundColor: '#fff',
-    display: 'flex',
-    flexDirection: 'column',
-    transition: 'transform 0.2s',
-  },
-
-  image: {
-    width: '100%',
-    height: 'auto',
-    objectFit: 'cover', 
-    aspectRatio: '3 / 2', 
-    borderBottom: '1px solid #eee',
-  },
-
-  content: {
-    padding: '16px',
-    flexGrow: 1, 
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-  },
-
-  name: {
-    fontSize: '18px',
-    margin: '0 0 4px 0',
-    fontWeight: 'bold',
-  },
-
-  vendor: {
-    fontSize: '14px',
-    color: '#555',
-    margin: '0 0 8px 0',
-  },
-
-  price: {
-    fontSize: '20px',
-    color: '#0070f3',
-    fontWeight: 'bolder',
-    margin: '8px 0 16px 0',
-  },
-  
-  button: {
-    backgroundColor: 'var(--komorebi-yellow)', 
-    color: 'var(--komorebi-black)',
-    border: 'none',
-    padding: '10px',
-    borderRadius: '3rem',
-    cursor: 'pointer',
-    fontSize: '16px',
-    fontWeight: '600',
-    transition: 'background-color 0.3s',
-  }
 };
 
 export default ProductCard;

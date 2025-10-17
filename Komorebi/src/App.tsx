@@ -11,7 +11,8 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<HeroSection />} />
-
+                <Route path="/categories" element={<ProductGrid/>} />
+        
         <Route path="/productos" element={<ProductGrid />} />
       </Routes>
 

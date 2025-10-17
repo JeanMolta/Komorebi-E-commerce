@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { Product } from '../../data/ProductTypes';
 
 interface ProductCardProps {
@@ -16,6 +16,12 @@ const formatPrice = (price: number): string => {
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const imageUrl = product.image ?? `/images/products/${product.id}.jpg`;
   const fallback = '/images/products/placeholder.jpg';
+
+  const [added, setAdded] = useState(false);
+
+  const handleAddClick = () => {
+    setAdded(true);
+  };
 
   return (
     <div className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col transition-transform transform hover:-translate-y-1">
@@ -38,10 +44,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <div className="mt-4 flex items-center justify-between">
           <span className="text-xl font-bold text-[var(--komorebi-black)]">{formatPrice(product.price)}</span>
           <button
-            onClick={() => alert(`Añadido: ${product.name}`)}
-            className="bg-[var(--komorebi-yellow)] text-[var(--komorebi-black)] px-4 py-2 rounded-full font-semibold hover:brightness-95"
+            onClick={handleAddClick}
+            className={`px-4 py-2 rounded-full font-semibold transition-all duration-200 ${
+              added
+                ? 'bg-yellow-600 text-white cursor-default'
+                : 'bg-[var(--komorebi-yellow)] text-[var(--komorebi-black)] hover:brightness-95'
+            }`}
           >
-            Add
+            {added ? 'Added' : 'Add'}
           </button>
         </div>
       </div>

@@ -1,8 +1,8 @@
 // ProductGrid.tsx
 import React from 'react';
 import ProductCard from './ProductCard';
-import { products } from '../data/ProductData';
-import type { Product } from '../data/ProductTypes';
+import { products } from '../../data/ProductData';
+import type { Product } from '../../data/ProductTypes';
 
 const ProductGrid: React.FC = () => {
   return (

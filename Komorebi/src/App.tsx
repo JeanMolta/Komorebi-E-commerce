@@ -1,9 +1,9 @@
 import { Routes, Route } from 'react-router-dom';
-import HeroSection from './components/HeroSection';
-import Navbar from './components/NavBar';
-import ProductGrid from './components/ProductGrid';
+import HeroSection from './components/homepage/HeroSection';
+import Navbar from './components/homepage/NavBar';
+import ProductGrid from './components/homepage/ProductGrid';
+import Footer from './components/homepage/Footer';
 import './index.css'
-import Footer from './components/Footer';
 
 function App() {
   return (

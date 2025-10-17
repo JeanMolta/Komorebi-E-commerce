@@ -1,18 +1,17 @@
 @import "tailwindcss/preflight";
 @import "tailwindcss/utilities";
 @import "tailwindcss";
-/* Custom Colors */
+
 :root {
   --komorebi-black: #282828;
   --komorebi-gray: #D9D9D9;
   --komorebi-yellow: #FFD464;
   --komorebi-offwhite: #F9F8F5;
     --komorebi-pink: #DB2265;
-    --komorebi-green: #edf8cd;
+    --komorebi-green: #ffe9c0;
 
 }
 
-/* Utility Classes */
 body {
   margin: 0;
   padding: 0;
@@ -27,3 +26,29 @@ input {
   outline: none;
 }
 
+.notifications-list {
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+}
+.notifications-list::-webkit-scrollbar {
+  display: none; 
+}
+
+html, body {
+  -ms-overflow-style: none;  
+  scrollbar-width: none;     
+  overflow-y: scroll;        
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;            
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .transition-all,
+  .transition-transform,
+  .transition-opacity {
+    transition: none !important;
+  }
+}

@@ -14,7 +14,7 @@ const formatPrice = (price: number): string => {
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const imageUrl = 'https://via.placeholder.com/300x200?text=' + product.name.split(' ')[0];
+  const imageUrl = product.imageUrl;
 
   return (
     <div style={styles.card}>

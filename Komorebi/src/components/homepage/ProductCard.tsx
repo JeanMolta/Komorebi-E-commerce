@@ -34,7 +34,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 const styles: Record<string, React.CSSProperties> = {
   card: {
     border: '1px solid #eee',
-    borderRadius: '8px',
+    borderRadius: '20px',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
     overflow: 'hidden', 
     backgroundColor: '#fff',

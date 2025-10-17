@@ -6,10 +6,9 @@ import NotificationMenu from "./NotificationMenu";
 export default function Navbar() {
   const navigate = useNavigate();
 
-  // sticky
+  
   const [isSticky, setIsSticky] = useState(false);
 
-  // mobile
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
@@ -33,7 +32,6 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 py-3 relative">
-          {/* LEFT: Logo + desktop links */}
           <div className="flex items-center gap-4">
             <button
               className="text-[var(--komorebi-yellow)] text-2xl font-bold hover:text-[var(--komorebi-black)] transition-colors"
@@ -42,7 +40,6 @@ export default function Navbar() {
               Komorebi
             </button>
 
-            {/* desktop links */}
             <div className="hidden sm:flex items-center gap-4 text-sm text-[var(--komorebi-black)] ml-12">
               <button className="hover:text-[var(--komorebi-yellow)] transition-colors font-medium">
                 Categories
@@ -53,8 +50,7 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* CENTER: Desktop search (hidden on mobile) */}
-          <div className="hidden sm:flex items-center bg-[var(--komorebi-gray)] rounded-full px-4 py-2 w-1/2 sm:w-1/3">
+          <div className="hidden sm:flex items-center bg-white/50 backdrop-blur-sm rounded-full px-4 py-2 w-1/2 sm:w-1/3">
             <Search size={18} className="text-[var(--komorebi-black)]/70" />
             <input
               type="text"
@@ -63,9 +59,7 @@ export default function Navbar() {
             />
           </div>
 
-          {/* RIGHT: desktop icons (hidden on mobile) + mobile icons */}
           <div className="flex items-center gap-3">
-            {/* Desktop icons */}
             <div className="hidden sm:flex items-center gap-5 text-[var(--komorebi-black)]">
               <Heart
                 size={22}
@@ -82,7 +76,6 @@ export default function Navbar() {
               />
             </div>
 
-            {/* MOBILE: search icon */}
             <button
               className="sm:hidden inline-flex items-center justify-center h-8 w-8 rounded-md text-[var(--komorebi-black)] hover:text-[var(--komorebi-yellow)] transition-colors"
               aria-label="Open search"
@@ -94,7 +87,6 @@ export default function Navbar() {
               <Search size={18} />
             </button>
 
-            {/* MOBILE: hamburger */}
             <button
               className="sm:hidden inline-flex items-center justify-center h-8 w-8 rounded-md text-[var(--komorebi-black)] hover:text-[var(--komorebi-yellow)] transition-colors"
               aria-label="Open menu"
@@ -103,7 +95,6 @@ export default function Navbar() {
                 if (!mobileMenuOpen) setMobileSearchOpen(false);
               }}
             >
-              {/* hamburger svg */}
               <svg width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect y="0" width="20" height="2" rx="1" fill="currentColor" />
                 <rect y="5" width="20" height="2" rx="1" fill="currentColor" />
@@ -143,7 +134,6 @@ export default function Navbar() {
           <div className="bg-white/20 backdrop-blur-md border-t border-white/30 shadow-lg">
             <div className="px-3 py-3">
               <div className="flex items-center justify-between gap-4 overflow-x-auto whitespace-nowrap scrollbar-hidden">
-                {/* Links — inline */}
                 <button className="text-left text-base font-medium text-[var(--komorebi-black)] hover:text-[var(--komorebi-yellow)] mr-4">
                   Categories
                 </button>
@@ -151,10 +141,8 @@ export default function Navbar() {
                   Sell
                 </button>
 
-                {/* Divider - visual spacing */}
                 <div className="h-6 border-l border-white/10 mx-2" />
 
-                {/* Icon actions inline */}
                 <button className="inline-flex items-center gap-2 text-[var(--komorebi-black)] hover:text-[var(--komorebi-yellow)] mr-4">
                   <Heart size={20} /> 
                 </button>
@@ -163,7 +151,6 @@ export default function Navbar() {
                   <ShoppingCart size={20} /> 
                 </button>
 
-                {/* compact notification - keep NotificationMenu (renders its own button) */}
                 <div className="inline-flex items-center mr-4">
                   <NotificationMenu />
                 </div>

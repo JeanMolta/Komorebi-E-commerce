@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Bell } from "lucide-react";
 
 import commentsData from "../../data/comments.json";
@@ -55,11 +56,12 @@ const READ_KEY = "komorebi_notis_read";
 
 export default function NotificationsMenu() {
   const [open, setOpen] = useState(false);
+  const [coords, setCoords] = useState<{ top: number; left: number } | null>(null);
   const [notis, setNotis] = useState<Noti[]>([]);
   const [readMap, setReadMap] = useState<Record<string, boolean>>({});
   const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
 
-  // Build notifications from sales + comments
   useEffect(() => {
     const products: Product[] = (productsData as any) ?? [];
     const users: User[] = (usersData as any) ?? [];
@@ -83,7 +85,6 @@ export default function NotificationsMenu() {
     const commentsNotis: Noti[] = comments.map((c) => {
       const author = users.find((u) => u.id === c.userId) ?? null;
       const product = products.find((p) => p.id === c.productId) ?? null;
-      // Shorten comment for message
       const snippet = c.content.length > 70 ? c.content.slice(0, 67) + "..." : c.content;
       return {
         id: `comment_${c.id}`,
@@ -103,7 +104,6 @@ export default function NotificationsMenu() {
     setNotis(combined.slice(0, 10));
   }, []);
 
-  // Load readMap from localStorage
   useEffect(() => {
     try {
       const raw = localStorage.getItem(READ_KEY);
@@ -113,7 +113,6 @@ export default function NotificationsMenu() {
     }
   }, []);
 
-  // Click outside to close
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       if (!wrapperRef.current) return;
@@ -123,14 +122,31 @@ export default function NotificationsMenu() {
     return () => document.removeEventListener("mousedown", handleClick);
   }, [open]);
 
-  // Mark single as read
+  useEffect(() => {
+    if (!open) return;
+    const compute = () => {
+      const btn = buttonRef.current;
+      if (!btn) return setCoords(null);
+      const rect = btn.getBoundingClientRect();
+      const top = rect.bottom + 12 + window.scrollY;
+      const left = rect.right - 320 - 16 + window.scrollX;
+      setCoords({ top, left });
+    };
+    compute();
+    window.addEventListener("resize", compute);
+    window.addEventListener("scroll", compute, { passive: true });
+    return () => {
+      window.removeEventListener("resize", compute);
+      window.removeEventListener("scroll", compute);
+    };
+  }, [open]);
+
   const markRead = (id: string) => {
     const next = { ...readMap, [id]: true };
     setReadMap(next);
     localStorage.setItem(READ_KEY, JSON.stringify(next));
   };
 
-  // Mark all as read
   const markAllRead = () => {
     const next: Record<string, boolean> = {};
     notis.forEach((n) => (next[n.id] = true));
@@ -138,129 +154,121 @@ export default function NotificationsMenu() {
     localStorage.setItem(READ_KEY, JSON.stringify(next));
   };
 
-  // How many unread
   const unreadCount = notis.reduce((acc, n) => (readMap[n.id] ? acc : acc + 1), 0);
 
   return (
-    <div className="relative relative inline-flex items-center" ref={wrapperRef}>
-      {/* Bell button */}
+    <div className="relative inline-flex items-center" ref={wrapperRef}>
       <button
-  aria-label="Open notifications"
-  onClick={() => setOpen((v) => !v)}
-  className="relative inline-flex items-center justify-center h-6 w-6"
->
-  <Bell
-    size={22}
-    className="cursor-pointer hover:text-[var(--komorebi-yellow)] transition-colors"
-  />
-  {unreadCount > 0 && (
-    <span className="absolute -top-1 -right-2 inline-flex items-center justify-center h-4 min-w-[1rem] px-1 rounded-full text-xs text-white bg-[var(--komorebi-yellow)] font-medium">
-      {unreadCount}
-    </span>
-  )}
-</button>
+        ref={buttonRef}
+        aria-label="Open notifications"
+        onClick={() => setOpen((v) => !v)}
+        className="relative inline-flex items-center justify-center h-6 w-6"
+      >
+        <Bell
+          size={22}
+          className="cursor-pointer hover:text-[var(--komorebi-yellow)] transition-colors"
+        />
+        {unreadCount > 0 && (
+          <span className="absolute -top-1 -right-2 inline-flex items-center justify-center h-4 min-w-[1rem] px-1 rounded-full text-xs text-white bg-[var(--komorebi-yellow)] font-medium">
+            {unreadCount}
+          </span>
+        )}
+      </button>
 
+      {open && coords &&
+        createPortal(
+          <div
+            role="dialog"
+            aria-label="Notifications"
+            style={{ position: "absolute", top: coords.top, left: coords.left }}
+            className="w-80 max-w-sm z-[9999]"
+          >
+            <div className="bg-white/75 border backdrop-blur-sm border-white/10 shadow-xl rounded-3xl overflow-hidden">
+              <div className="px-4 py-3 border-b border-white/10">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-lg font-semibold">Notifications</h4>
+                  <button
+                    onClick={markAllRead}
+                    className="text-sm text-[var(--komorebi-black)]/70 hover:text-[var(--komorebi-black)]"
+                  >
+                    Mark all read
+                  </button>
+                </div>
+              </div>
 
-      {/* Dropdown */}
-      {open && (
-        <div
-          role="dialog"
-          aria-label="Notifications"
-          className="absolute top-full right-0 mt-3 w-80 max-w-sm z-50"
-        >
-          {/* Glass card */}
-          <div className="bg-white/20 backdrop-blur-md border border-white/30 shadow-lg rounded-3xl overflow-hidden">
-            <div className="px-4 py-3 border-b border-white/10">
-              <div className="flex items-center justify-between">
-                <h4 className="text-lg font-semibold">Notifications</h4>
+              <ul className="max-h-72 overflow-auto notifications-list">
+                {notis.length === 0 && (
+                  <li className="p-3 text-sm text-[var(--komorebi-black)]/60">No notifications</li>
+                )}
+                {notis.map((n) => {
+                  const isRead = !!readMap[n.id];
+                  return (
+                    <li
+                      key={n.id}
+                      className={`flex gap-3 px-4 py-3 items-start hover:bg-white/10 transition-colors ${
+                        isRead ? "opacity-80" : "bg-white/10"
+                      }`}
+                    >
+                      <div className="flex-shrink-0 mt-1">
+                        {n.type === "sale" ? (
+                          <span className="inline-block bg-[var(--komorebi-yellow)] rounded p-1 text-sm">💳</span>
+                        ) : (
+                          <span className="inline-block bg-[var(--komorebi-yellow)] rounded p-1 text-sm">💬</span>
+                        )}
+                      </div>
+
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between">
+                          <div className="text-sm font-medium text-[var(--komorebi-black)]">
+                            {n.user?.name ?? "Unknown"}
+                            <span className="ml-2 text-xs font-normal text-[var(--komorebi-black)]/60">• {n.product?.name ?? ""}</span>
+                          </div>
+                          <div className="text-xs text-[var(--komorebi-black)]/60">
+                            {new Date(n.createdAt).toLocaleString()}
+                          </div>
+                        </div>
+
+                        <div className="mt-1 text-sm text-[var(--komorebi-black)]/90">
+                          {n.message}
+                        </div>
+
+                        <div className="mt-2 flex items-center gap-3">
+                          {!isRead && (
+                            <button
+                              onClick={() => markRead(n.id)}
+                              className="text-xs px-2 py-1 rounded-full bg-[var(--komorebi-yellow)] text-[var(--komorebi-black)]"
+                            >
+                              Mark read
+                            </button>
+                          )}
+                          <button
+                            onClick={() => {
+                              setOpen(false);
+                              markRead(n.id);
+                            }}
+                            className="text-xs text-[var(--komorebi-black)]/70 hover:text-[var(--komorebi-black)]"
+                          >
+                            View
+                          </button>
+                        </div>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+
+              <div className="px-4 py-3 border-t border-white/10">
                 <button
-                  onClick={markAllRead}
-                  className="text-sm text-[var(--komorebi-black)]/70 hover:text-[var(--komorebi-black)]"
+                  onClick={() => setOpen(false)}
+                  className="w-full py-2 rounded-full bg-[var(--komorebi-yellow)] text-[var(--komorebi-black)] font-medium"
                 >
-                  Mark all read
+                  View All Notifications
                 </button>
               </div>
             </div>
-
-            <ul className="max-h-72 overflow-auto notifications-list">
-              {notis.length === 0 && (
-                <li className="p-3 text-sm text-[var(--komorebi-black)]/60">No notifications</li>
-              )}
-              {notis.map((n) => {
-                const isRead = !!readMap[n.id];
-                return (
-                  <li
-                    key={n.id}
-                    className={`flex gap-3 px-4 py-3 items-start hover:bg-white/10 transition-colors ${
-                      isRead ? "opacity-70" : "bg-white/5"
-                    }`}
-                  >
-                    {/* Left icon by type */}
-                    <div className="flex-shrink-0 mt-1">
-                      {n.type === "sale" ? (
-                        <span className="inline-block bg-[var(--komorebi-yellow)] rounded p-1 text-sm">💳</span>
-                      ) : (
-                        <span className="inline-block bg-[var(--komorebi-yellow)] rounded p-1 text-sm">💬</span>
-                      )}
-                    </div>
-
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between">
-                        <div className="text-sm font-medium text-[var(--komorebi-black)]">
-                          {n.user?.name ?? "Unknown"}
-                          <span className="ml-2 text-xs font-normal text-[var(--komorebi-black)]/60">• {n.product?.name ?? ""}</span>
-                        </div>
-                        <div className="text-xs text-[var(--komorebi-black)]/60">
-                          {new Date(n.createdAt).toLocaleString()}
-                        </div>
-                      </div>
-
-                      <div className="mt-1 text-sm text-[var(--komorebi-black)]/80">
-                        {n.message}
-                      </div>
-
-                      <div className="mt-2 flex items-center gap-3">
-                        {!isRead && (
-                          <button
-                            onClick={() => markRead(n.id)}
-                            className="text-xs px-2 py-1 rounded-full bg-[var(--komorebi-yellow)] text-[var(--komorebi-black)]"
-                          >
-                            Mark read
-                          </button>
-                        )}
-                        <button
-                          onClick={() => {
-                            // Example action: navigate to product page (if you want)
-                            // window.location.href = `/product/${n.product?.id ?? ""}`;
-                            setOpen(false);
-                            markRead(n.id);
-                          }}
-                          className="text-xs text-[var(--komorebi-black)]/70 hover:text-[var(--komorebi-black)]"
-                        >
-                          View
-                        </button>
-                      </div>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-
-            <div className="px-4 py-3 border-t border-white/10">
-              <button
-                onClick={() => {
-                  // Example action: go to full notifications page
-                  // navigate('/notifications') if you use react-router here
-                  setOpen(false);
-                }}
-                className="w-full py-2 rounded-full bg-[var(--komorebi-yellow)] text-[var(--komorebi-black)] font-medium"
-              >
-                View All Notifications
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+          </div>,
+          document.body
+        )}
     </div>
   );
 }

@@ -53,9 +53,11 @@ export default function Navbar() {
                   Categories
                 </button>
               </NavLink>
-              <button className="hover:text-[var(--komorebi-yellow)] transition-colors font-medium">
-                Sell
-              </button>
+              <NavLink to="/sell">
+                <button className="hover:text-[var(--komorebi-yellow)] transition-colors font-medium">
+                  Sell
+                </button>
+              </NavLink>
             </div>
           </div>
 
@@ -73,19 +75,25 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             {/* Desktop user action icons */}
             <div className="hidden sm:flex items-center gap-5 text-[var(--komorebi-black)]">
-              <Heart
-                size={22}
-                className="cursor-pointer hover:text-[var(--komorebi-yellow)] transition-colors"
-              />
+              <NavLink to="/wishlist">
+                <Heart
+                  size={22}
+                  className="cursor-pointer hover:text-[var(--komorebi-yellow)] transition-colors"
+                />
+              </NavLink>
               <NotificationMenu />
-              <ShoppingCart
-                size={22}
-                className="cursor-pointer hover:text-[var(--komorebi-yellow)] transition-colors"
-              />
-              <User
-                size={22}
-                className="cursor-pointer hover:text-[var(--komorebi-yellow)] transition-colors"
-              />
+              <NavLink to="/cart">
+                <ShoppingCart
+                  size={22}
+                  className="cursor-pointer hover:text-[var(--komorebi-yellow)] transition-colors"
+                />
+              </NavLink>
+              <NavLink to="/profile">
+                <User
+                  size={22}
+                  className="cursor-pointer hover:text-[var(--komorebi-yellow)] transition-colors"
+                />
+              </NavLink>
             </div>
 
             {/* Mobile search toggle button */}
@@ -150,35 +158,42 @@ export default function Navbar() {
             <div className="px-3 py-3">
               {/* Horizontal scrollable menu with all navigation options */}
               <div className="flex items-center justify-between gap-4 overflow-x-auto whitespace-nowrap scrollbar-hidden">
-                <button className="text-left text-base font-medium text-[var(--komorebi-black)] hover:text-[var(--komorebi-yellow)] mr-4">
-                  Categories
-                </button>
-                <button className="text-left text-base font-medium text-[var(--komorebi-black)] hover:text-[var(--komorebi-yellow)] mr-4">
-                  Sell
-                </button>
+                <NavLink to="/categories">
+                  <button className="text-left text-base font-medium text-[var(--komorebi-black)] hover:text-[var(--komorebi-yellow)] mr-4">
+                    Categories
+                  </button>
+                </NavLink>
+                <NavLink to="/sell">
+                  <button className="text-left text-base font-medium text-[var(--komorebi-black)] hover:text-[var(--komorebi-yellow)] mr-4">
+                    Sell
+                  </button>
+                </NavLink>
 
                 {/* Vertical divider */}
                 <div className="h-6 border-l border-white/10 mx-2" />
 
                 {/* Mobile user action buttons */}
-                <button className="inline-flex items-center gap-2 text-[var(--komorebi-black)] hover:text-[var(--komorebi-yellow)] mr-4">
-                  <Heart size={20} /> 
-                </button>
+                <NavLink to="/wishlist">
+                  <button className="inline-flex items-center gap-2 text-[var(--komorebi-black)] hover:text-[var(--komorebi-yellow)] mr-4">
+                    <Heart size={20} /> 
+                  </button>
+                </NavLink>
 
-                <button className="inline-flex items-center gap-2 text-[var(--komorebi-black)] hover:text-[var(--komorebi-yellow)] mr-4">
-                  <ShoppingCart size={20} /> 
-                </button>
+                <NavLink to="/cart">
+                  <button className="inline-flex items-center gap-2 text-[var(--komorebi-black)] hover:text-[var(--komorebi-yellow)] mr-4">
+                    <ShoppingCart size={20} /> 
+                  </button>
+                </NavLink>
 
                 <div className="inline-flex items-center mr-4">
                   <NotificationMenu />
                 </div>
 
-                <button
-                  className="inline-flex items-center gap-2 text-[var(--komorebi-black)] hover:text-[var(--komorebi-yellow)] mr-4"
-                  onClick={() => navigate("/profile")}
-                >
-                  <User size={20} /> 
-                </button>
+                <NavLink to="/profile">
+                  <button className="inline-flex items-center gap-2 text-[var(--komorebi-black)] hover:text-[var(--komorebi-yellow)] mr-4">
+                    <User size={20} /> 
+                  </button>
+                </NavLink>
               </div>
             </div>
           </div>

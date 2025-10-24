@@ -1,8 +1,13 @@
 import { Routes, Route } from 'react-router-dom';
-import HeroSection from './components/homepage/HeroSection';
 import Navbar from './components/homepage/NavBar';
 import ProductGrid from './components/homepage/ProductGrid';
 import Footer from './components/homepage/Footer';
+import HomePage from './pages/HomePage';
+import CategoriesPage from './pages/CategoriesPage';
+import AddProductPage from './pages/AddProductPage';
+import CartPage from './pages/CartPage';
+import WishListPage from './pages/WishListPage';
+import ProfilePage from './pages/ProfilePage';
 import './index.css'
 
 function App() {
@@ -10,13 +15,14 @@ function App() {
     <>
       <Navbar />
       <Routes>
-        <Route path="/" element={<HeroSection />} />
-                <Route path="/categories" element={<ProductGrid/>} />
-        
+        <Route path="/" element={<HomePage />} />
+        <Route path="/categories" element={<CategoriesPage />} />
+        <Route path="/sell" element={<AddProductPage />} />
+        <Route path="/wishlist" element={<WishListPage />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route path="/productos" element={<ProductGrid />} />
       </Routes>
-
-      <ProductGrid/>
 
       <Footer komorebi="Komorebi" year={2025} />
     </>

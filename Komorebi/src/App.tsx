@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/homepage/NavBar';
 import ProductGrid from './components/homepage/ProductGrid';
 import Footer from './components/homepage/Footer';
+import ScrollToTop from './components/ScrollToTop';
 import HomePage from './pages/HomePage';
 import CategoriesPage from './pages/CategoriesPage';
 import AddProductPage from './pages/AddProductPage';
@@ -13,6 +14,7 @@ import './index.css'
 function App() {
   return (
     <>
+      <ScrollToTop />
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />

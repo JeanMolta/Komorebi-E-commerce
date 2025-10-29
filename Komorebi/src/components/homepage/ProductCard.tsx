@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import type { Product } from '../../data/ProductTypes';
 
 interface ProductCardProps {
@@ -15,6 +16,9 @@ const formatPrice = (price: number): string => {
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  // Navigation hook
+  const navigate = useNavigate();
+  
   // Set image URL from product data or use default path
   const imageUrl = product.image ?? `/images/products/${product.id}.jpg`;
   const fallback = '/images/products/placeholder.jpg';
@@ -23,13 +27,22 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const [added, setAdded] = useState(false);
 
   // Handle add to cart button click
-  const handleAddClick = () => {
+  const handleAddClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent card click when clicking Add button
     setAdded(true);
+  };
+
+  // Handle card click to navigate to product page
+  const handleCardClick = () => {
+    navigate(`/product/${product.id}`);
   };
 
   return (
     // Card container with hover effect that lifts the card up
-    <div className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col transition-transform transform hover:-translate-y-1">
+    <div 
+      onClick={handleCardClick}
+      className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col transition-transform transform hover:-translate-y-1 cursor-pointer"
+    >
       {/* Product image container with fixed height */}
       <div className="w-full h-48 bg-gray-100">
         <img
@@ -59,7 +72,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             className={`px-4 py-2 rounded-full font-semibold transition-all duration-200 ${
               added
                 ? 'bg-yellow-600 text-white cursor-default'
-                : 'bg-[var(--komorebi-yellow)] text-[var(--komorebi-black)] hover:brightness-95'
+                : 'btn-komorebi-yellow'
             }`}
           >
             {added ? 'Added' : 'Add'}

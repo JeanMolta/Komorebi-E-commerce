@@ -9,6 +9,7 @@ import AddProductPage from './pages/AddProductPage';
 import CartPage from './pages/CartPage';
 import WishListPage from './pages/WishListPage';
 import ProfilePage from './pages/ProfilePage';
+import ProductPage from './pages/ProductPage';
 import './index.css'
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route path="/wishlist" element={<WishListPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/product/:productId" element={<ProductPage />} />
         <Route path="/productos" element={<ProductGrid />} />
       </Routes>
 

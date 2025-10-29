@@ -19,13 +19,13 @@ interface FooterColumnProps {
 /* Small presentational component: renders a column of footer links */
 const FooterColumn: React.FC<FooterColumnProps> = ({ title, links }) => (
   <div className="mb-8 md:mb-0 text-center md:text-left"> 
-    <h3 className="text-white font-bold mb-4 uppercase tracking-wider text-sm">{title}</h3>
+    <h3 className="text-gray-500 font-bold mb-4 uppercase tracking-wider text-sm">{title}</h3>
     <ul className="space-y-2">
       {links.map((link) => (
         <li key={link.label}>
           <a
             href={link.url}
-            className="text-gray-300 hover:text-white transition duration-300 text-base md:text-sm"
+            className="text-gray-400 hover:text-gray-700 transition duration-300 text-base md:text-sm"
           >
             {link.label}
           </a>
@@ -59,12 +59,12 @@ const Footer: React.FC<FooterProps> = ({ komorebi, year }) => {
   ];
 
   return (
-    <footer className="bg-[var(--komorebi-pink)] text-[var(--komorebi-offwhite)] px-6 py-10 md:px-16 md:py-12">
-      
+    <footer className="bg-transparent text-gray-400 px-6 py-10 md:px-16 md:py-12">
+
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-8 lg:gap-16">
         {/* Brand column: logo, description, social icons */}
         <div className="col-span-1 text-center md:text-left"> 
-          <button className="text-[var(--komorebi-yellow)] text-3xl sm:text-2xl font-bold hover:text-[var(--komorebi-offwhite)] transition-colors mb-4">
+          <button className="text-[var(--komorebi-yellow)] text-3xl sm:text-2xl font-bold hover:text-amber-400 transition-colors mb-4">
             {komorebi}
           </button>
           
@@ -73,18 +73,18 @@ const Footer: React.FC<FooterProps> = ({ komorebi, year }) => {
           </p>
 
           <div className="mt-4">
-            <h4 className="text-white font-semibold mb-3">Follow Us</h4>
+            <h4 className="text-gray-500 font-semibold mb-3">Follow Us</h4>
             <div className="flex space-x-4 text-2xl md:text-xl justify-center md:justify-start"> 
-              <a href="#" className="hover:text-[var(--komorebi-offwhite)] transition duration-300" aria-label="Instagram">
+              <a href="#" className="hover:text-gray-700 transition duration-300" aria-label="Instagram">
                 <FaInstagram /> 
               </a>
               
-              <a href="#" className="hover:text-[var(--komorebi-offwhite)] transition duration-300" aria-label="Facebook">
+              <a href="#" className="hover:text-gray-700 transition duration-300" aria-label="Facebook">
                 <FaFacebookF /> 
               </a>
-              
-              <a href="#" className="hover:text-[var(--komorebi-offwhite)] transition duration-300" aria-label="Twitter">
-                <FaTwitter /> 
+
+              <a href="#" className="hover:text-gray-700 transition duration-300" aria-label="Twitter">
+                <FaTwitter />
               </a>
               
               <a href="#" className="hover:text-[var(--komorebi-offwhite)] transition duration-300" aria-label="Email">
@@ -103,7 +103,7 @@ const Footer: React.FC<FooterProps> = ({ komorebi, year }) => {
       </div>
 
       {/* Divider */}
-      <hr className="border-t border-[var(--komorebi-offwhite)] my-8 max-w-7xl mx-auto" />
+      <hr className="border-t border-gray-500 my-8 max-w-7xl mx-auto" />
 
       {/* Bottom row: copyright + quick links */}
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-center md:justify-between items-center text-xs">
@@ -113,9 +113,9 @@ const Footer: React.FC<FooterProps> = ({ komorebi, year }) => {
         </p>
         
         <div className="flex space-x-6 order-1 md:order-2 justify-center md:justify-start text-sm md:text-xs"> 
-          <a href="/privacy-policy" className="hover:text-white transition duration-300">Privacy Policy</a>
-          <a href="/terms-of-service" className="hover:text-white transition duration-300">Terms of Service</a>
-          <a href="/help-center" className="hover:text-white transition duration-300">Help Center</a>
+          <a href="/privacy-policy" className="hover:text-gray-700 transition duration-300">Privacy Policy</a>
+          <a href="/terms-of-service" className="hover:text-gray-700 transition duration-300">Terms of Service</a>
+          <a href="/help-center" className="hover:text-gray-700 transition duration-300">Help Center</a>
         </div>
       </div>
     </footer>

@@ -24,7 +24,6 @@ function App() {
         <Route path="/wishlist" element={<WishListPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/product/:productId" element={<ProductPage />} />
         <Route path="/productos" element={<ProductGrid />} />
         <Route path="/product/:id" element={<ProductPage />} />
       </Routes>

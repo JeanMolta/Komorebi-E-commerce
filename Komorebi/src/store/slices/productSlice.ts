@@ -66,11 +66,16 @@ export const fetchProducts = createAsyncThunk(
 export const fetchProductById = createAsyncThunk(
   'products/fetchProductById',
   async (productId: string) => {
+    console.log('🔍 ProductSlice - Buscando producto con ID:', productId)
+    console.log('📦 Productos disponibles:', productsData.map(p => p.id))
+    
     await new Promise(resolve => setTimeout(resolve, 300))
     
     const foundProduct = productsData.find(p => p.id === productId)
+    console.log('🎯 Producto encontrado:', foundProduct)
     
     if (!foundProduct) {
+      console.log('❌ Producto no encontrado para ID:', productId)
       throw new Error('Producto no encontrado')
     }
     

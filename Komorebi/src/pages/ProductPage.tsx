@@ -25,8 +25,12 @@ const ProductPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'discussion' | 'reviews'>('discussion')
 
   useEffect(() => {
+    console.log('🔍 ProductPage - ID recibido:', id)
     if (id) {
+      console.log('🚀 Dispatching fetchProductById con ID:', id)
       dispatch(fetchProductById(id))
+    } else {
+      console.log('❌ No se recibió ID')
     }
     return () => {
       dispatch(clearCurrentProduct())
@@ -90,15 +94,6 @@ const ProductPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-[var(--komorebi-offwhite)]">
       <div className="max-w-7xl mx-auto px-4 py-6">
-        
-        {/* Breadcrumb */}
-        <nav className="flex items-center space-x-2 text-sm mb-6">
-          <Link to="/" className="text-[var(--komorebi-black)]/60 hover:text-[var(--komorebi-black)]">Home</Link>
-          <span className="text-[var(--komorebi-black)]/40">/</span>
-          <Link to="/categories" className="text-[var(--komorebi-black)]/60 hover:text-[var(--komorebi-black)]">Categories</Link>
-          <span className="text-[var(--komorebi-black)]/40">/</span>
-          <span className="text-[var(--komorebi-black)]">{product.name}</span>
-        </nav>
 
         {/* Main Product Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
@@ -144,10 +139,6 @@ const ProductPage: React.FC = () => {
                 <Heart className="w-4 h-4 mr-1" />
                 Save
               </button>
-              <button className="flex items-center text-[var(--komorebi-black)]/60 hover:text-[var(--komorebi-black)]">
-                <Share className="w-4 h-4 mr-1" />
-                Share
-              </button>
             </div>
           </div>
 
@@ -157,7 +148,7 @@ const ProductPage: React.FC = () => {
             <div>
               <div className="flex items-center space-x-2 mb-2">
                 <span className="text-[var(--komorebi-yellow)] font-semibold text-sm">🏪 Komorebi</span>
-                <span className="text-blue-500">✓</span>
+                <span className="text-blue-500"></span>
                 <div className="flex items-center">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <Star 
@@ -209,7 +200,7 @@ const ProductPage: React.FC = () => {
                 </button>
               </div>
               
-              <button className="flex-1 bg-[var(--komorebi-yellow)] text-[var(--komorebi-black)] py-3 px-6 rounded-lg font-semibold hover:bg-[var(--komorebi-yellow)]/90 transition-colors flex items-center justify-center">
+              <button className="flex-1 btn-komorebi-yellow py-3 px-6 rounded-3xl font-semibold flex items-center justify-center">
                 <ShoppingCart className="w-5 h-5 mr-2" />
                 Add to Cart ${(product.price * quantity).toLocaleString()}
               </button>
@@ -313,7 +304,7 @@ const ProductPage: React.FC = () => {
               <p className="text-xs text-[var(--komorebi-black)]/50">
                 Be respectful and help build a great community
               </p>
-              <button className="bg-[var(--komorebi-yellow)] text-[var(--komorebi-black)] px-6 py-2 rounded-lg font-medium hover:bg-[var(--komorebi-yellow)]/90 transition-colors">
+              <button className="btn-komorebi-yellow px-6 py-2 rounded-3xl font-medium">
                 Send Message
               </button>
             </div>

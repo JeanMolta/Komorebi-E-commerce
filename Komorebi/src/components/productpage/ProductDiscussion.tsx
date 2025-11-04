@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+import { MessageCircle, Send } from 'lucide-react';
+import type { Product } from '../../data/ProductTypes';
 
 interface ProductDiscussionProps {
-  product: any;
-  comments: any[];
-  users: any[];
+  product: Product;
+  comments?: any[];
+  users?: any[];
 }
 
-const ProductDiscussion: React.FC<ProductDiscussionProps> = ({ product, comments, users }) => {
+const ProductDiscussion: React.FC<ProductDiscussionProps> = ({ product, comments = [], users = [] }) => {
   const [newQuestion, setNewQuestion] = useState('');
 
   // Mock discussion data (in a real app, this would be separate from reviews)
@@ -57,7 +59,8 @@ const ProductDiscussion: React.FC<ProductDiscussionProps> = ({ product, comments
   return (
     <div className="border border-gray-300 p-6 rounded-lg shadow-sm">
       <div className="mb-5">
-        <h2 className="text-xl font-bold mb-2 text-[var(--komorebi-black)]">
+        <h2 className="text-xl font-bold mb-2 text-[var(--komorebi-black)] flex items-center">
+          <MessageCircle className="w-5 h-5 mr-2" />
           Discussion ({mockDiscussions.length})
         </h2>
         <p className="text-gray-600 text-sm">
@@ -126,9 +129,10 @@ const ProductDiscussion: React.FC<ProductDiscussionProps> = ({ product, comments
         />
         <button 
           onClick={handleSubmitQuestion}
-          className="mt-3 py-3 px-5 btn-komorebi-yellow rounded-full font-bold shadow-sm"
+          className="mt-3 py-3 px-5 btn-komorebi-yellow rounded-full font-bold shadow-sm flex items-center"
         >
-          📩 Send Message
+          <Send className="w-4 h-4 mr-2" />
+          Send Message
         </button>
       </div>
     </div>

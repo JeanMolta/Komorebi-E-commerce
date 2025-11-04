@@ -1,63 +1,70 @@
 import React from 'react';
+import { Star, MapPin, Truck, Clock } from 'lucide-react';
+import type { Product } from '../../data/ProductTypes';
 
 interface ProductInfoProps {
-  product: any;
+  product: Product;
+  avgRating: number;
+  reviewsCount: number;
 }
 
-// Format price to Colombian Peso currency format
-const formatPrice = (price: number): string => {
-  return new Intl.NumberFormat('es-CO', {
-    style: 'currency',
-    currency: 'COP',
-    minimumFractionDigits: 0
-  }).format(price);
-};
-
-const ProductInfo: React.FC<ProductInfoProps> = ({ product }) => {
+const ProductInfo: React.FC<ProductInfoProps> = ({ product, avgRating, reviewsCount }) => {
   return (
-    <div className="mb-8">
-      {/* Product Title */}
-      <h1 className="text-3xl font-bold mb-3 text-[var(--komorebi-black)]">
-        {product.name}
-      </h1>
+    <div className="space-y-6">
+      {/* Header */}
+      <div>
+        <div className="flex items-center space-x-2 mb-2">
+          <span className="text-[var(--komorebi-yellow)] font-semibold text-sm">🏪 Komorebi</span>
+          <div className="flex items-center">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <Star 
+                key={star}
+                className={`w-4 h-4 ${
+                  star <= Math.floor(avgRating) ? 'text-[var(--komorebi-yellow)] fill-current' : 'text-gray-300'
+                }`}
+              />
+            ))}
+            <span className="text-[var(--komorebi-black)]/60 text-sm ml-1">
+              {avgRating.toFixed(1)} ({reviewsCount} reviews)
+            </span>
+          </div>
+        </div>
+        
+        <div className="flex items-center text-[var(--komorebi-black)]/60 text-sm mb-4">
+          <MapPin className="w-4 h-4 mr-1" />
+          Cali, Co
+        </div>
 
-      {/* Vendor Info */}
-      <div className="flex items-center gap-3 mb-4">
-        <span className="text-[var(--komorebi-yellow)] font-bold">🏪 {product.vendor}</span>
-        <span className="text-green-600 text-sm">✓</span>
-      </div>
-
-      {/* Location */}
-      <p className="text-gray-600 mb-4">📍 Cali, Colombia</p>
-
-      {/* Rating */}
-      <div className="flex items-center gap-3 mb-5">
-        <div className="text-lg">⭐⭐⭐⭐⭐</div>
-        <span className="text-gray-600 text-sm">(4.8 rating)</span>
-        <span className="text-gray-600 text-sm">(125 reviews)</span>
+        <h1 className="text-3xl font-bold text-[var(--komorebi-black)] mb-2">{product.name}</h1>
       </div>
 
       {/* Price */}
-      <div className="mb-5">
+      <div className="flex items-center space-x-4">
         <span className="text-3xl font-bold text-[var(--komorebi-black)]">
-          {formatPrice(product.price)}
+          ${product.price.toLocaleString()}
         </span>
-        <span className="text-xl text-gray-400 line-through ml-3">
-          {formatPrice(product.price + 2000)}
+        <span className="text-xl text-[var(--komorebi-black)]/50 line-through">
+          ${(product.price * 1.3).toLocaleString()}
         </span>
       </div>
 
       {/* Shipping Info */}
-      <div className="bg-gray-50 p-4 rounded-lg mb-5 border border-gray-200">
-        <p className="mb-2 text-green-600 text-sm">
-          🚚 Free shipping over $20.000
-        </p>
-        <p className="mb-2 text-gray-700 text-sm">
-          📅 Estimated delivery: 2-3 business days
-        </p>
-        <p className="mb-0 text-gray-600 text-sm">
-          🍃 Fresh delivery prepared daily
-        </p>
+      <div className="bg-transparent rounded-lg p-4 space-y-3">
+        <div className="flex items-center text-[var(--komorebi-black)]">
+          <Truck className="w-5 h-5 mr-3 text-[var(--komorebi-yellow)]" />
+          <div>
+            <p className="font-medium">Free Shipping over $20,000</p>
+            <p className="text-sm text-[var(--komorebi-black)]/60">2-3 Business Days</p>
+          </div>
+        </div>
+        
+        <div className="flex items-center text-[var(--komorebi-black)]">
+          <Clock className="w-5 h-5 mr-3 text-[var(--komorebi-yellow)]" />
+          <div>
+            <p className="font-medium">Fresh Delivery</p>
+            <p className="text-sm text-[var(--komorebi-black)]/60">Prepared Daily</p>
+          </div>
+        </div>
       </div>
     </div>
   );

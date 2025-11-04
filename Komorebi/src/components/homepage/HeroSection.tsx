@@ -40,7 +40,7 @@ const HeroSection: React.FC = () => {
         </p>
 
         {/* Call-to-action button */}
-        <button className="bg-[var(--komorebi-yellow)]/100 border border-white/20 shadow-sm text-[var(--komorebi-black)] px-6 py-3 rounded-full hover:bg-[var(--komorebi-white)]/95 transition-colors font-bold">
+        <button className="btn-komorebi-yellow border border-white/20 shadow-sm px-6 py-3 rounded-full font-bold">
           Shop Now
         </button>
       </div>

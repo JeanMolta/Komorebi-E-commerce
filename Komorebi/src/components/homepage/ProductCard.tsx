@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import type { Product } from '../../data/ProductTypes';
 
 interface ProductCardProps {
@@ -15,6 +16,7 @@ const formatPrice = (price: number): string => {
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const navigate = useNavigate();
   // Set image URL from product data or use default path
   const imageUrl = product.image ?? `/images/products/${product.id}.jpg`;
   const fallback = '/images/products/placeholder.jpg';
@@ -23,13 +25,22 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const [added, setAdded] = useState(false);
 
   // Handle add to cart button click
-  const handleAddClick = () => {
+  const handleAddClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Evitar que se active el click del card
     setAdded(true);
+  };
+
+  // Navigate to product page when card is clicked
+  const handleCardClick = () => {
+    navigate(`/product/${product.id}`);
   };
 
   return (
     // Card container with hover effect that lifts the card up
-    <div className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col transition-transform transform hover:-translate-y-1">
+    <div 
+      className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col transition-transform transform hover:-translate-y-1 cursor-pointer"
+      onClick={handleCardClick}
+    >
       {/* Product image container with fixed height */}
       <div className="w-full h-48 bg-gray-100">
         <img

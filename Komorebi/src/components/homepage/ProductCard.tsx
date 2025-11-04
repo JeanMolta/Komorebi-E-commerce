@@ -70,7 +70,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             className={`px-4 py-2 rounded-full font-semibold transition-all duration-200 ${
               added
                 ? 'bg-yellow-600 text-white cursor-default'
-                : 'btn-komorebi-yellow'
+                : 'bg-[var(--komorebi-yellow)] text-[var(--komorebi-black)] hover:brightness-95'
             }`}
           >
             {added ? 'Added' : 'Add'}

@@ -10,6 +10,8 @@ import CartPage from './pages/CartPage';
 import WishListPage from './pages/WishListPage';
 import ProfilePage from './pages/ProfilePage';
 import ProductPage from './pages/ProductPage';
+import Register from './pages/Register';
+import SignIn from './pages/SignIn';
 import './index.css'
 
 function App() {
@@ -26,6 +28,8 @@ function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/productos" element={<ProductGrid />} />
         <Route path="/product/:id" element={<ProductPage />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/signin" element={<SignIn />} />
       </Routes>
 
       <Footer komorebi="Komorebi" year={2025} />

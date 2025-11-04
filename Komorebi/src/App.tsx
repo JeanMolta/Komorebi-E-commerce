@@ -26,6 +26,7 @@ function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/product/:productId" element={<ProductPage />} />
         <Route path="/productos" element={<ProductGrid />} />
+        <Route path="/product/:id" element={<ProductPage />} />
       </Routes>
 
       <Footer komorebi="Komorebi" year={2025} />

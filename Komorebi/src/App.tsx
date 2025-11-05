@@ -18,21 +18,29 @@ function App() {
   return (
     <>
       <ScrollToTop />
-      <Navbar />
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/categories" element={<CategoriesPage />} />
-        <Route path="/sell" element={<AddProductPage />} />
-        <Route path="/wishlist" element={<WishListPage />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/productos" element={<ProductGrid />} />
-        <Route path="/product/:id" element={<ProductPage />} />
+        {/* Rutas de autenticación SIN navbar/footer */}
         <Route path="/register" element={<Register />} />
         <Route path="/signin" element={<SignIn />} />
+        
+        {/* Rutas principales CON navbar/footer */}
+        <Route path="/*" element={
+          <>
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/categories" element={<CategoriesPage />} />
+              <Route path="/sell" element={<AddProductPage />} />
+              <Route path="/wishlist" element={<WishListPage />} />
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/productos" element={<ProductGrid />} />
+              <Route path="/product/:id" element={<ProductPage />} />
+            </Routes>
+            <Footer komorebi="Komorebi" year={2025} />
+          </>
+        } />
       </Routes>
-
-      <Footer komorebi="Komorebi" year={2025} />
     </>
   );
 }

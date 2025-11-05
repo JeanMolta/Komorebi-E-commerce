@@ -104,12 +104,14 @@ const Register: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--komorebi-offwhite)] pt-20">
-      <div className="max-w-md mx-auto px-4 py-8">
+    <div className="min-h-screen bg-[var(--komorebi-offwhite)] ">
+      <div className="max-w-md mx-auto px-4 py-8 pt-20">
         
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-[var(--komorebi-yellow)] text-3xl font-bold mb-2">Komorebi</h1>
+          <Link to="/" className="inline-block">
+            <h1 className="text-[var(--komorebi-yellow)] text-3xl font-bold mb-2 hover:opacity-80 transition-opacity cursor-pointer">Komorebi</h1>
+          </Link>
           <p className="text-[var(--komorebi-black)]/60 text-sm">Welcome back to the marketplace</p>
           
           <h2 className="text-2xl font-bold text-[var(--komorebi-black)] mt-6 mb-2">Create Account</h2>

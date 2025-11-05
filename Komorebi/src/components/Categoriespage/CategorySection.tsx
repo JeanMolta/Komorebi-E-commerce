@@ -1,5 +1,5 @@
 import React from 'react';
-import CategoryCard from './categoryCard'; 
+import CategoryCard from './CategoryCard'; 
 
 const categoriesData = [
   { id: 'cakes', name: 'Cakes', image: '/images/categories/categories_01.jpg' },

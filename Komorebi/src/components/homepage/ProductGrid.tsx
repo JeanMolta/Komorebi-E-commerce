@@ -1,6 +1,6 @@
 import React from 'react';
 import ProductCard from './ProductCard';
-import { products } from '../../data/ProductData';
+import { productsData } from '../../data/ProductData';
 import type { Product } from '../../data/ProductTypes';
 
 const ProductGrid: React.FC = () => {
@@ -15,7 +15,7 @@ const ProductGrid: React.FC = () => {
       {/* Responsive grid that auto-fits cards with minimum width of 250px */}
       <div className="grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(250px,1fr))]">
         {/* Map through products array and render a ProductCard for each item */}
-        {products.map((product: Product) => (
+        {productsData.map((product: Product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>

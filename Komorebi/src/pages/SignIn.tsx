@@ -30,7 +30,7 @@ const SignIn: React.FC = () => {
   // Redirect to home if authenticated
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/')
+      navigate('/home')
     }
   }, [isAuthenticated, navigate])
 
@@ -52,7 +52,7 @@ const SignIn: React.FC = () => {
         
         {/* Header */}
         <div className="text-center mb-8">
-          <Link to="/" className="inline-block">
+          <Link to="/home" className="inline-block">
             <h1 className="text-[var(--komorebi-yellow)] text-3xl font-bold mb-2 hover:opacity-80 transition-opacity cursor-pointer">Komorebi</h1>
           </Link>
           <p className="text-[var(--komorebi-black)]/60 text-sm">Welcome back to the marketplace</p>

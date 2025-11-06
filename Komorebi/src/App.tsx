@@ -19,6 +19,9 @@ function App() {
     <>
       <ScrollToTop />
       <Routes>
+        {/* Ruta principal - SignIn como página de inicio */}
+        <Route path="/" element={<SignIn />} />
+        
         {/* Rutas de autenticación SIN navbar/footer */}
         <Route path="/register" element={<Register />} />
         <Route path="/signin" element={<SignIn />} />
@@ -28,7 +31,7 @@ function App() {
           <>
             <Navbar />
             <Routes>
-              <Route path="/" element={<HomePage />} />
+              <Route path="/home" element={<HomePage />} />
               <Route path="/categories" element={<CategoriesPage />} />
               <Route path="/sell" element={<AddProductPage />} />
               <Route path="/wishlist" element={<WishListPage />} />

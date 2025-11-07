@@ -69,10 +69,10 @@ const SignIn: React.FC = () => {
         )}
 
         {/* Demo Credentials Info */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-          <h4 className="font-semibold text-blue-800 mb-2">Demo Credentials:</h4>
-          <p className="text-sm text-blue-700">Email: demo@komorebi.com</p>
-          <p className="text-sm text-blue-700">Password: password123</p>
+        <div className="bg-blue-[var(--komorebi-offwhite)] border border-[var(--komorebi-yellow)] rounded-3xl p-4 mb-6">
+          <h4 className="font-semibold text-[var(--komorebi-black)] mb-2">Demo Credentials:</h4>
+          <p className="text-sm text-[var(--komorebi-black)]">Email: demo@komorebi.com</p>
+          <p className="text-sm text-[var(--komorebi-black)]">Password: password123</p>
         </div>
 
         {/* Sign In Form */}
@@ -90,7 +90,7 @@ const SignIn: React.FC = () => {
               onChange={handleInputChange}
               placeholder="Enter your email"
               required
-              className="w-full px-4 py-3 bg-gray-200 rounded-lg border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50"
+              className="w-full px-4 py-3 bg-gray-200 rounded-3xl border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50"
             />
           </div>
 
@@ -106,7 +106,7 @@ const SignIn: React.FC = () => {
               onChange={handleInputChange}
               placeholder="Enter your password"
               required
-              className="w-full px-4 py-3 bg-gray-200 rounded-lg border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50"
+              className="w-full px-4 py-3 bg-gray-200 rounded-3xl border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50"
             />
           </div>
 

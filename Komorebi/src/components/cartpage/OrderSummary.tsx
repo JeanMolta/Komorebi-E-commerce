@@ -85,7 +85,7 @@ const OrderSummary: React.FC = () => {
         <div className="text-center mt-2">
           <a 
             href="/home" 
-            className="text-lg text-[var(--komorebi-green)] hover:underline"
+            className="text-lg text-[var(--komorebi-yellow)] hover:underline"
           >
             Continue Shopping
           </a>

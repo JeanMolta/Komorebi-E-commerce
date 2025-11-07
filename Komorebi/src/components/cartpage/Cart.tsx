@@ -66,7 +66,7 @@ const Cart: React.FC = () => {
                 <div className="flex justify-between items-center">
                   <Link 
                     to="/home"
-                    className="text-[var(--komorebi-green)] hover:underline font-medium flex items-center"
+                    className="text-[var(--komorebi-yellow)] hover:underline font-medium flex items-center"
                   >
                     ← Continue Shopping
                   </Link>

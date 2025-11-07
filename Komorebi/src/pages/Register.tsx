@@ -296,10 +296,10 @@ const Register: React.FC = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className={`w-full py-4 rounded-lg font-bold text-white transition-all mt-6 ${
+            className={`w-full py-4 rounded-3xl font-bold transition-all mt-6 ${
               isLoading 
-                ? 'bg-gray-400 cursor-not-allowed' 
-                : 'bg-[var(--komorebi-green)] hover:bg-[var(--komorebi-green)]/90'
+                ? 'bg-gray-400 cursor-not-allowed text-white' 
+                : 'btn-komorebi-yellow'
             }`}
           >
             {isLoading ? 'Creating Account...' : 'Create Account'}
@@ -316,7 +316,7 @@ const Register: React.FC = () => {
         {/* Google Sign Up */}
         <button
           onClick={handleGoogleSignUp}
-          className="w-full py-4 bg-white border border-gray-300 rounded-lg font-medium text-[var(--komorebi-black)] hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
+          className="w-full py-4 bg-white border rounded-3xl font-medium text-[var(--komorebi-black)] hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
         >
           <span className="text-xl">G</span>
           Google

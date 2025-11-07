@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../store/hooks';
+import { addToCart } from '../../store/slices/cartSlice';
 import type { Product } from '../../data/ProductTypes';
 
 interface ProductCardProps {
@@ -17,6 +19,7 @@ const formatPrice = (price: number): string => {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   // Set image URL from product data or use default path
   const imageUrl = product.image ?? `/images/products/${product.id}.jpg`;
   const fallback = '/images/products/placeholder.jpg';
@@ -27,7 +30,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   // Handle add to cart button click
   const handleAddClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // Evitar que se active el click del card
+    dispatch(addToCart(product));
     setAdded(true);
+    
+    // Reset "Added" state after 2 seconds
+    setTimeout(() => {
+      setAdded(false);
+    }, 2000);
   };
 
   // Navigate to product page when card is clicked

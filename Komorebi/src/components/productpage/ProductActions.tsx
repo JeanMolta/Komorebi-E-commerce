@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { ShoppingCart, Heart } from 'lucide-react';
+import { useAppDispatch } from '../../store/hooks';
+import { addToCart } from '../../store/slices/cartSlice';
 import type { Product } from '../../data/ProductTypes';
 
 interface ProductActionsProps {
@@ -13,16 +15,21 @@ const ProductActions: React.FC<ProductActionsProps> = ({
   onAddToCart,
   onToggleFavorite
 }) => {
+  const dispatch = useAppDispatch();
   const [quantity, setQuantity] = useState(1);
   const [isFavorite, setIsFavorite] = useState(false);
 
   const handleAddToCart = () => {
+    // Add each item individually to respect quantity
+    for (let i = 0; i < quantity; i++) {
+      dispatch(addToCart(product));
+    }
+    
     if (onAddToCart) {
       onAddToCart(product.id, quantity);
-    } else {
-      console.log('🛒 Agregando al carrito:', product.id, 'cantidad:', quantity);
-      alert(`${product.name} agregado al carrito!`);
     }
+    
+    console.log('🛒 Agregando al carrito:', product.name, 'cantidad:', quantity);
   };
 
   const handleToggleFavorite = () => {

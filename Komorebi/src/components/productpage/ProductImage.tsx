@@ -20,7 +20,7 @@ const ProductImage: React.FC<ProductImageProps> = ({ product }) => {
   return (
     <div className="space-y-4">
       {/* Main Image */}
-      <div className="bg-white rounded-2xl p-4 shadow-sm">
+      <div className="bg-[var(--komorebi-offwhite)] rounded-2xl p-4 shadow-sm">
         <img 
           src={productImages[selectedImage]}
           alt={product.name}

@@ -62,14 +62,14 @@ const ProductActions: React.FC<ProductActionsProps> = ({
     <div className="space-y-4">
       {/* Quantity and Add to Cart */}
       <div className="flex items-center space-x-4">
-        <div className="flex items-center border border-[var(--komorebi-gray)] rounded-lg">
+        <div className="flex items-center border border-[var(--komorebi-gray)] rounded-3xl">
           <button 
             onClick={() => setQuantity(Math.max(1, quantity - 1))}
             className="px-3 py-2 text-[var(--komorebi-black)]/60 hover:text-[var(--komorebi-black)]"
           >
             -
           </button>
-          <span className="px-4 py-2 border-x border-[var(--komorebi-gray)]">{quantity}</span>
+          <span className="px-4 py-2">{quantity}</span>
           <button 
             onClick={() => setQuantity(quantity + 1)}
             className="px-3 py-2 text-[var(--komorebi-black)]/60 hover:text-[var(--komorebi-black)]"

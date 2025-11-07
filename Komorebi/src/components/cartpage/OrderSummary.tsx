@@ -21,7 +21,7 @@ const OrderSummary: React.FC = () => {
   }
 
   return (
-    <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-100 h-fit">
+    <div className="bg-var(--komorebi-offwhite) rounded-lg p-6 shadow-sm border border-gray-100 h-fit">
       <h2 className="text-lg font-semibold text-[var(--komorebi-black)] mb-6">
         Order Summary
       </h2>
@@ -72,7 +72,7 @@ const OrderSummary: React.FC = () => {
         <button
           onClick={handleCheckout}
           disabled={itemCount === 0}
-          className={`w-full py-4 rounded-lg font-semibold transition-all mt-6 ${
+          className={`w-full py-4 rounded-3xl font-semibold transition-all mt-6 ${
             itemCount === 0
               ? 'bg-gray-400 cursor-not-allowed text-white'
               : 'btn-komorebi-yellow'
@@ -85,7 +85,7 @@ const OrderSummary: React.FC = () => {
         <div className="text-center mt-2">
           <a 
             href="/home" 
-            className="text-lg text-[var(--komorebi-green)] hover:underline"
+            className="text-lg text-[var(--komorebi-yellow)] hover:underline"
           >
             Continue Shopping
           </a>

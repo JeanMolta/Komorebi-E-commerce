@@ -148,7 +148,7 @@ const Register: React.FC = () => {
                 value={formData.firstName}
                 onChange={handleInputChange}
                 placeholder="Gustavo"
-                className={`w-full px-4 py-3 bg-gray-200 rounded-lg border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50 ${
+                className={`w-full px-4 py-3 bg-gray-200 rounded-3xl border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50 ${
                   validationErrors.firstName ? 'bg-red-100 border-red-400' : ''
                 }`}
               />
@@ -167,7 +167,7 @@ const Register: React.FC = () => {
                 value={formData.lastName}
                 onChange={handleInputChange}
                 placeholder="Petro"
-                className={`w-full px-4 py-3 bg-gray-200 rounded-lg border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50 ${
+                className={`w-full px-4 py-3 bg-gray-200 rounded-3xl border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50 ${
                   validationErrors.lastName ? 'bg-red-100 border-red-400' : ''
                 }`}
               />
@@ -188,7 +188,7 @@ const Register: React.FC = () => {
               value={formData.email}
               onChange={handleInputChange}
               placeholder="Enter your email"
-              className={`w-full px-4 py-3 bg-gray-200 rounded-lg border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50 ${
+              className={`w-full px-4 py-3 bg-gray-200 rounded-3xl border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50 ${
                 validationErrors.email ? 'bg-red-100 border-red-400' : ''
               }`}
             />
@@ -208,7 +208,7 @@ const Register: React.FC = () => {
               value={formData.phone}
               onChange={handleInputChange}
               placeholder="+57 000 000 0000"
-              className={`w-full px-4 py-3 bg-gray-200 rounded-lg border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50 ${
+              className={`w-full px-4 py-3 bg-gray-200 rounded-3xl border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50 ${
                 validationErrors.phone ? 'bg-red-100 border-red-400' : ''
               }`}
             />
@@ -228,7 +228,7 @@ const Register: React.FC = () => {
               value={formData.location}
               onChange={handleInputChange}
               placeholder="Country, Region, City"
-              className={`w-full px-4 py-3 bg-gray-200 rounded-lg border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50 ${
+              className={`w-full px-4 py-3 bg-gray-200 rounded-3xl border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50 ${
                 validationErrors.location ? 'bg-red-100 border-red-400' : ''
               }`}
             />
@@ -248,7 +248,7 @@ const Register: React.FC = () => {
               onChange={handleInputChange}
               placeholder="Tell a little bit about yourself..."
               rows={3}
-              className="w-full px-4 py-3 bg-gray-200 rounded-lg border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50 resize-none"
+              className="w-full px-4 py-3 bg-gray-200 rounded-3xl border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50 resize-none"
             />
           </div>
 
@@ -263,7 +263,7 @@ const Register: React.FC = () => {
               value={formData.password}
               onChange={handleInputChange}
               placeholder="Create a strong password"
-              className={`w-full px-4 py-3 bg-gray-200 rounded-lg border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50 ${
+              className={`w-full px-4 py-3 bg-gray-200 rounded-3xl border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50 ${
                 validationErrors.password ? 'bg-red-100 border-red-400' : ''
               }`}
             />
@@ -283,7 +283,7 @@ const Register: React.FC = () => {
               value={formData.confirmPassword}
               onChange={handleInputChange}
               placeholder="Confirm your password"
-              className={`w-full px-4 py-3 bg-gray-200 rounded-lg border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50 ${
+              className={`w-full px-4 py-3 bg-gray-200 rounded-3xl border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50 ${
                 validationErrors.confirmPassword ? 'bg-red-100 border-red-400' : ''
               }`}
             />

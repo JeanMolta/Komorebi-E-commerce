@@ -6,7 +6,7 @@ import ScrollToTop from './components/ScrollToTop';
 import HomePage from './pages/HomePage';
 import CategoriesPage from './pages/CategoriesPage';
 import CategoryProductsPage from './pages/CategoryProductsPage';
-import AddProductPage from './pages/AddProductPage';
+import AddProductPage from './pages/SellProductPage';
 import CartPage from './pages/CartPage';
 import WishListPage from './pages/WishListPage';
 import ProfilePage from './pages/ProfilePage';

@@ -55,7 +55,8 @@ export const fetchProducts = createAsyncThunk(
       vendor: product.vendor,
       price: product.price,
       image: product.image,
-      imageUrl: product.image
+      imageUrl: product.image,
+      category: product.category
     }))
     
     return mappedProducts
@@ -97,7 +98,8 @@ export const fetchProductById = createAsyncThunk(
       vendor: foundProduct.vendor,
       price: foundProduct.price,
       image: foundProduct.image,
-      imageUrl: foundProduct.image
+      imageUrl: foundProduct.image,
+      category: foundProduct.category
     }
     
     return { product, comments: productComments }

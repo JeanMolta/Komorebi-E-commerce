@@ -11,7 +11,7 @@ const Cart: React.FC = () => {
 
   if (cartItems.length === 0) {
     return (
-      <div className="min-h-screen bg-[var(--komorebi-offwhite)] pt-20">
+      <div className="min-h-screen bg-var(--komorebi-offwhite) pt-20">
         <div className="max-w-6xl mx-auto px-4 py-8">
           <h1 className="text-3xl font-bold text-[var(--komorebi-black)] mb-8">Shopping Cart</h1>
           
@@ -36,11 +36,11 @@ const Cart: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--komorebi-offwhite)] pt-20">
+    <div className="min-h-screen bg-var(--komorebi-offwhite) pt-20">
       <div className="max-w-6xl mx-auto px-4 py-8">
         
         {/* Header */}
-        <div className="mb-8">
+        <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-[var(--komorebi-black)] mb-2">Shopping Cart</h1>
           <p className="text-[var(--komorebi-black)]/60">
             {cartItems.length} {cartItems.length === 1 ? 'item' : 'items'} in your cart
@@ -52,7 +52,7 @@ const Cart: React.FC = () => {
           
           {/* Left Column - Cart Items */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-100">
+            <div className="bg-[var(--komorebi-offwhite)] rounded-lg p-6 shadow-sm border border-gray-100">
               
               {/* Cart Items */}
               <div className="space-y-0">

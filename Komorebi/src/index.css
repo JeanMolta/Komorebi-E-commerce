@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss/preflight";
 @import "tailwindcss/utilities";
 @import "tailwindcss";
@@ -6,7 +8,7 @@
   --komorebi-black: #282828;
   --komorebi-gray: #D9D9D9;
   --komorebi-yellow: #FFD464;
-  --komorebi-offwhite: #F9F8F5;
+  --komorebi-offwhite: #fffbf0;
   --komorebi-white: #ffffff;
   --komorebi-pink: #DB2265;
   --komorebi-green: #ffe9c0;
@@ -16,6 +18,11 @@ body {
   margin: 0;
   padding: 0;
   background-color: var(--komorebi-offwhite);
+  font-family: 'Poppins', sans-serif;
+}
+
+h1 {
+  font-family: 'Jost', sans-serif;
 }
 
 button {

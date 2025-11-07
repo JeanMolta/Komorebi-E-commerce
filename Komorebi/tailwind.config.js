@@ -11,6 +11,10 @@ export default {
           pink: '#DB2265',
         },
       },
+      fontFamily: {
+        'jost': ['Jost', 'sans-serif'],
+        'poppins': ['Poppins', 'sans-serif'],
+      },
     },
   },
   plugins: [],

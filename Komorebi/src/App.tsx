@@ -13,7 +13,7 @@ import ProfilePage from './pages/ProfilePage';
 import ProductPage from './pages/ProductPage';
 import Register from './pages/Register';
 import SignIn from './pages/SignIn';
-import './index.css'
+import './index.css';
 
 function App() {
   return (

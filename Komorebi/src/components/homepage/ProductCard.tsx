@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../store/hooks';
 import { addToCart } from '../../store/slices/cartSlice';
-import type { Product } from '../../data/ProductTypes';
+import type { ProductCard } from '../../data/ProductTypes';
+
 
 interface ProductCardProps {
-  product: Product;
+  product: ProductCard;
 }
 
 // Format price to Colombian Peso currency format

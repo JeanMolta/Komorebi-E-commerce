@@ -3,7 +3,11 @@ import { Search, Heart, ShoppingCart, User } from "lucide-react";
 import { NavLink, useNavigate } from "react-router";
 import NotificationMenu from "./NotificationMenu";
 
-export default function Navbar() {
+interface NavbarProps {
+  onSearchChange: (term: string) => void;
+}
+
+export default function Navbar({ onSearchChange }: NavbarProps) {
   const navigate = useNavigate();
 
   // Track if navbar should be sticky (fixed position)
@@ -24,6 +28,11 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Llama a la función de App.tsx para actualizar el estado central
+    onSearchChange(e.target.value);
+  };
 
   return (
     <>
@@ -68,6 +77,7 @@ export default function Navbar() {
               type="text"
               placeholder="Search for snacks..."
               className="ml-2 w-full bg-transparent outline-none placeholder:text-[var(--komorebi-black)]/50 text-sm"
+              onChange={handleInputChange}
             />
           </div>
 
@@ -139,6 +149,7 @@ export default function Navbar() {
                   autoFocus
                   className="w-full pl-11 pr-4 py-2 rounded-full bg-[var(--komorebi-gray)] text-sm placeholder:text-[var(--komorebi-black)]/50 outline-none transition-all"
                   placeholder="Search for snacks..."
+                  onChange={handleInputChange}
                   onKeyDown={(e) => {
                     if (e.key === "Escape") setMobileSearchOpen(false);
                   }}

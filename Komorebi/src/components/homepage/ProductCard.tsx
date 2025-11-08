@@ -18,7 +18,6 @@ const formatPrice = (price: number): string => {
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const imageUrl = product.imageUrl;
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();

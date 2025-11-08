@@ -1,3 +1,4 @@
+// App.tsx
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/homepage/NavBar';
 import ProductGrid from './components/homepage/ProductGrid';
@@ -13,6 +14,7 @@ import ProfilePage from './pages/ProfilePage';
 import ProductPage from './pages/ProductPage';
 import Register from './pages/Register';
 import SignIn from './pages/SignIn';
+import SearchResultsPage from './pages/SearchResultsPage'; // <<-- NUEVA IMPORTACIÓN
 import './index.css';
 
 function App() {
@@ -30,6 +32,7 @@ function App() {
         {/* Ruta principal '/*' que aplica el Layout (Navbar/Footer) al resto de la aplicación */}
         <Route path="/*" element={
           <>
+            {/* NO NECESITA PROPS onSearchChange AQUÍ AHORA */}
             <Navbar />
             
             {/* ÚNICO BLOQUE Routes ANIDADO: Contiene todas las rutas con Layout */}
@@ -42,6 +45,9 @@ function App() {
               {/* 2. Ruta DINÁMICA para ver los ProductCard de una categoría específica */}
               <Route path="/categories/:categoryId" element={<CategoryProductsPage />} />
               
+              {/* 3. Ruta de BÚSQUEDA GENERAL: Usaremos un query param 'q' para el término de búsqueda */}
+              <Route path="/search" element={<SearchResultsPage />} /> {/* <<-- RUTA DE BÚSQUEDA */}
+
               {/* Ruta para producto individual */}
               <Route path="/product/:id" element={<ProductPage />} />
 

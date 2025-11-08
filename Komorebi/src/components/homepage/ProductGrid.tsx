@@ -1,42 +1,26 @@
-// ProductGrid.tsx
 import React from 'react';
 import ProductCard from './ProductCard';
-import { products } from '../../data/ProductData';
+import { productsData } from '../../data/ProductData';
 import type { Product } from '../../data/ProductTypes';
 
 const ProductGrid: React.FC = () => {
   return (
-    <div style={styles.container}>
-      <h2 style={styles.title}>Featured Snacks 🍣</h2>
-      <div style={styles.grid}>
-        {products.map((product: Product) => (
+    // Main container with padding and centered layout
+    <div className="p-5 max-w-[1200px] mx-auto">
+      {/* Section header with bottom border */}
+      <h2 className="text-[28px] font-semibold mb-5 border-b-2 border-gray-200 pb-2">
+        Featured Snacks 🍣
+      </h2>
+
+      {/* Responsive grid that auto-fits cards with minimum width of 250px */}
+      <div className="grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(250px,1fr))]">
+        {/* Map through products array and render a ProductCard for each item */}
+        {productsData.map((product: Product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
     </div>
   );
-};
-
-const styles: Record<string, React.CSSProperties> = {
-  container: {
-    padding: '20px',
-    maxWidth: '1200px', 
-    margin: '0 auto',
-  },
-
-  title: {
-    fontSize: '28px',
-    fontWeight: '600',
-    marginBottom: '20px',
-    borderBottom: '2px solid #eee',
-    paddingBottom: '10px',
-  },
-
-  grid: {
-    display: 'grid',
-    gap: '20px', 
-    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-  },
 };
 
 export default ProductGrid;

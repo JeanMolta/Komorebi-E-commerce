@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 // Extended Product interface for form data
 interface ProductFormData {
@@ -19,24 +19,21 @@ interface ProductInformationFormProps {
 
 // Categories available for products
 const CATEGORIES = [
-  'Electronics',
-  'Clothing',
-  'Home & Garden',
-  'Sports & Outdoors',
-  'Books & Media',
-  'Health & Beauty',
-  'Toys & Games',
-  'Automotive',
+  'Healthy',
+  'Cakes',
+  'Shakes',
+  'Sweet Treats',
+  'Donuts',
+  'Onigiris',
   'Other'
 ]
 
 // Product conditions
 const CONDITIONS = [
-  'New',
-  'Like New', 
-  'Good',
-  'Fair',
-  'Poor'
+  'Artisanal',
+  'Organic',
+  'Vegan',
+  'Gluten-Free',
 ]
 
 const ProductInformationForm: React.FC<ProductInformationFormProps> = ({
@@ -44,6 +41,43 @@ const ProductInformationForm: React.FC<ProductInformationFormProps> = ({
   errors,
   onInputChange
 }) => {
+  const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false)
+  const [conditionDropdownOpen, setConditionDropdownOpen] = useState(false)
+  const categoryRef = useRef<HTMLDivElement>(null)
+  const conditionRef = useRef<HTMLDivElement>(null)
+
+  // Cerrar dropdowns al hacer click fuera
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (categoryRef.current && !categoryRef.current.contains(event.target as Node)) {
+        setCategoryDropdownOpen(false)
+      }
+      if (conditionRef.current && !conditionRef.current.contains(event.target as Node)) {
+        setConditionDropdownOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
+
+  const handleCategorySelect = (category: string) => {
+    const event = {
+      target: { name: 'category', value: category }
+    } as React.ChangeEvent<HTMLSelectElement>
+    onInputChange(event)
+    setCategoryDropdownOpen(false)
+  }
+
+  const handleConditionSelect = (condition: string) => {
+    const event = {
+      target: { name: 'condition', value: condition }
+    } as React.ChangeEvent<HTMLSelectElement>
+    onInputChange(event)
+    setConditionDropdownOpen(false)
+  }
   return (
     <div className="bg-[var(--komorebi-offwhite)] rounded-2xl p-6 shadow-sm">
       <h2 className="text-xl font-semibold text-[var(--komorebi-black)] mb-6">Product Information</h2>
@@ -110,19 +144,40 @@ const ProductInformationForm: React.FC<ProductInformationFormProps> = ({
             <label className="block text-sm font-medium text-[var(--komorebi-black)] mb-2">
               Category*
             </label>
-            <select
-              name="category"
-              value={formData.category}
-              onChange={onInputChange}
-              className={`w-full px-4 py-3 bg-gray-100 rounded-3xl border-none outline-none ${
-                errors.category ? 'bg-red-50 border border-red-300' : ''
-              }`}
-            >
-              <option value="">Select a category</option>
-              {CATEGORIES.map(cat => (
-                <option key={cat} value={cat}>{cat}</option>
-              ))}
-            </select>
+            <div className="relative" ref={categoryRef}>
+              <div
+                onClick={() => setCategoryDropdownOpen(!categoryDropdownOpen)}
+                className={`w-full px-4 py-3 bg-gray-100 rounded-3xl border-none outline-none cursor-pointer flex justify-between items-center ${
+                  errors.category ? 'bg-red-50' : ''
+                }`}
+              >
+                <span className={formData.category ? 'text-black' : 'text-gray-500'}>
+                  {formData.category || 'Select a category'}
+                </span>
+                <svg 
+                  className={`w-4 h-4 transition-transform ${categoryDropdownOpen ? 'rotate-180' : ''}`}
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+              
+              {categoryDropdownOpen && (
+                <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-2xl shadow-lg border border-gray-200 z-10 max-h-48 overflow-y-auto">
+                  {CATEGORIES.map(cat => (
+                    <div
+                      key={cat}
+                      onClick={() => handleCategorySelect(cat)}
+                      className="px-4 py-3 hover:bg-gray-50 cursor-pointer first:rounded-t-2xl last:rounded-b-2xl"
+                    >
+                      {cat}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
             {errors.category && <p className="text-red-500 text-sm mt-1">{errors.category}</p>}
           </div>
         </div>
@@ -133,19 +188,40 @@ const ProductInformationForm: React.FC<ProductInformationFormProps> = ({
             <label className="block text-sm font-medium text-[var(--komorebi-black)] mb-2">
               Condition*
             </label>
-            <select
-              name="condition"
-              value={formData.condition}
-              onChange={onInputChange}
-              className={`w-full px-4 py-3 bg-gray-100 rounded-3xl border-none outline-none ${
-                errors.condition ? 'bg-red-50 border border-red-300' : ''
-              }`}
-            >
-              <option value="">Product State</option>
-              {CONDITIONS.map(condition => (
-                <option key={condition} value={condition}>{condition}</option>
-              ))}
-            </select>
+            <div className="relative" ref={conditionRef}>
+              <div
+                onClick={() => setConditionDropdownOpen(!conditionDropdownOpen)}
+                className={`w-full px-4 py-3 bg-gray-100 rounded-3xl border-none outline-none cursor-pointer flex justify-between items-center ${
+                  errors.condition ? 'bg-red-50' : ''
+                }`}
+              >
+                <span className={formData.condition ? 'text-black' : 'text-gray-500'}>
+                  {formData.condition || 'Product State'}
+                </span>
+                <svg 
+                  className={`w-4 h-4 transition-transform ${conditionDropdownOpen ? 'rotate-180' : ''}`}
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+              
+              {conditionDropdownOpen && (
+                <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-2xl shadow-lg border border-gray-200 z-10 max-h-48 overflow-y-auto">
+                  {CONDITIONS.map(condition => (
+                    <div
+                      key={condition}
+                      onClick={() => handleConditionSelect(condition)}
+                      className="px-4 py-3 hover:bg-gray-50 cursor-pointer first:rounded-t-2xl last:rounded-b-2xl"
+                    >
+                      {condition}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
             {errors.condition && <p className="text-red-500 text-sm mt-1">{errors.condition}</p>}
           </div>
 

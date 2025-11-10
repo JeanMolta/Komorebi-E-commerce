@@ -3,7 +3,9 @@ import HeroSection from './components/homepage/HeroSection';
 import Navbar from './components/homepage/NavBar';
 import ProductGrid from './components/homepage/ProductGrid';
 import Footer from './components/homepage/Footer';
-import WishlistPage from './components/homepage/WishListPage'; // <-- IMPORTACIÓN
+// Importamos la WishlistPage para que la ruta anterior siga funcionando
+import WishlistPage from './components/homepage/WishListPage'; 
+import ProfilePage from './components/homepage/ProfilePage'; // <-- NUEVA IMPORTACIÓN
 import './index.css'
 
 function App() {
@@ -11,15 +13,18 @@ function App() {
     <>
       <Navbar />
       <Routes>
-        {/* CORRECCIÓN: La ruta principal incluye Hero y ProductGrid */}
+        {/* Ruta principal */}
         <Route path="/" element={<><HeroSection /><ProductGrid /></>} /> 
         
+        {/* Rutas de navegación principales */}
         <Route path="/categories" element={<ProductGrid/>} />
         <Route path="/sell" element={<ProductGrid/>} />
         <Route path="/productos" element={<ProductGrid />} />
 
-        {/* --- NUEVA RUTA WISHLIST --- */}
+        {/* Rutas de usuario */}
         <Route path="/wishlist" element={<WishlistPage />} />
+        {/* --- NUEVA RUTA PROFILE --- */}
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
 
       <Footer komorebi="Komorebi" year={2025} />

@@ -5,7 +5,7 @@ import ProductGrid from './components/homepage/ProductGrid';
 import Footer from './components/homepage/Footer';
 // Importamos la WishlistPage para que la ruta anterior siga funcionando
 import WishlistPage from './components/homepage/WishListPage'; 
-import ProfilePage from './components/homepage/ProfilePage'; // <-- NUEVA IMPORTACIÓN
+import ProfilePage from './components/homepage/ProfilePage'; 
 import './index.css'
 
 function App() {

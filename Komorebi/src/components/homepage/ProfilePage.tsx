@@ -171,7 +171,7 @@ const SellingDashboard: React.FC = () => (
       Become a Komorebi Seller
     </h3>
     <p className="text-lg text-gray-700 max-w-xl mx-auto mb-6">
-      It's simple! List your unique snacks and reach thousands of food lovers.
+      It's simple! List your unique snacks and reach thousands of food lovers
     </p>
     <button className="bg-[var(--komorebi-pink)] text-white px-8 py-3 rounded-full hover:bg-[var(--komorebi-black)] transition-colors font-bold shadow-xl flex items-center gap-2 mx-auto">
       <DollarSign size={20} /> Start Selling

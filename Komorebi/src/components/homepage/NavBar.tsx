@@ -1,20 +1,22 @@
 import { useEffect, useState } from "react";
-import { Search, Heart, ShoppingCart, User } from "lucide-react";
-import { NavLink, useNavigate } from "react-router";
+import { Search, Heart, ShoppingCart, User, Menu, X } from "lucide-react";
+import { NavLink, useNavigate } from "react-router-dom"; // Corregida la importación a 'react-router-dom'
 import NotificationMenu from "./NotificationMenu";
 
 export default function Navbar() {
   const navigate = useNavigate();
 
-  // Track if navbar should be sticky (fixed position)
   const [isSticky, setIsSticky] = useState(false);
-
-  // Control mobile menu visibility
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  // Control mobile search bar visibility
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+  
+  // Función para cerrar el menú móvil después de navegar
+  const handleNavClick = (path: string) => {
+    setMobileMenuOpen(false); // Cierra el menú móvil
+    navigate(path);
+  };
 
-  // Add scroll listener to toggle sticky navbar
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 80) setIsSticky(true);
@@ -29,11 +31,13 @@ export default function Navbar() {
     <>
       {/* Main navbar with conditional sticky styling */}
       <nav
-        className={`${
-          isSticky
-            ? "fixed top-0 left-0 w-full z-50 bg-white/30 backdrop-blur-md border-b border-white/30 shadow-sm transform translate-y-0 opacity-100 transition-all duration-300 ease-out"
-            : "absolute top-0 left-0 w-full bg-transparent border-b border-white/0 z-10 transform -translate-y-0.5 opacity-90 transition-all duration-300 ease-out"
-        }`}
+        className={`
+          ${
+            isSticky
+              ? "fixed top-0 left-0 w-full z-50 bg-white/30 backdrop-blur-md border-b border-white/30 shadow-sm transform translate-y-0 opacity-100 transition-all duration-300 ease-out"
+              : "absolute top-0 left-0 w-full bg-transparent border-b border-white/0 z-10 transform -translate-y-0.5 opacity-90 transition-all duration-300 ease-out"
+          }
+        `}
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 py-3 relative">
           {/* Left section: Logo and navigation links */}
@@ -75,19 +79,24 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             {/* Desktop user action icons */}
             <div className="hidden sm:flex items-center gap-5 text-[var(--komorebi-black)]">
+              
+              {/* WISHLIST (Desktop) */}
               <NavLink to="/wishlist">
                 <Heart
                   size={22}
                   className="cursor-pointer hover:text-[var(--komorebi-yellow)] transition-colors"
                 />
               </NavLink>
+
               <NotificationMenu />
+              
               <NavLink to="/cart">
                 <ShoppingCart
                   size={22}
                   className="cursor-pointer hover:text-[var(--komorebi-yellow)] transition-colors"
                 />
               </NavLink>
+              
               <NavLink to="/profile">
                 <User
                   size={22}
@@ -117,11 +126,7 @@ export default function Navbar() {
                 if (!mobileMenuOpen) setMobileSearchOpen(false);
               }}
             >
-              <svg width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect y="0" width="20" height="2" rx="1" fill="currentColor" />
-                <rect y="5" width="20" height="2" rx="1" fill="currentColor" />
-                <rect y="10" width="20" height="2" rx="1" fill="currentColor" />
-              </svg>
+              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
 
@@ -148,7 +153,7 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Mobile menu dropdown (appears below navbar when toggled) */}
+        {/* Mobile menu dropdown */}
         <div
           className={`sm:hidden absolute top-full left-0 w-full z-40 transition-transform duration-200 ${
             mobileMenuOpen ? "transform translate-y-0 opacity-100" : "transform -translate-y-2 opacity-0 pointer-events-none"
@@ -158,42 +163,49 @@ export default function Navbar() {
             <div className="px-3 py-3">
               {/* Horizontal scrollable menu with all navigation options */}
               <div className="flex items-center justify-between gap-4 overflow-x-auto whitespace-nowrap scrollbar-hidden">
-                <NavLink to="/categories">
-                  <button className="text-left text-base font-medium text-[var(--komorebi-black)] hover:text-[var(--komorebi-yellow)] mr-4">
-                    Categories
-                  </button>
-                </NavLink>
-                <NavLink to="/sell">
-                  <button className="text-left text-base font-medium text-[var(--komorebi-black)] hover:text-[var(--komorebi-yellow)] mr-4">
-                    Sell
-                  </button>
-                </NavLink>
+                
+                {/* Enlaces principales */}
+                <button 
+                  onClick={() => handleNavClick("/categories")}
+                  className="text-left text-base font-medium text-[var(--komorebi-black)] hover:text-[var(--komorebi-yellow)] mr-4"
+                >
+                  Categories
+                </button>
+                <button 
+                  onClick={() => handleNavClick("/sell")}
+                  className="text-left text-base font-medium text-[var(--komorebi-black)] hover:text-[var(--komorebi-yellow)] mr-4"
+                >
+                  Sell
+                </button>
 
                 {/* Vertical divider */}
                 <div className="h-6 border-l border-white/10 mx-2" />
 
                 {/* Mobile user action buttons */}
-                <NavLink to="/wishlist">
-                  <button className="inline-flex items-center gap-2 text-[var(--komorebi-black)] hover:text-[var(--komorebi-yellow)] mr-4">
-                    <Heart size={20} /> 
-                  </button>
-                </NavLink>
+                <button 
+                  onClick={() => handleNavClick("/wishlist")} // <-- WISHLIST (Móvil)
+                  className="inline-flex items-center gap-2 text-[var(--komorebi-black)] hover:text-[var(--komorebi-yellow)] mr-4"
+                >
+                  <Heart size={20} /> 
+                </button>
 
-                <NavLink to="/cart">
-                  <button className="inline-flex items-center gap-2 text-[var(--komorebi-black)] hover:text-[var(--komorebi-yellow)] mr-4">
-                    <ShoppingCart size={20} /> 
-                  </button>
-                </NavLink>
+                <button 
+                  onClick={() => handleNavClick("/cart")}
+                  className="inline-flex items-center gap-2 text-[var(--komorebi-black)] hover:text-[var(--komorebi-yellow)] mr-4"
+                >
+                  <ShoppingCart size={20} /> 
+                </button>
 
                 <div className="inline-flex items-center mr-4">
                   <NotificationMenu />
                 </div>
 
-                <NavLink to="/profile">
-                  <button className="inline-flex items-center gap-2 text-[var(--komorebi-black)] hover:text-[var(--komorebi-yellow)] mr-4">
-                    <User size={20} /> 
-                  </button>
-                </NavLink>
+                <button 
+                  onClick={() => handleNavClick("/profile")}
+                  className="inline-flex items-center gap-2 text-[var(--komorebi-black)] hover:text-[var(--komorebi-yellow)] mr-4"
+                >
+                  <User size={20} /> 
+                </button>
               </div>
             </div>
           </div>

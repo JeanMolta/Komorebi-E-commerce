@@ -3,6 +3,7 @@ import HeroSection from './components/homepage/HeroSection';
 import Navbar from './components/homepage/NavBar';
 import ProductGrid from './components/homepage/ProductGrid';
 import Footer from './components/homepage/Footer';
+import WishlistPage from './components/homepage/WhishListPage'; // 
 import './index.css'
 
 function App() {
@@ -10,14 +11,27 @@ function App() {
     <>
       <Navbar />
       <Routes>
-        <Route path="/" element={<HeroSection />} />
-                <Route path="/categories" element={<ProductGrid/>} />
-                <Route path="/sell" element={<ProductGrid/>} />
+        {/* Ruta principal ahora incluye Hero y ProductGrid */}
+        <Route 
+          path="/" 
+          element={
+            <>
+              <HeroSection />
+              <ProductGrid /> {/* <-- 3. CORRECCIÓN: Movido aquí */}
+            </>
+          } 
+        />
         
+        <Route path="/categories" element={<ProductGrid/>} />
+        <Route path="/sell" element={<ProductGrid/>} />
         <Route path="/productos" element={<ProductGrid />} />
+
+        {/* --- NUEVA RUTA WISHLIST --- */}
+        <Route path="/wishlist" element={<WishlistPage />} /> {/* <-- 2. AÑADIR RUTA */}
+
       </Routes>
 
-      <ProductGrid/>
+      {/* <ProductGrid/> */} {/* <-- 3. CORRECCIÓN: Eliminar de aquí */}
 
       <Footer komorebi="Komorebi" year={2025} />
     </>

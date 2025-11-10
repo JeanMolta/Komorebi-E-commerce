@@ -96,7 +96,7 @@ const WishlistPage: React.FC = () => {
                   className="w-full h-full object-cover" 
                   loading="lazy"
                 />
-                {/* Botón de Remover de la lista */}
+                {/* Botón de Remover de la list */}
                 <button
                     onClick={() => removeItem(item.id)}
                     className="absolute top-2 right-2 bg-white/80 backdrop-blur-sm rounded-full p-2 text-gray-500 hover:text-[var(--komorebi-pink)] transition-colors shadow-md"

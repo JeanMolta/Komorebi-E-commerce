@@ -1,99 +1,99 @@
-// src/components/homepage/ProfilePage.tsx
+// src/components/homepage/ProfilePage.tsx (English Version)
 
 import React, { useState } from 'react';
 import { User, MapPin, Mail, Phone, ShoppingBag, DollarSign, LogOut, Settings, Clock, Package } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 
-// --- Datos de Perfil de Ejemplo ---
+// --- Mock User Data ---
 const mockUser = {
-  name: "Sofía Martínez",
-  email: "sofia.martinez@komorebi.com",
+  name: "Sophia Martinez",
+  email: "sophia.martinez@komorebi.com",
   phone: "+57 310 123 4567",
   location: "Bogotá, Colombia",
-  avatarUrl: "https://via.placeholder.com/150/FFD464/282828?text=SM", // Placeholder usando komorebi-yellow
-  memberSince: "Enero 2024",
+  avatarUrl: "https://via.placeholder.com/150/FFD464/282828?text=SM", // Placeholder using komorebi-yellow
+  memberSince: "January 2024",
   lifetimeSpend: 450000,
   totalOrders: 15,
 };
 
-// Formato de precio para Colombia
+// Price formatting (kept Colombian Peso for consistency, but you can change 'COP' to 'USD' or 'EUR')
 const formatPrice = (price: number): string => {
-  return new Intl.NumberFormat('es-CO', {
+  return new Intl.NumberFormat('en-US', { // Changed locale to en-US
     style: 'currency',
-    currency: 'COP',
+    currency: 'COP', 
     minimumFractionDigits: 0
   }).format(price);
 };
 
-// --- Componentes Auxiliares para las Pestañas ---
+// --- Helper Components for Tabs ---
 
 const ProfileInfo: React.FC = () => (
   <div className="space-y-8">
     
-    {/* Tarjetas de Métricas Rápidas */}
+    {/* Quick Metrics Cards */}
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
       <MetricCard 
         icon={ShoppingBag} 
-        title="Órdenes Totales" 
+        title="Total Orders" 
         value={mockUser.totalOrders.toString()}
         color="--komorebi-yellow"
       />
       <MetricCard 
         icon={DollarSign} 
-        title="Gasto Total" 
+        title="Lifetime Spend" 
         value={formatPrice(mockUser.lifetimeSpend)}
         color="--komorebi-pink"
         isMoney
       />
       <MetricCard 
         icon={Clock} 
-        title="Miembro Desde" 
+        title="Member Since" 
         value={mockUser.memberSince}
         color="--komorebi-black"
       />
     </div>
 
-    {/* Panel de Contacto y Configuración */}
+    {/* Contact and Actions Panel */}
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       
-      {/* Información de Contacto */}
+      {/* Contact Information */}
       <div className="md:col-span-2 bg-white/50 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-gray-100">
         <h3 className="text-2xl font-bold mb-5" style={{ color: 'var(--komorebi-black)' }}>
-          Detalles de Contacto
+          Contact Details
         </h3>
         
         <InfoItem icon={Mail} label="Email" value={mockUser.email} color="--komorebi-pink" />
-        <InfoItem icon={Phone} label="Teléfono" value={mockUser.phone} color="--komorebi-pink" />
-        <InfoItem icon={MapPin} label="Ubicación" value={mockUser.location} color="--komorebi-pink" />
+        <InfoItem icon={Phone} label="Phone" value={mockUser.phone} color="--komorebi-pink" />
+        <InfoItem icon={MapPin} label="Location" value={mockUser.location} color="--komorebi-pink" />
         
         <button className="mt-8 w-full md:w-auto bg-[var(--komorebi-black)] text-white px-6 py-3 rounded-full hover:bg-[var(--komorebi-pink)] transition-colors font-semibold shadow-md">
-          <Settings size={20} className="inline mr-2" /> Ajustes de Cuenta
+          <Settings size={20} className="inline mr-2" /> Account Settings
         </button>
       </div>
 
-      {/* Tarjeta de Acciones */}
+      {/* Action Card */}
       <div className="bg-[var(--komorebi-yellow)] p-8 rounded-2xl shadow-xl flex flex-col justify-between">
           <h3 className="text-2xl font-bold mb-4" style={{ color: 'var(--komorebi-black)' }}>
-            Acciones Rápidas
+            Quick Actions
           </h3>
           <NavLink to="/cart">
-            <ActionButton icon={ShoppingBag} label="Ver Carrito" color="--komorebi-black" />
+            <ActionButton icon={ShoppingBag} label="View Cart" color="--komorebi-black" />
           </NavLink>
           <NavLink to="/wishlist">
-            <ActionButton icon={Package} label="Mis Favoritos" color="--komorebi-black" />
+            <ActionButton icon={Package} label="My Wishlist" color="--komorebi-black" />
           </NavLink>
           <button 
-            onClick={() => alert("Cerrando sesión...")}
+            onClick={() => alert("Logging out...")}
             className="mt-6 w-full text-red-600 border-2 border-red-600 bg-white/50 py-2 rounded-full hover:bg-red-600 hover:text-white transition-colors font-semibold flex items-center justify-center gap-2"
           >
-            <LogOut size={20} /> Cerrar Sesión
+            <LogOut size={20} /> Log Out
           </button>
       </div>
     </div>
   </div>
 );
 
-// Componente para una tarjeta de métrica
+// Component for a metric card
 const MetricCard: React.FC<{ icon: any, title: string, value: string, color: string, isMoney?: boolean }> = ({ icon: Icon, title, value, color, isMoney = false }) => (
     <div className="bg-white p-6 rounded-2xl shadow-lg border-t-4" style={{ borderColor: `var(${color})` }}>
         <Icon size={28} style={{ color: `var(${color})` }} className="mb-2" />
@@ -104,7 +104,7 @@ const MetricCard: React.FC<{ icon: any, title: string, value: string, color: str
     </div>
 );
 
-// Componente para un ítem de información de contacto
+// Component for a contact info item
 const InfoItem: React.FC<{ icon: any, label: string, value: string, color: string }> = ({ icon: Icon, label, value, color }) => (
     <div className="flex items-center gap-4 py-3 border-b border-gray-100">
         <Icon size={20} style={{ color: `var(${color})` }} />
@@ -115,7 +115,7 @@ const InfoItem: React.FC<{ icon: any, label: string, value: string, color: strin
     </div>
 );
 
-// Componente para un botón de acción rápida
+// Component for a quick action button
 const ActionButton: React.FC<{ icon: any, label: string, color: string }> = ({ icon: Icon, label, color }) => (
     <button 
         className="w-full mb-3 flex items-center gap-3 p-4 rounded-xl transition-all duration-200"
@@ -127,18 +127,18 @@ const ActionButton: React.FC<{ icon: any, label: string, color: string }> = ({ i
 );
 
 
-// Componente de simulación para Órdenes
+// Simulation component for Orders
 const OrdersHistory: React.FC = () => (
   <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
     <h3 className="text-3xl font-bold mb-6" style={{ color: 'var(--komorebi-black)' }}>
-      Historial de Órdenes Recientes
+      Recent Order History
     </h3>
     <ul className="space-y-4">
       {[
-        { id: 'KM1024', date: '15/10/2025', items: 3, total: 45000, status: 'Entregado', color: 'text-green-600' },
-        { id: 'KM1023', date: '01/10/2025', items: 1, total: 12000, status: 'Enviado', color: 'text-blue-600' },
-        { id: 'KM1022', date: '20/09/2025', items: 5, total: 98500, status: 'Entregado', color: 'text-green-600' },
-        { id: 'KM1021', date: '05/09/2025', items: 2, total: 35000, status: 'Cancelado', color: 'text-red-600' },
+        { id: 'KM1024', date: '15/10/2025', items: 3, total: 45000, status: 'Delivered', color: 'text-green-600' },
+        { id: 'KM1023', date: '01/10/2025', items: 1, total: 12000, status: 'Shipped', color: 'text-blue-600' },
+        { id: 'KM1022', date: '20/09/2025', items: 5, total: 98500, status: 'Delivered', color: 'text-green-600' },
+        { id: 'KM1021', date: '05/09/2025', items: 2, total: 35000, status: 'Cancelled', color: 'text-red-600' },
       ].map((order) => (
         <li key={order.id} className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 bg-gray-50 rounded-lg transition-shadow hover:shadow-md">
           <div className="mb-2 sm:mb-0">
@@ -146,7 +146,7 @@ const OrdersHistory: React.FC = () => (
               #{order.id}
             </p>
             <p className="text-sm text-gray-500">
-              {order.items} productos | {order.date}
+              {order.items} products | {order.date}
             </p>
           </div>
           <div className="flex items-center gap-4">
@@ -163,28 +163,28 @@ const OrdersHistory: React.FC = () => (
   </div>
 );
 
-// Componente de simulación para Ventas
+// Simulation component for Selling
 const SellingDashboard: React.FC = () => (
   <div className="bg-[var(--komorebi-green)] p-8 rounded-2xl shadow-lg border border-gray-100 text-center">
     <DollarSign size={48} className="mx-auto mb-4" style={{ color: 'var(--komorebi-black)' }} />
     <h3 className="text-3xl font-bold mb-4" style={{ color: 'var(--komorebi-black)' }}>
-      Conviértete en Vendedor Komorebi
+      Become a Komorebi Seller
     </h3>
     <p className="text-lg text-gray-700 max-w-xl mx-auto mb-6">
-      ¡Es simple! Lista tus snacks únicos y llega a miles de amantes de la comida.
+      It's simple! List your unique snacks and reach thousands of food lovers.
     </p>
     <button className="bg-[var(--komorebi-pink)] text-white px-8 py-3 rounded-full hover:bg-[var(--komorebi-black)] transition-colors font-bold shadow-xl flex items-center gap-2 mx-auto">
-      <DollarSign size={20} /> Empezar a Vender
+      <DollarSign size={20} /> Start Selling
     </button>
   </div>
 );
 
-// --- Componente Principal ---
+// --- Main Component ---
 
 const TABS = [
-  { id: 'profile', label: 'Mi Perfil', icon: User, content: <ProfileInfo /> },
-  { id: 'orders', label: 'Historial', icon: ShoppingBag, content: <OrdersHistory /> },
-  { id: 'selling', label: 'Vender', icon: DollarSign, content: <SellingDashboard /> },
+  { id: 'profile', label: 'My Profile', icon: User, content: <ProfileInfo /> },
+  { id: 'orders', label: 'Order History', icon: ShoppingBag, content: <OrdersHistory /> },
+  { id: 'selling', label: 'Selling Dashboard', icon: DollarSign, content: <SellingDashboard /> },
 ];
 
 
@@ -194,7 +194,7 @@ const ProfilePage: React.FC = () => {
   return (
     <div className="container mx-auto px-4 py-12" style={{ minHeight: 'calc(100vh - 200px)' }}>
       
-      {/* Header del Perfil - Más limpio */}
+      {/* Profile Header - Clean look */}
       <div className="flex flex-col md:flex-row items-center justify-between mb-10 p-8 bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white">
         <div className="flex items-center gap-6">
           <img 
@@ -206,12 +206,12 @@ const ProfilePage: React.FC = () => {
             <h1 className="text-4xl font-extrabold" style={{ color: 'var(--komorebi-black)' }}>
               {mockUser.name}
             </h1>
-            <p className="text-gray-500 text-lg">Cuenta de Cliente Komorebi</p>
+            <p className="text-gray-500 text-lg">Komorebi Customer Account</p>
           </div>
         </div>
       </div>
 
-      {/* Navegación de Pestañas Estética */}
+      {/* Aesthetic Tab Navigation */}
       <div className="mb-8">
         <nav className="flex space-x-2 md:space-x-4 border-b border-gray-200 overflow-x-auto whitespace-nowrap">
           {TABS.map((tab) => {
@@ -236,7 +236,7 @@ const ProfilePage: React.FC = () => {
         </nav>
       </div>
 
-      {/* Contenido de la Pestaña Activa */}
+      {/* Active Tab Content */}
       <div className="pt-4">
         {TABS.find(tab => tab.id === activeTab)?.content}
       </div>

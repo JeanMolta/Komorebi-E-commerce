@@ -8,21 +8,21 @@ import { useNavigate } from 'react-router-dom';
 const mockWishlistItems = [
   {
     id: 1,
-    name: "Snack de Matcha y Chocolate Blanco",
+    name: "Snack Matcha and white chocolate",
     price: 12000,
     imageUrl: "https://via.placeholder.com/300x300.png?text=Matcha",
-    vendor: "Tienda Japón"
+    vendor: "Store japan"
   },
   {
     id: 2,
-    name: "Caja Sorpresa de Dulces Asiáticos",
+    name: "Surprise Candy Box",
     price: 35500,
     imageUrl: "https://via.placeholder.com/300x300.png?text=Mystery+Box",
     vendor: "Global Eats"
   },
   {
     id: 3,
-    name: "Bebida Energética de Cereza",
+    name: "Cherry Blossom Drink",
     price: 8500,
     imageUrl: "https://via.placeholder.com/300x300.png?text=Energy+Drink",
     vendor: "Fresh Drinks"
@@ -43,12 +43,13 @@ const WishlistPage: React.FC = () => {
 
   // Funciones de simulación
   const removeItem = (id: number) => {
-    alert(`Producto ${id} eliminado de la Wishlist.`);
+    alert(`Product ${id} deleted from wishlist.`);
     // Lógica para eliminar el producto de la lista (en una app real, aquí se usaría el estado o una API)
   };
 
   const moveToCart = (item: any) => {
-    alert(`"${item.name}" movido al carrito.`);
+    alert(`"${item.name}" moved to the cart.`);
+    // Aquí se añadiría el producto al carrito y se eliminaría de la wishlist
     // Lógica para añadir a carrito y eliminar de la Wishlist
   };
 
@@ -58,7 +59,7 @@ const WishlistPage: React.FC = () => {
         className="text-4xl font-bold text-center mb-10" 
         style={{ color: 'var(--komorebi-black)' }}
       >
-        Mi Lista de Deseos
+        Your Wishlist
       </h1>
       
       {mockWishlistItems.length === 0 ? (
@@ -67,16 +68,16 @@ const WishlistPage: React.FC = () => {
             className="text-2xl font-semibold" 
             style={{ color: 'var(--komorebi-black)' }}
           >
-            Tu Lista de Deseos está vacía 🙁
+            Your wishlist is empty.
           </p>
           <p className="mt-4 text-lg text-gray-600">
-            Guarda tus snacks favoritos para no perderlos de vista.
+            save items to your wishlist to view them here.
           </p>
           <button
             onClick={() => navigate('/')}
             className="mt-8 bg-[var(--komorebi-yellow)]/100 text-[var(--komorebi-black)] px-6 py-3 rounded-full hover:brightness-95 transition-colors font-bold shadow-md"
           >
-            Empezar a Comprar
+            Browse Products
           </button>
         </div>
       ) : (

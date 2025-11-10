@@ -131,7 +131,7 @@ const WishlistPage: React.FC = () => {
                         className="w-full mt-3 flex items-center justify-center gap-2 text-white font-bold py-2 px-4 rounded-full transition-all duration-300 hover:opacity-90 hover:shadow-lg text-sm"
                         style={{ backgroundColor: 'var(--komorebi-black)' }}
                     >
-                        <ShoppingCart size={18} /> Mover al Carrito
+                        <ShoppingCart size={18} /> Move to Cart
                     </button>
                 </div>
               </div>

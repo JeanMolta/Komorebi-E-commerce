@@ -16,7 +16,6 @@ import CartPage from './pages/CartPage';
 import CategoriesPage from './pages/CategoriesPage';
 import CategoryProductsPage from './pages/CategoryProductsPage';
 import WishListPage from './pages/WishListPage';
-import ProfilePage from './pages/ProfilePage';
 import SellProductPage from './pages/SellProductPage';
 
 import './index.css'
@@ -54,7 +53,6 @@ function App() {
         <Route path="/categories" element={<MainLayout><CategoriesPage /></MainLayout>} />
         <Route path="/categories/:category" element={<MainLayout><CategoryProductsPage /></MainLayout>} />
         <Route path="/wishlist" element={<MainLayout><WishListPage /></MainLayout>} />
-        <Route path="/profile" element={<MainLayout><ProfilePage /></MainLayout>} />
         <Route path="/sell" element={<MainLayout><SellProductPage /></MainLayout>} />
         
         {/* 404 - Clean layout */}

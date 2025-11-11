@@ -1,7 +1,7 @@
 [
   {
     "id": "prod_001",
-    "name": "Onigiri de Salmón",
+    "name": "Salmon Onigiri",
     "vendor": "Sakura Onigiri Co.",
     "price": 15000,
     "image": "/images/products/prod_001.jpg",
@@ -9,7 +9,7 @@
   },
   {
     "id": "prod_002",
-    "name": "Onigiri de Atún Picante",
+    "name": "Spicy Tuna Onigiri",
     "vendor": "Sakura Onigiri Co.",
     "price": 16000,
     "image": "/images/products/prod_002.jpg",
@@ -17,7 +17,7 @@
   },
   {
     "id": "prod_003",
-    "name": "Onigiri de Umeboshi (Ciruela ácida japonesa)",
+    "name": "Umeboshi Onigiri (Japanese Pickled Plum)",
     "vendor": "ZenRice Snacks",
     "price": 14500,
     "image": "/images/products/prod_003.jpg",
@@ -25,8 +25,8 @@
   },
   {
     "id": "prod_004",
-    "name": "Mochi de Té Verde",
-    "vendor": "Mochi Mágico",
+    "name": "Green Tea Mochi",
+    "vendor": "Magic Mochi",
     "price": 8000,
     "image": "/images/products/prod_004.jpg",
     "category": "sweettreats" 
@@ -41,15 +41,15 @@
   },
   {
     "id": "prod_006",
-    "name": "KitKat Té Matcha",
-    "vendor": "Nestlé Japón",
+    "name": "KitKat Matcha Tea",
+    "vendor": "Nestlé Japan",
     "price": 9000,
     "image": "/images/products/prod_006.jpg",
     "category": "sweettreats"
   },
   {
     "id": "prod_007",
-    "name": "Dorayaki con Frijol Rojo",
+    "name": "Dorayaki with Red Bean",
     "vendor": "Dora Snacks",
     "price": 11000,
     "image": "/images/products/prod_007.jpg",
@@ -57,7 +57,7 @@
   },
   {
     "id": "prod_008",
-    "name": "Chocolate Hershey’s Classic",
+    "name": "Hershey's Classic Chocolate",
     "vendor": "Hershey’s Colombia",
     "price": 6000,
     "image": "/images/products/prod_008.jpg",
@@ -65,7 +65,7 @@
   },
   {
     "id": "prod_009",
-    "name": "Twix Caramelo",
+    "name": "Twix Caramel",
     "vendor": "Mars International",
     "price": 6500,
     "image": "/images/products/prod_009.jpg",
@@ -73,15 +73,15 @@
   },
   {
     "id": "prod_010",
-    "name": "KitKat Negro",
-    "vendor": "Nestlé Internacional",
+    "name": "KitKat Dark Chocolate",
+    "vendor": "Nestlé International",
     "price": 8800,
     "image": "/images/products/prod_010.jpg",
     "category": "sweettreats"
   },
   {
     "id": "prod_011",
-    "name": "Haribo Ositos",
+    "name": "Haribo Gummy Bears",
     "vendor": "Haribo Global",
     "price": 7500,
     "image": "/images/products/prod_011.jpg",
@@ -89,7 +89,7 @@
   },
   {
     "id": "prod_012",
-    "name": "Lays Papas Clásicas",
+    "name": "Lays Classic Chips",
     "vendor": "PepsiCo Snacks",
     "price": 6400,
     "image": "/images/products/prod_012.jpg",
@@ -105,7 +105,7 @@
   },
   {
     "id": "prod_014",
-    "name": "Chocoramo Mini",
+    "name": "Chocoramo Mini Cake",
     "vendor": "Productos Ramo",
     "price": 4200,
     "image": "/images/products/prod_014.jpg",
@@ -114,7 +114,7 @@
   {
     "id": "prod_015",
     "name": "Takis Fuego",
-    "vendor": "Barcel Internacional",
+    "vendor": "Barcel International",
     "price": 9500,
     "image": "/images/products/prod_015.jpg",
     "category": "sweettreats"
@@ -129,7 +129,7 @@
   },
   {
     "id": "prod_017",
-    "name": "Kinder Huevo",
+    "name": "Kinder Surprise Egg",
     "vendor": "Ferrero",
     "price": 12000,
     "image": "/images/products/prod_017.jpg",
@@ -137,23 +137,23 @@
   },
   {
     "id": "prod_018",
-    "name": "Twix Blanco",
-    "vendor": "Mars Internacional",
+    "name": "White Twix",
+    "vendor": "Mars International",
     "price": 9000,
     "image": "/images/products/prod_018.jpg",
     "category": "sweettreats"
   },
   {
     "id": "prod_019",
-    "name": "Ramen Instantáneo Premium",
-    "vendor": "Nissin Japonés",
+    "name": "Premium Instant Ramen",
+    "vendor": "Nissin Japan",
     "price": 10500,
     "image": "/images/products/prod_019.jpg",
     "category": "onigiris" 
   },
   {
     "id": "prod_020",
-    "name": "Galletas Oreo Doble Crema",
+    "name": "Double Cream Oreo Cookies",
     "vendor": "Mondelez",
     "price": 6800,
     "image": "/images/products/prod_020.jpg",

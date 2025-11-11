@@ -16,7 +16,7 @@ const ProductGrid: React.FC = () => {
     return (
       <div className="p-5 max-w-[1200px] mx-auto">
         <h2 className="text-[28px] font-semibold mb-5 border-b-2 border-gray-200 pb-2">
-          Featured Snacks 🍣
+          Featured Snacks
         </h2>
         <div className="flex justify-center items-center h-32">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--komorebi-yellow)]"></div>
@@ -30,7 +30,7 @@ const ProductGrid: React.FC = () => {
     <div className="p-5 max-w-[1200px] mx-auto">
       {/* Section header with bottom border */}
       <h2 className="text-[28px] font-semibold mb-5 border-b-2 border-gray-200 pb-2">
-        Featured Snacks 🍣
+        Featured Snacks
       </h2>
 
       {/* Responsive grid that auto-fits cards with minimum width of 250px */}

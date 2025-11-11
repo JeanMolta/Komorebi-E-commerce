@@ -33,10 +33,10 @@ const WishListPage: React.FC = () => {
               Explore our products and add your favorites to your wishlist. They'll appear here for easy access later!
             </p>
             <Link
-              to="/"
-              className="inline-flex items-center gap-2 bg-[var(--komorebi-black)] text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors duration-200"
+              to="/home"
+              className="inline-flex items-center font-semibold gap-2 btn-komorebi-yellow px-6 py-3 rounded-3xl transition-colors duration-200"
             >
-              <ShoppingBag size={20} />
+              
               Start Shopping
             </Link>
           </div>
@@ -50,7 +50,7 @@ const WishListPage: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-[var(--komorebi-black)] mb-2">
+          <h1 className="text-3xl font-bold text-[var(--komorebi-black)] mb-2">
             Your Wishlist
           </h1>
           <p className="text-gray-600">
@@ -68,10 +68,10 @@ const WishListPage: React.FC = () => {
         {/* Actions */}
         <div className="mt-12 text-center">
           <Link
-            to="/"
-            className="inline-flex items-center gap-2 bg-[var(--komorebi-black)] text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors duration-200"
+            to="/home"
+            className="inline-flex items-center font-semibold gap-2 btn-komorebi-yellow px-6 py-3 rounded-3xl transition-colors duration-200"
           >
-            <ShoppingBag size={20} />
+            
             Continue Shopping
           </Link>
         </div>

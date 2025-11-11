@@ -19,7 +19,7 @@ const PublishActions: React.FC<PublishActionsProps> = ({
         type="button"
         onClick={onSaveAsDraft}
         disabled={isSubmitting}
-        className={`flex-1 py-4 rounded-3xl font-semibold transition-all ${
+        className={`flex-1 py-4 rounded-4xl font-semibold transition-all ${
           isSubmitting && isDraft
             ? 'bg-gray-400 text-white cursor-not-allowed'
             : 'bg-gray-200 text-[var(--komorebi-black)] hover:bg-gray-300'
@@ -32,7 +32,7 @@ const PublishActions: React.FC<PublishActionsProps> = ({
         type="submit"
         onClick={onPublish}
         disabled={isSubmitting}
-        className={`flex-1 py-4 rounded-3xl font-semibold transition-all ${
+        className={`flex-1 py-4 rounded-4xl font-semibold transition-all ${
           isSubmitting && !isDraft
             ? 'bg-gray-400 text-white cursor-not-allowed'
             : 'btn-komorebi-yellow'

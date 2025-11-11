@@ -26,7 +26,7 @@ const CartItemCard: React.FC<CartItemCardProps> = ({ item }) => {
     <div className="flex items-center py-4 border-b border-gray-200 last:border-b-0">
       
       {/* Product Image */}
-      <div className="w-16 h-16 rounded-lg mr-4 flex-shrink-0 overflow-hidden">
+      <div className="w-16 h-16 rounded-2xl mr-4 flex-shrink-0 overflow-hidden">
         <img 
           src={item.imageUrl || item.image} 
           alt={item.name}

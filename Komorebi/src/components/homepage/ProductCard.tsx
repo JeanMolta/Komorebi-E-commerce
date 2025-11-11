@@ -2,9 +2,13 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// Eliminamos: import { useAppDispatch } from '../../store/hooks';
-// Eliminamos: import { addToCart } from '../../store/slices/cartSlice';
-import type { Product } from '../../data/ProductTypes'; // Asumiendo que este tipo es correcto
+import { useSelector } from 'react-redux';
+import { Heart } from 'lucide-react';
+import { useAppDispatch } from '../../store/hooks';
+import { addToCart } from '../../store/slices/cartSlice';
+import { addToFavorites, removeFromFavorites, selectIsFavorite } from '../../store/slices/favoriteSlice';
+import type { Product } from '../../data/ProductTypes';
+import type { RootState } from '../../store';
 
 interface ProductCardProps {
   product: Product;
@@ -21,7 +25,10 @@ const formatPrice = (price: number): string => {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const navigate = useNavigate();
-  // Eliminamos: const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
+  
+  // Check if product is in favorites
+  const isFavorite = useSelector((state: RootState) => selectIsFavorite(state, product.id));
   
   // Set image URL from product data or use default path
   const imageUrl = product.image ?? `/images/products/${product.id}.jpg`;
@@ -30,13 +37,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   // Track whether product has been added to cart
   const [added, setAdded] = useState(false);
 
-  // Handle add to cart button click (SIN REDUX)
+  // Handle add to cart button click
   const handleAddClick = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Evitar que se active el click del card
+    e.stopPropagation(); // Prevent card click from firing
     
-    // Lógica simulada de "Agregar a carrito"
-    console.log(`Product ${product.name} added to cart (SIMULADO).`); 
-    
+    // Add product to cart using Redux
+    dispatch(addToCart(product));
     setAdded(true);
     
     // Reset "Added" state after 2 seconds
@@ -44,8 +50,18 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       setAdded(false);
     }, 2000);
   };
-  
-  // Handle click on card to view product details
+
+  // Handle favorite toggle
+  const handleFavoriteClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (isFavorite) {
+      dispatch(removeFromFavorites(product.id));
+    } else {
+      dispatch(addToFavorites(product));
+    }
+  };
+
+  // Navigate to product page when card is clicked
   const handleCardClick = () => {
     navigate(`/product/${product.id}`); // Asumiendo una ruta de detalle
   };
@@ -57,7 +73,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       onClick={handleCardClick} // Handle click on card
     >
       {/* Product image container with fixed height */}
-      <div className="w-full h-48 bg-gray-100">
+      <div className="w-full h-48 bg-gray-100 relative">
         <img
           src={imageUrl}
           alt={product.name}
@@ -66,6 +82,21 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           onError={(e) => ((e.target as HTMLImageElement).src = fallback)}
           className="w-full h-full object-cover"
         />
+        {/* Favorite button */}
+        <button
+          onClick={handleFavoriteClick}
+          className="absolute top-3 right-3 p-2 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-colors duration-200 group"
+          aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+        >
+          <Heart 
+            size={20} 
+            className={`transition-colors duration-200 ${
+              isFavorite 
+                ? 'text-red-500 fill-red-500' 
+                : 'text-gray-400 hover:text-red-500 group-hover:text-red-500'
+            }`}
+          />
+        </button>
       </div>
 
       {/* Product details section */}

@@ -31,7 +31,7 @@ const ProductImagesUpload: React.FC<ProductImagesUploadProps> = ({
           id="image-upload"
         />
         <label htmlFor="image-upload" className="cursor-pointer">
-          <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
             📁
           </div>
           <p className="text-[var(--komorebi-black)] font-medium mb-1">Click to upload images</p>

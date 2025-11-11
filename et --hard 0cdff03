@@ -1,0 +1,89 @@
+[33mf33973b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdevelop[m[33m, [m[1;31morigin/develop[m[33m)[m Merge pull request #36 from JeanMolta/feature/carrito-final
+[33m3d5ccbc[m[33m ([m[1;31morigin/feature/profilepage[m[33m, [m[1;31morigin/feature/carrito-final[m[33m)[m PROFILE PAGE NO FUNCIONAAAAAAA
+[33m93352b6[m wishlist dios el redux no sirveeeeeeeeeeee
+[33m11e8106[m cambios app tsx
+[33m0cdff03[m Merge pull request #34 from JeanMolta/feature/sell-page
+[33m18278bb[m[33m ([m[1;31morigin/feature/sell-page[m[33m, [m[1;32mfeature/sell-page[m[33m)[m refractor: style improvement
+[33mf9ebce5[m Merge pull request #33 from JeanMolta/feature/sell-page
+[33mf69e88e[m refractor: form improvement
+[33m942734f[m Merge pull request #32 from JeanMolta/feature/cart-page
+[33ma21d286[m[33m ([m[1;31morigin/feature/cart-page[m[33m, [m[1;32mfeature/cart-page[m[33m)[m style improvement
+[33mfaa4786[m style: fonts included
+[33m073e765[m Merge pull request #31 from JeanMolta/feature/cart-page
+[33mde6ebf1[m feat: cart page layout
+[33m0897262[m[33m ([m[1;31morigin/feature/categories[m[33m)[m Categories Complete
+[33med9fa3a[m Merge pull request #28 from JeanMolta/feature/register-page
+[33mf0c32eb[m[33m ([m[1;31morigin/feature/register-page[m[33m, [m[1;32mfeature/register-page[m[33m)[m refractor: code improvement
+[33m797c617[m Merge pull request #27 from JeanMolta/feature/register-page
+[33mea1db89[m refractor: sign in, register page improvements
+[33m816df54[m Merge pull request #26 from JeanMolta/feature/categories
+[33mfe64e4f[m Merge pull request #25 from JeanMolta/feature/register-page
+[33m8a8892a[m Cards Categories
+[33mb5a489c[m feat:register page layout
+[33m3431bac[m Merge pull request #24 from JeanMolta/feature/product-page
+[33m48022c1[m[33m ([m[1;31morigin/feature/product-page[m[33m, [m[1;32mfeature/product-page[m[33m)[m file: product page components
+[33mb696442[m Merge pull request #23 from JeanMolta/feature/product-page
+[33mfebe698[m style: button improvement
+[33m2e8de41[m Merge pull request #22 from JeanMolta/feature/state-data
+[33m4df5f68[m[33m ([m[1;31morigin/feature/state-data[m[33m)[m Merge branch 'develop' into feature/state-data
+[33m572914a[m[33m ([m[1;32mfeature/state-data[m[33m)[m feat: product slice
+[33mdcc2945[m Merge pull request #21 from JeanMolta/feature/product-page
+[33m08e0617[m style: footer color changed
+[33m32936c3[m Merge pull request #20 from JeanMolta/feature/state-data
+[33m73c2849[m file: scafolding state+data
+[33m77ec475[m Merge pull request #19 from JeanMolta/feature/homepage
+[33m4164ffc[m[33m ([m[1;31morigin/feature/homepage[m[33m, [m[1;32mfeature/homepage[m[33m)[m feat: scroll siempre arriba
+[33mb654b4f[m Merge pull request #18 from JeanMolta/feature/homepage
+[33m461529b[m file: pages scafolding created
+[33m987a49b[m Merge pull request #17 from JeanMolta/feature/homepage
+[33ma43e8b0[m style:comments
+[33mb15319f[m Merge pull request #16 from JeanMolta/feature/homepage
+[33m03e9c2d[m style: product grid improvement
+[33mec6b99f[m stlye: product cards images
+[33m6aec83f[m Merge pull request #15 from JeanMolta/feature/homepage
+[33m78f4d9d[m feat: navlinks advance
+[33m90e5660[m Merge pull request #14 from JeanMolta/feature/homepage
+[33m21603c7[m Merge branch 'develop' of https://github.com/JeanMolta/Komorebi-E-commerce into feature/homepage
+[33mddfad8c[m Merge pull request #13 from JeanMolta/feature/product-cards
+[33mfe1eb01[m style: product card improvement
+[33mf195fa2[m style: responsive hero section
+[33m13c9811[m Product Card
+[33mb08852e[m Product Cards
+[33m2758f08[m Merge pull request #12 from JeanMolta/feature/product-cards
+[33mf795543[m feat: product cards section
+[33m3337716[m Product Cards
+[33m833463e[m Merge pull request #11 from JeanMolta/feature/homepage
+[33mb7baba6[m feat: nav bar responsive
+[33m8eeada6[m Merge pull request #10 from JeanMolta/feature/homepage
+[33m52a095e[m style: fixed navbar style
+[33m5fedf75[m Merge pull request #9 from JeanMolta/feature/homepage
+[33m4da7991[m Merge branch 'develop' into feature/homepage
+[33m3427082[m feat: notis navbar menu
+[33ma8e79f0[m feat:notification bell menu done
+[33m21f08dc[m style: save branch before pull
+[33m129b7a7[m Merge remote-tracking branch 'origin' into feature/footer
+[33m777b882[m Footer Responsive
+[33m663a41b[m Responsive Footer
+[33m36a7931[m Footer responsive
+[33ma787fe3[m Merge pull request #7 from JeanMolta/feature/homepage
+[33m5e7331d[m style: hero section improvement
+[33m95918b8[m branch merge update
+[33md2d63fe[m Merge pull request #6 from JeanMolta/feature/homepage
+[33m8c03840[m Merge branch 'develop' of https://github.com/JeanMolta/Komorebi-E-commerce into feature/homepage
+[33m14f6dfe[m refractor: hero section
+[33me9527ca[m Merge pull request #5 from JeanMolta/feature/homepage
+[33ma444048[m style: hero section improvement
+[33m8ee0a8b[m Merge pull request #4 from JeanMolta/feature/homepage
+[33m65cfb21[m file: products mocked data added
+[33mf1bf54e[m Merge branch 'develop' of https://github.com/JeanMolta/Komorebi-E-commerce into feature/homepage
+[33me4e4987[m feat: changing brand colors
+[33m3f7daff[m Merge pull request #3 from Jersonrz14/feature/footer
+[33m65722e7[m Feature: Footer
+[33m27b971d[m Merge pull request #2 from JeanMolta/feature/homepage
+[33mfd050e5[m feat:hero section
+[33mb63a0ed[m feat: hero section advances
+[33m137e75d[m feat: navbar prototype
+[33mdd7916f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Merge pull request #1 from JeanMolta/feature/homepage
+[33m6aa4390[m file: base scafolding created, main and develop branches created
+[33m0f3e9a3[m[33m ([m[1;32mmain[m[33m)[m file: add .gitignore
+[33mf9409c9[m Initial commit

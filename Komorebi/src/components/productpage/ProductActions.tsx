@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ShoppingCart, Heart } from 'lucide-react';
 import { useAppDispatch } from '../../store/hooks';
 import { addToCart } from '../../store/slices/cartSlice';
@@ -18,12 +18,27 @@ const ProductActions: React.FC<ProductActionsProps> = ({
   const dispatch = useAppDispatch();
   const [quantity, setQuantity] = useState(1);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isAdded, setIsAdded] = useState(false);
+
+  // Check localStorage on mount to see if item was previously added
+  useEffect(() => {
+    const addedItems = JSON.parse(localStorage.getItem('komorebi-added-items') || '{}');
+    if (addedItems[product.id]) {
+      setIsAdded(true);
+    }
+  }, [product.id]);
 
   const handleAddToCart = () => {
     // Add each item individually to respect quantity
     for (let i = 0; i < quantity; i++) {
       dispatch(addToCart(product));
     }
+    
+    // Set added state and persist in localStorage
+    setIsAdded(true);
+    const addedItems = JSON.parse(localStorage.getItem('komorebi-added-items') || '{}');
+    addedItems[product.id] = true;
+    localStorage.setItem('komorebi-added-items', JSON.stringify(addedItems));
     
     if (onAddToCart) {
       onAddToCart(product.id, quantity);
@@ -80,10 +95,15 @@ const ProductActions: React.FC<ProductActionsProps> = ({
         
         <button 
           onClick={handleAddToCart}
-          className="flex-1 btn-komorebi-yellow py-3 px-6 rounded-3xl font-semibold flex items-center justify-center"
+          disabled={isAdded}
+          className={`flex-1 py-3 px-6 rounded-3xl font-semibold flex items-center justify-center transition-all duration-200 ${
+            isAdded
+              ? 'bg-[var(--komorebi-yellow)] text-[var(--komorebi-black)] cursor-default'
+              : 'btn-komorebi-yellow hover:brightness-95'
+          }`}
         >
           <ShoppingCart className="w-5 h-5 mr-2" />
-          Add to Cart
+          {isAdded ? 'Added!' : 'Add to Cart'}
         </button>
       </div>
 

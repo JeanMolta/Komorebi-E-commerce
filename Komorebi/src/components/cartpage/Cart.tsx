@@ -52,7 +52,7 @@ const Cart: React.FC = () => {
           
           {/* Left Column - Cart Items */}
           <div className="lg:col-span-2">
-            <div className="bg-[var(--komorebi-offwhite)] rounded-lg p-6 shadow-sm border border-gray-100">
+            <div className="bg-[var(--komorebi-offwhite)] rounded-3xl p-6 shadow-sm border border-gray-100">
               
               {/* Cart Items */}
               <div className="space-y-0">

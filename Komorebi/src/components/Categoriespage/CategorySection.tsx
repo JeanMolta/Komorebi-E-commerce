@@ -12,9 +12,9 @@ const categoriesData = [
 
 const CategorySection: React.FC = () => {
   return (
-    <section className="p-4 md:p-8 mt-8">
+    <section className="p-4 md:p-8 mt-16">
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">Categories</h2>
+        <h2 className="text-3xl font-bold text-gray-900">Categories</h2>
         <p className="text-md text-gray-500">Discover awesome products!</p>
       </div>
 

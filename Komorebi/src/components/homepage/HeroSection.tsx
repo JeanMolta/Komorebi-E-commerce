@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const HeroSection: React.FC = () => {
   return (
@@ -35,14 +36,16 @@ const HeroSection: React.FC = () => {
         </h1>
 
         {/* Subtitle description with responsive sizing */}
-        <p className="text-[var(--komorebi-black)] text-base sm:text-lg md:text-xl max-w-2xl mb-6 sm:mb-10 px-2">
+        <p className="text-[var(--komorebi-black)] text-base sm:text-lg md:text-xl max-w-xl mb-6 sm:mb-10 px-2">
           From artisanal onigiri to international treats, find and sell the most delicious snacks in our curated marketplace. Connect with food lovers and discover your next favorite bite.
         </p>
 
         {/* Call-to-action button */}
-        <button className="btn-komorebi-yellow border border-white/20 shadow-sm px-6 py-3 rounded-full font-bold">
-          Shop Now
-        </button>
+        <NavLink to="/categories">
+          <button className="btn-komorebi-yellow border border-white/20 shadow-sm px-6 py-3 rounded-full font-bold">
+            Shop Now
+          </button>
+        </NavLink>
       </div>
     </section>
   );

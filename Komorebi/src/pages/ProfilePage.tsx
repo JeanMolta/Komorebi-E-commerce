@@ -30,13 +30,13 @@ const ProfilePage: React.FC = () => {
               </p>
             </div>
             <div className="mt-4 sm:mt-0 flex gap-3">
-              <button className="flex items-center gap-2 text-sm bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors duration-200">
+              <button className="flex items-center gap-2 text-sm bg-gray-100 text-gray-700 px-4 py-2 rounded-3xl hover:bg-gray-200 transition-colors duration-200">
                 <Settings size={16} />
                 Settings
               </button>
               
               <NavLink to="/register">
-              <button className="flex items-center gap-2 text-sm bg-red-100 text-red-700 px-4 py-2 rounded-lg hover:bg-red-200 transition-colors duration-200">
+              <button className="flex items-center gap-2 text-sm bg-red-100 text-red-700 px-4 py-2 rounded-3xl hover:bg-red-200 transition-colors duration-200">
                 <LogOut size={16} />
                 Logout
               </button>

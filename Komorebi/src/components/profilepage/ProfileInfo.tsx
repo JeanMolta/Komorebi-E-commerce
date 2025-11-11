@@ -63,7 +63,7 @@ const ProfileInfo: React.FC = () => {
           {!isEditing && (
             <button
               onClick={() => setIsEditing(true)}
-              className="flex items-center gap-2 text-sm bg-[var(--komorebi-black)] text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors duration-200"
+              className="flex items-center gap-2 text-sm bg-[var(--komorebi-black)] text-white px-4 py-2 rounded-3xl hover:bg-gray-800 transition-colors duration-200"
             >
               <Edit3 size={16} />
               Edit

@@ -49,7 +49,7 @@ const ProfileStats: React.FC = () => {
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
       <h2 className="text-xl font-semibold text-gray-900 mb-6">Account Overview</h2>
       
-      {/* 🟢 AJUSTE DE GRID: Usamos grid-cols-2 en móviles y lg:grid-cols-2 en grandes */}
+      {/*  AJUSTE DE GRID: Usamos grid-cols-2 en móviles y lg:grid-cols-2 en grandes */}
       <div className="grid grid-cols-2 gap-4"> 
         {stats.map((stat, index) => {
           const IconComponent = stat.icon;
@@ -57,7 +57,7 @@ const ProfileStats: React.FC = () => {
           return (
             <div
               key={index}
-              // 🟢 Removimos la clase de borde para un diseño más limpio
+              //  Removimos la clase de borde para un diseño más limpio
               className="flex items-center p-3 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors duration-200" 
             >
               <div className={`p-2 rounded-lg ${stat.bgColor} mr-3`}> 
@@ -76,15 +76,15 @@ const ProfileStats: React.FC = () => {
       <div className="mt-6 pt-6 border-t border-gray-200">
         <h3 className="text-lg font-medium text-gray-900 mb-4">Quick Actions</h3>
         <div className="flex flex-wrap gap-3">
-          <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
+          <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-3xl hover:bg-gray-200 transition-colors duration-200">
             <Heart size={16} />
             View Wishlist
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
+          <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-3xl hover:bg-gray-200 transition-colors duration-200">
             <ShoppingCart size={16} />
             View Cart
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
+          <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-3xl hover:bg-gray-200 transition-colors duration-200">
             <Package size={16} />
             Order History
           </button>

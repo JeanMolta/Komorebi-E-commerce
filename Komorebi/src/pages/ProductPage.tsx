@@ -48,7 +48,7 @@ const ProductPage: React.FC = () => {
   }, [dispatch, id])
 
   // Handle add to cart
-  const handleAddToCart = (productId: string, quantity: number = 1) => {
+  const handleAddToCart = (quantity: number = 1) => {
     if (product) {
       for (let i = 0; i < quantity; i++) {
         dispatch(addToCart(product))
@@ -139,7 +139,7 @@ const ProductPage: React.FC = () => {
             />
             <ProductActions 
               product={product}
-              onAddToCart={handleAddToCart}
+              onAddToCart={(productId: string, quantity: number) => handleAddToCart(quantity)}
               onToggleFavorite={handleToggleFavorite}
             />
           </div>

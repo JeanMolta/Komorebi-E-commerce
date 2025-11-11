@@ -114,7 +114,7 @@ const SignIn: React.FC = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className={`w-full py-4 rounded-3xl font-bold transition-all mt-6 ${
+            className={`w-full py-4 rounded-4xl font-bold transition-all mt-6 ${
               isLoading 
                 ? 'bg-gray-400 cursor-not-allowed text-white' 
                 : 'btn-komorebi-yellow'

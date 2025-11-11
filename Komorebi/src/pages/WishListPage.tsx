@@ -34,9 +34,9 @@ const WishListPage: React.FC = () => {
             </p>
             <Link
               to="/home"
-              className="inline-flex items-center gap-2 btn-komorebi-yellow px-6 py-3 rounded-3xl transition-colors duration-200"
+              className="inline-flex items-center font-semibold gap-2 btn-komorebi-yellow px-6 py-3 rounded-3xl transition-colors duration-200"
             >
-              <ShoppingBag size={20} />
+              
               Start Shopping
             </Link>
           </div>
@@ -69,9 +69,9 @@ const WishListPage: React.FC = () => {
         <div className="mt-12 text-center">
           <Link
             to="/home"
-            className="inline-flex items-center gap-2 btn-komorebi-yellow px-6 py-3 rounded-3xl transition-colors duration-200"
+            className="inline-flex items-center font-semibold gap-2 btn-komorebi-yellow px-6 py-3 rounded-3xl transition-colors duration-200"
           >
-            <ShoppingBag size={20} />
+            
             Continue Shopping
           </Link>
         </div>

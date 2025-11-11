@@ -70,8 +70,8 @@ const CategoryProductsPage: React.FC = () => {
   if (products.length === 0) {
     return (
       <div className="min-h-screen p-8 mt-20 text-center">
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">No se encontraron productos 😔</h1>
-        <p className="text-gray-600">No hay productos disponibles para "{pageTitle}".</p>
+        <h1 className="text-3xl font-bold text-gray-900 mb-4">No products were found 😔</h1>
+        <p className="text-gray-600">No products are available for "{pageTitle}".</p>
       </div>
     );
   }

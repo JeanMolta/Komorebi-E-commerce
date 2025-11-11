@@ -45,7 +45,7 @@
     "vendor": "Nestlé Japan",
     "price": 9000,
     "image": "/images/products/prod_006.jpg",
-    "category": "sweettreats"
+    "category": "donuts"
   },
   {
     "id": "prod_007",
@@ -53,7 +53,7 @@
     "vendor": "Dora Snacks",
     "price": 11000,
     "image": "/images/products/prod_007.jpg",
-    "category": "sweettreats"
+    "category": "cakes"
   },
   {
     "id": "prod_008",
@@ -69,7 +69,7 @@
     "vendor": "Mars International",
     "price": 6500,
     "image": "/images/products/prod_009.jpg",
-    "category": "sweettreats"
+    "category": "donuts"
   },
   {
     "id": "prod_010",
@@ -77,7 +77,7 @@
     "vendor": "Nestlé International",
     "price": 8800,
     "image": "/images/products/prod_010.jpg",
-    "category": "sweettreats"
+    "category": "healthy"
   },
   {
     "id": "prod_011",
@@ -93,11 +93,11 @@
     "vendor": "PepsiCo Snacks",
     "price": 6400,
     "image": "/images/products/prod_012.jpg",
-    "category": "sweettreats" 
+    "category": "healthy" 
   },
   {
     "id": "prod_013",
-    "name": "Cheetos Flamin’ Hot",
+    "name": "Cheetos Flamin' Hot",
     "vendor": "PepsiCo Snacks",
     "price": 7000,
     "image": "/images/products/prod_013.jpg",
@@ -125,7 +125,7 @@
     "vendor": "Lotus Biscoff",
     "price": 13000,
     "image": "/images/products/prod_016.jpg",
-    "category": "sweettreats"
+    "category": "cakes"
   },
   {
     "id": "prod_017",
@@ -141,7 +141,7 @@
     "vendor": "Mars International",
     "price": 9000,
     "image": "/images/products/prod_018.jpg",
-    "category": "sweettreats"
+    "category": "healthy"
   },
   {
     "id": "prod_019",
@@ -157,6 +157,6 @@
     "vendor": "Mondelez",
     "price": 6800,
     "image": "/images/products/prod_020.jpg",
-    "category": "sweettreats"
+    "category": "donuts"
   }
 ]

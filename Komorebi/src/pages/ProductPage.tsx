@@ -9,6 +9,8 @@ import {
   selectProductLoading,
   selectProductError 
 } from '../store/slices/productSlice'
+import { addToCart } from '../store/slices/cartSlice'
+import { addToFavorites, removeFromFavorites, selectIsFavorite } from '../store/slices/favoriteSlice'
 
 // Import user data directly for components
 import usersData from '../data/users.json'
@@ -28,6 +30,9 @@ const ProductPage: React.FC = () => {
   const comments = useAppSelector(selectCurrentProductComments)
   const isLoading = useAppSelector(selectProductLoading)
   const error = useAppSelector(selectProductError)
+  const isFavorite = useAppSelector((state) => 
+    product ? selectIsFavorite(state, product.id) : false
+  )
 
   useEffect(() => {
     console.log('🔄 ProductPage mounted, productId:', id)
@@ -41,6 +46,29 @@ const ProductPage: React.FC = () => {
       dispatch(clearCurrentProduct())
     }
   }, [dispatch, id])
+
+  // Handle add to cart
+  const handleAddToCart = (productId: string, quantity: number = 1) => {
+    if (product) {
+      for (let i = 0; i < quantity; i++) {
+        dispatch(addToCart(product))
+      }
+      console.log('🛒 Added to cart:', product.name, 'quantity:', quantity)
+    }
+  }
+
+  // Handle toggle favorite
+  const handleToggleFavorite = (productId: string) => {
+    if (product) {
+      if (isFavorite) {
+        dispatch(removeFromFavorites(productId))
+        console.log('💔 Removed from favorites:', product.name)
+      } else {
+        dispatch(addToFavorites(product))
+        console.log('💖 Added to favorites:', product.name)
+      }
+    }
+  }
 
   // Show loading state
   if (isLoading) {
@@ -111,14 +139,8 @@ const ProductPage: React.FC = () => {
             />
             <ProductActions 
               product={product}
-              onAddToCart={(productId, quantity) => {
-                console.log('🛒 Add to cart:', productId, 'quantity:', quantity);
-                // Here you would dispatch to cart slice
-              }}
-              onToggleFavorite={(productId) => {
-                console.log('💖 Toggle favorite:', productId);
-                // Here you would dispatch to favorites slice  
-              }}
+              onAddToCart={handleAddToCart}
+              onToggleFavorite={handleToggleFavorite}
             />
           </div>
         </div>

@@ -71,7 +71,7 @@ const CartItemCard: React.FC<CartItemCardProps> = ({ item }) => {
       {/* Remove Button */}
       <button
         onClick={handleRemove}
-        className="w-6 h-6 rounded-full text-black flex items-center justify-center text-xs hover:bg-red-600 transition-colors flex-shrink-0"
+        className="w-6 h-6 rounded-full text-gray-400 hover:text-red-500 hover:bg-red-50 flex items-center justify-center text-xs transition-colors flex-shrink-0"
       >
         ×
       </button>

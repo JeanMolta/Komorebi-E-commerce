@@ -9,6 +9,17 @@ export default function Navbar() {
   const [isSticky, setIsSticky] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState(""); // Estado para el término de búsqueda
+  
+  // Función para manejar la búsqueda
+  const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && searchTerm.trim()) {
+      const encodedSearchTerm = encodeURIComponent(searchTerm.trim());
+      navigate(`/search/${encodedSearchTerm}`);
+      setSearchTerm(""); // Limpiar el campo después de buscar
+      setMobileSearchOpen(false); // Cerrar búsqueda móvil si está abierta
+    }
+  };
   
   // Función para cerrar el menú móvil después de navegar
   const handleNavClick = (path: string) => {
@@ -71,6 +82,9 @@ export default function Navbar() {
             <input
               type="text"
               placeholder="Search for snacks..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyDown={handleSearch}
               className="ml-2 w-full bg-transparent outline-none placeholder:text-[var(--komorebi-black)]/50 text-sm"
             />
           </div>
@@ -142,11 +156,19 @@ export default function Navbar() {
                 </div>
                 <input
                   autoFocus
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Escape") {
+                      setMobileSearchOpen(false);
+                      setSearchTerm("");
+                    } else {
+                      handleSearch(e);
+                    }
+                  }}
                   className="w-full pl-11 pr-4 py-2 rounded-full bg-[var(--komorebi-gray)] text-sm placeholder:text-[var(--komorebi-black)]/50 outline-none transition-all"
                   placeholder="Search for snacks..."
-                  onKeyDown={(e) => {
-                    if (e.key === "Escape") setMobileSearchOpen(false);
-                  }}
                 />
               </div>
             </div>

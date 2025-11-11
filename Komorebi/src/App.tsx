@@ -52,7 +52,8 @@ function App() {
         <Route path="/product/:id" element={<MainLayout><ProductPage /></MainLayout>} />
         <Route path="/cart" element={<MainLayout><CartPage /></MainLayout>} />
         <Route path="/categories" element={<MainLayout><CategoriesPage /></MainLayout>} />
-        <Route path="/categories/:category" element={<MainLayout><CategoryProductsPage /></MainLayout>} />
+        <Route path="/categories/:categoryId" element={<MainLayout><CategoryProductsPage /></MainLayout>} />
+        <Route path="/search/:searchTerm" element={<MainLayout><CategoryProductsPage /></MainLayout>} />
         <Route path="/wishlist" element={<MainLayout><WishListPage /></MainLayout>} />
         <Route path="/sell" element={<MainLayout><SellProductPage /></MainLayout>} />
         <Route path="/profile" element={<MainLayout><ProfilePage /></MainLayout>} />

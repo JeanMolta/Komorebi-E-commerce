@@ -17,6 +17,7 @@ import CategoriesPage from './pages/CategoriesPage';
 import CategoryProductsPage from './pages/CategoryProductsPage';
 import WishListPage from './pages/WishListPage';
 import SellProductPage from './pages/SellProductPage';
+import ProfilePage from './pages/ProfilePage';
 
 import './index.css'
 
@@ -54,6 +55,7 @@ function App() {
         <Route path="/categories/:category" element={<MainLayout><CategoryProductsPage /></MainLayout>} />
         <Route path="/wishlist" element={<MainLayout><WishListPage /></MainLayout>} />
         <Route path="/sell" element={<MainLayout><SellProductPage /></MainLayout>} />
+        <Route path="/profile" element={<MainLayout><ProfilePage /></MainLayout>} />
         
         {/* 404 - Clean layout */}
         <Route path="*" element={<AuthLayout><div className="min-h-screen flex items-center justify-center"><h1 className="text-2xl">Page not found</h1></div></AuthLayout>} />

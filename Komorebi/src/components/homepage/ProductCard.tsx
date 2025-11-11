@@ -1,3 +1,5 @@
+// src/components/homepage/ProductCard.tsx
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -37,7 +39,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   // Handle add to cart button click
   const handleAddClick = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Evitar que se active el click del card
+    e.stopPropagation(); // Prevent card click from firing
+    
+    // Add product to cart using Redux
     dispatch(addToCart(product));
     setAdded(true);
     
@@ -59,14 +63,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   // Navigate to product page when card is clicked
   const handleCardClick = () => {
-    navigate(`/product/${product.id}`);
+    navigate(`/product/${product.id}`); // Asumiendo una ruta de detalle
   };
 
   return (
     // Card container with hover effect that lifts the card up
     <div 
       className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col transition-transform transform hover:-translate-y-1 cursor-pointer"
-      onClick={handleCardClick}
+      onClick={handleCardClick} // Handle click on card
     >
       {/* Product image container with fixed height */}
       <div className="w-full h-48 bg-gray-100 relative">
@@ -114,8 +118,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 ? 'bg-yellow-600 text-white cursor-default'
                 : 'bg-[var(--komorebi-yellow)] text-[var(--komorebi-black)] hover:brightness-95'
             }`}
+            disabled={added} // Disable button when product is added
           >
-            {added ? 'Added' : 'Add'}
+            {added ? 'Added!' : 'Add'}
           </button>
         </div>
       </div>

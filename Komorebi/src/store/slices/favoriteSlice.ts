@@ -6,9 +6,32 @@ interface FavoriteState {
   items: Product[]
 }
 
-const initialState: FavoriteState = {
-  items: []
+// Load favorites from localStorage
+const loadFavoritesFromStorage = (): FavoriteState => {
+  try {
+    const savedFavorites = localStorage.getItem('komorebi-favorites')
+    if (savedFavorites) {
+      return JSON.parse(savedFavorites)
+    }
+  } catch (error) {
+    console.error('Error loading favorites from localStorage:', error)
+  }
+  
+  return {
+    items: []
+  }
 }
+
+// Save favorites to localStorage
+const saveFavoritesToStorage = (state: FavoriteState) => {
+  try {
+    localStorage.setItem('komorebi-favorites', JSON.stringify(state))
+  } catch (error) {
+    console.error('Error saving favorites to localStorage:', error)
+  }
+}
+
+const initialState: FavoriteState = loadFavoritesFromStorage()
 
 const favoriteSlice = createSlice({
   name: 'favorites',
@@ -18,13 +41,16 @@ const favoriteSlice = createSlice({
       const existingItem = state.items.find(item => item.id === action.payload.id)
       if (!existingItem) {
         state.items.push(action.payload)
+        saveFavoritesToStorage(state)
       }
     },
     removeFromFavorites: (state, action: PayloadAction<string>) => {
       state.items = state.items.filter(item => item.id !== action.payload)
+      saveFavoritesToStorage(state)
     },
     clearFavorites: (state) => {
       state.items = []
+      saveFavoritesToStorage(state)
     }
   }
 })

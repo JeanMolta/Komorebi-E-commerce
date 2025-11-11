@@ -82,7 +82,7 @@ const CategoryProductsPage: React.FC = () => {
       
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">{pageTitle}</h1>
-        <p className="text-lg text-gray-600">Explora nuestros deliciosos productos.</p>
+        <p className="text-lg text-gray-600">Explore our delicious products.</p>
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">

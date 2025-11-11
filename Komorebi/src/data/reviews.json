@@ -1,0 +1,222 @@
+[
+  {
+    "id": "review_001",
+    "productId": "prod_001",
+    "userId": "user_123",
+    "userName": "Sakura Tanaka",
+    "userAvatar": "/images/avatars/sakura.jpg",
+    "rating": 5,
+    "title": "Perfect onigiri!",
+    "comment": "The salmon is super fresh and the rice is perfectly seasoned. Definitely my favorite onigiri of all time.",
+    "date": "2025-11-05"
+  },
+  {
+    "id": "review_002",
+    "productId": "prod_002",
+    "userId": "user_456",
+    "userName": "Carlos Mendoza",
+    "userAvatar": "/images/avatars/carlos.jpg",
+    "rating": 4,
+    "title": "Very spicy but delicious",
+    "comment": "The spicy tuna has the perfect level of heat. Very authentic Japanese flavor. Highly recommend it.",
+    "date": "2025-11-03"
+  },
+  {
+    "id": "review_003",
+    "productId": "prod_003",
+    "userId": "user_789",
+    "userName": "Ana Rodriguez",
+    "userAvatar": "/images/avatars/ana.jpg",
+    "rating": 5,
+    "title": "Incredible traditional flavor",
+    "comment": "The umeboshi gives it a unique and traditional taste. Perfect for lovers of authentic Japanese food.",
+    "date": "2025-10-28"
+  },
+  {
+    "id": "review_004",
+    "productId": "prod_004",
+    "userId": "user_012",
+    "userName": "Yuki Matsumoto",
+    "userAvatar": "/images/avatars/yuki.jpg",
+    "rating": 5,
+    "title": "Perfect mochi!",
+    "comment": "The texture is perfect and the green tea flavor is authentic. It reminds me of Japan.",
+    "date": "2025-11-01"
+  },
+  {
+    "id": "review_005",
+    "productId": "prod_005",
+    "userId": "user_345",
+    "userName": "Maria Gonzalez",
+    "userAvatar": "/images/avatars/maria.jpg",
+    "rating": 4,
+    "title": "Classic that never fails",
+    "comment": "Chocolate Pocky is always a good choice. Perfect for sharing with friends.",
+    "date": "2025-10-30"
+  },
+  {
+    "id": "review_006",
+    "productId": "prod_006",
+    "userId": "user_678",
+    "userName": "Diego Patel",
+    "userAvatar": "/images/avatars/diego.jpg",
+    "rating": 5,
+    "title": "Amazing matcha flavor",
+    "comment": "The green tea flavor is intense and delicious. Definitely my favorite KitKat.",
+    "date": "2025-11-02"
+  },
+  {
+    "id": "review_007",
+    "productId": "prod_007",
+    "userId": "user_901",
+    "userName": "Carmen Silva",
+    "userAvatar": "/images/avatars/carmen.jpg",
+    "rating": 5,
+    "title": "Authentic dorayaki",
+    "comment": "The red bean filling is perfect, not too sweet. Exactly how a dorayaki should be.",
+    "date": "2025-10-25"
+  },
+  {
+    "id": "review_008",
+    "productId": "prod_008",
+    "userId": "user_234",
+    "userName": "Luis Herrera",
+    "userAvatar": "/images/avatars/luis.jpg",
+    "rating": 4,
+    "title": "Classic chocolate",
+    "comment": "Hershey's never disappoints. Perfect for any time of the day.",
+    "date": "2025-11-06"
+  },
+  {
+    "id": "review_009",
+    "productId": "prod_009",
+    "userId": "user_567",
+    "userName": "Isabella Chen",
+    "userAvatar": "/images/avatars/isabella.jpg",
+    "rating": 5,
+    "title": "Perfect caramel",
+    "comment": "The combination of caramel and chocolate is addictive. I can't stop eating it.",
+    "date": "2025-10-29"
+  },
+  {
+    "id": "review_010",
+    "productId": "prod_010",
+    "userId": "user_890",
+    "userName": "Pedro Ramirez",
+    "userAvatar": "/images/avatars/pedro.jpg",
+    "rating": 4,
+    "title": "Delicious dark chocolate",
+    "comment": "For dark chocolate lovers, this KitKat is perfect. Less sweet than the original.",
+    "date": "2025-11-04"
+  },
+  {
+    "id": "review_011",
+    "productId": "prod_011",
+    "userId": "user_123",
+    "userName": "Sofia Lopez",
+    "userAvatar": "/images/avatars/sofia.jpg",
+    "rating": 5,
+    "title": "Irresistible gummies",
+    "comment": "Haribo bears are always a joy. Perfect for sharing or enjoying alone.",
+    "date": "2025-10-27"
+  },
+  {
+    "id": "review_012",
+    "productId": "prod_012",
+    "userId": "user_456",
+    "userName": "Roberto Kim",
+    "userAvatar": "/images/avatars/roberto.jpg",
+    "rating": 3,
+    "title": "Standard chips",
+    "comment": "They're just regular Lay's chips. Good but nothing extraordinary. Perfect for a quick snack.",
+    "date": "2025-11-07"
+  },
+  {
+    "id": "review_013",
+    "productId": "prod_013",
+    "userId": "user_789",
+    "userName": "Valentina Cruz",
+    "userAvatar": "/images/avatars/valentina.jpg",
+    "rating": 5,
+    "title": "Super spicy!",
+    "comment": "For those who love spicy food, these Cheetos are perfect. Be careful, they're really hot!",
+    "date": "2025-10-26"
+  },
+  {
+    "id": "review_014",
+    "productId": "prod_014",
+    "userId": "user_012",
+    "userName": "Andres Vargas",
+    "userAvatar": "/images/avatars/andres.jpg",
+    "rating": 4,
+    "title": "Classic Chocoramo",
+    "comment": "A Colombian classic that never goes out of style. Perfect with coffee or milk.",
+    "date": "2025-11-08"
+  },
+  {
+    "id": "review_015",
+    "productId": "prod_015",
+    "userId": "user_345",
+    "userName": "Camila Torres",
+    "userAvatar": "/images/avatars/camila.jpg",
+    "rating": 5,
+    "title": "Addictive Takis",
+    "comment": "Once you start you can't stop. The fuego flavor is intense and delicious.",
+    "date": "2025-10-31"
+  },
+  {
+    "id": "review_016",
+    "productId": "prod_016",
+    "userId": "user_678",
+    "userName": "Gabriel Morales",
+    "userAvatar": "/images/avatars/gabriel.jpg",
+    "rating": 5,
+    "title": "Premium cookies",
+    "comment": "Biscoff has that unique spice flavor. Perfect to accompany coffee or tea.",
+    "date": "2025-11-09"
+  },
+  {
+    "id": "review_017",
+    "productId": "prod_017",
+    "userId": "user_901",
+    "userName": "Lucia Jimenez",
+    "userAvatar": "/images/avatars/lucia.jpg",
+    "rating": 4,
+    "title": "Surprise and chocolate",
+    "comment": "Kids love the surprise. Kinder chocolate is creamy and not too sweet.",
+    "date": "2025-10-24"
+  },
+  {
+    "id": "review_018",
+    "productId": "prod_018",
+    "userId": "user_234",
+    "userName": "Fernando Castro",
+    "userAvatar": "/images/avatars/fernando.jpg",
+    "rating": 4,
+    "title": "Unique white Twix",
+    "comment": "An interesting variation of the classic Twix. White chocolate gives it a special touch.",
+    "date": "2025-11-10"
+  },
+  {
+    "id": "review_019",
+    "productId": "prod_019",
+    "userId": "user_567",
+    "userName": "Natalia Ruiz",
+    "userAvatar": "/images/avatars/natalia.jpg",
+    "rating": 5,
+    "title": "Authentic premium ramen",
+    "comment": "This Nissin ramen is superior quality. The noodles have perfect texture and the broth is rich.",
+    "date": "2025-10-23"
+  },
+  {
+    "id": "review_020",
+    "productId": "prod_020",
+    "userId": "user_890",
+    "userName": "Alejandro Diaz",
+    "userAvatar": "/images/avatars/alejandro.jpg",
+    "rating": 5,
+    "title": "Oreo with more cream",
+    "comment": "For Oreo fanatics, this double cream version is paradise. Perfect with milk.",
+    "date": "2025-11-11"
+  }
+]

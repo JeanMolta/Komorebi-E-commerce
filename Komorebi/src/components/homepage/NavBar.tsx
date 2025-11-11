@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import { Search, Heart, ShoppingCart, User, Menu, X } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom"; // Corregida la importación a 'react-router-dom'
 import NotificationMenu from "./NotificationMenu";
+import { useAppSelector } from "../../store/hooks";
+import { selectIsAuthenticated } from "../../store/slices/authSlice";
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
   const [isSticky, setIsSticky] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -56,7 +59,7 @@ export default function Navbar() {
             {/* Logo button */}
             <button
               className="text-[var(--komorebi-yellow)] text-2xl font-bold hover:text-[var(--komorebi-black)] transition-colors"
-              onClick={() => navigate("/")}
+              onClick={() => navigate(isAuthenticated ? "/" : "/signin")}
             >
               Komorebi
             </button>

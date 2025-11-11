@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate, Link } from 'react-router-dom';
+import { Navigate, Link, NavLink } from 'react-router-dom';
 import { LogOut, Settings, Shield } from 'lucide-react';
 import { selectIsAuthenticated, selectCurrentUser } from '../store/slices/authSlice';
 import ProfileInfo from '../components/profilepage/ProfileInfo';
@@ -34,10 +34,13 @@ const ProfilePage: React.FC = () => {
                 <Settings size={16} />
                 Settings
               </button>
+              
+              <NavLink to="/register">
               <button className="flex items-center gap-2 text-sm bg-red-100 text-red-700 px-4 py-2 rounded-lg hover:bg-red-200 transition-colors duration-200">
                 <LogOut size={16} />
                 Logout
               </button>
+              </NavLink>
             </div>
           </div>
         </div>

@@ -103,6 +103,7 @@ const Register: React.FC = () => {
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleInputChange}
+                placeholder='Alvaro'
                 required
                 className="w-full px-4 py-3 bg-gray-200 rounded-3xl border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50"
               />
@@ -116,6 +117,7 @@ const Register: React.FC = () => {
                 name="lastName"
                 value={formData.lastName}
                 onChange={handleInputChange}
+                placeholder='Uribe'
                 required
                 className="w-full px-4 py-3 bg-gray-200 rounded-3xl border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50"
               />

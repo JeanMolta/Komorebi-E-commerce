@@ -1,295 +1,195 @@
-import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../store/hooks'
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../store/hooks'; // Asumiendo que tienes estos hooks personalizados
 import { 
   registerUser, 
+  clearError,
+  clearRegistrationSuccess,
   selectAuthLoading, 
   selectAuthError, 
   selectRegistrationSuccess,
-  clearError,
-  clearRegistrationSuccess
-} from '../store/slices/authSlice'
-import type { RegisterData } from '../store/slices/authSlice'
+  selectIsAuthenticated 
+} from '../store/slices/authSlice';
+import type { RegisterData } from '../store/slices/authSlice'; // Importar el tipo de datos
 
 const Register: React.FC = () => {
-  const dispatch = useAppDispatch()
-  const navigate = useNavigate()
-  
-  const isLoading = useAppSelector(selectAuthLoading)
-  const error = useAppSelector(selectAuthError)
-  const registrationSuccess = useAppSelector(selectRegistrationSuccess)
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  // Form state
-  const [formData, setFormData] = useState<RegisterData & { confirmPassword: string }>({
+  const isLoading = useAppSelector(selectAuthLoading);
+  const error = useAppSelector(selectAuthError);
+  const registrationSuccess = useAppSelector(selectRegistrationSuccess);
+  const isAuthenticated = useAppSelector(selectIsAuthenticated); // Para evitar que usuarios logueados accedan
+
+  const [formData, setFormData] = useState<RegisterData>({
     firstName: '',
     lastName: '',
     email: '',
     phone: '',
     location: '',
     description: '',
-    password: '',
-    confirmPassword: ''
-  })
+    password: ''
+  });
 
-  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({})
-
-  // Clear errors when component mounts
+  // Limpiar errores y éxito de registro al montar
   useEffect(() => {
-    dispatch(clearError())
-    dispatch(clearRegistrationSuccess())
-  }, [dispatch])
+    dispatch(clearError());
+    dispatch(clearRegistrationSuccess());
+  }, [dispatch]);
 
-  // Redirect to sign in on successful registration
+  // Redirigir si ya está autenticado
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/home', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
+
+  // Redirigir si el registro fue exitoso (el thunk te autentica automáticamente)
   useEffect(() => {
     if (registrationSuccess) {
-      setTimeout(() => {
-        navigate('/signin')
-      }, 2000)
+      // Navegamos al home y luego limpiamos el estado de éxito
+      navigate('/home'); 
+      dispatch(clearRegistrationSuccess());
     }
-  }, [registrationSuccess, navigate])
+  }, [registrationSuccess, navigate, dispatch]);
 
-  // Form validation
-  const validateForm = (): boolean => {
-    const errors: Record<string, string> = {}
-
-    if (!formData.firstName.trim()) errors.firstName = 'First name is required'
-    if (!formData.lastName.trim()) errors.lastName = 'Last name is required'
-    if (!formData.email.trim()) {
-      errors.email = 'Email is required'
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      errors.email = 'Email format is invalid'
-    }
-    if (!formData.phone.trim()) errors.phone = 'Phone number is required'
-    if (!formData.location.trim()) errors.location = 'Location is required'
-    if (!formData.password) {
-      errors.password = 'Password is required'
-    } else if (formData.password.length < 6) {
-      errors.password = 'Password must be at least 6 characters'
-    }
-    if (!formData.confirmPassword) {
-      errors.confirmPassword = 'Confirm password is required'
-    } else if (formData.password !== formData.confirmPassword) {
-      errors.confirmPassword = 'Passwords do not match'
-    }
-
-    setValidationErrors(errors)
-    return Object.keys(errors).length === 0
-  }
-
-  // Handle input changes
+  // Manejar cambios en los inputs
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData(prev => ({ ...prev, [name]: value }))
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  // Manejar envío del formulario
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     
-    // Clear specific field error when user starts typing
-    if (validationErrors[name]) {
-      setValidationErrors(prev => ({ ...prev, [name]: '' }))
-    }
-  }
+    // Convertir el campo 'phone' a string, si no lo es ya
+    const dataToSend = { ...formData, phone: String(formData.phone) };
 
-  // Handle form submission
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    if (!validateForm()) return
-
-    const { confirmPassword, ...registerData } = formData
-    dispatch(registerUser(registerData))
-  }
-
-  // Handle Google sign up (mock)
-  const handleGoogleSignUp = () => {
-    console.log('🔍 Google sign up clicked (not implemented)')
-    alert('Google sign up will be implemented in the future')
-  }
+    dispatch(registerUser(dataToSend));
+  };
 
   return (
-    <div className="min-h-screen bg-[var(--komorebi-offwhite)] ">
-      <div className="max-w-md mx-auto px-4 py-8 pt-20">
+    <div className="min-h-screen bg-[var(--komorebi-offwhite)] py-8">
+      <div className="max-w-xl mx-auto px-4 pt-16 pb-8">
         
         {/* Header */}
         <div className="text-center mb-8">
           <Link to="/home" className="inline-block">
             <h1 className="text-[var(--komorebi-yellow)] text-3xl font-bold mb-2 hover:opacity-80 transition-opacity cursor-pointer">Komorebi</h1>
           </Link>
-          <p className="text-[var(--komorebi-black)]/60 text-sm">Welcome back to the marketplace</p>
+          <p className="text-[var(--komorebi-black)]/60 text-sm">Join the marketplace today</p>
           
           <h2 className="text-2xl font-bold text-[var(--komorebi-black)] mt-6 mb-2">Create Account</h2>
-          <p className="text-[var(--komorebi-black)]/60 text-sm">Fill in your information to get started</p>
+          <p className="text-[var(--komorebi-black)]/60 text-sm">Fill in your details to get started</p>
         </div>
-
-        {/* Success Message */}
-        {registrationSuccess && (
-          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-6 text-center">
-            <p className="font-medium">Account created successfully!</p>
-            <p className="text-sm">Redirecting to sign in...</p>
-          </div>
-        )}
 
         {/* Error Message */}
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6">
-            <p className="text-sm">{error}</p>
+            <p className="text-sm font-medium">{error}</p>
           </div>
         )}
 
         {/* Registration Form */}
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
           
-          {/* Name Fields */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* First Name */}
             <div>
-              <label className="block text-sm font-medium text-[var(--komorebi-black)] mb-2">
-                First Name
-              </label>
+              <label className="block text-sm font-medium text-[var(--komorebi-black)] mb-2">First Name</label>
               <input
                 type="text"
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleInputChange}
-                placeholder="Gustavo"
-                className={`w-full px-4 py-3 bg-gray-200 rounded-3xl border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50 ${
-                  validationErrors.firstName ? 'bg-red-100 border-red-400' : ''
-                }`}
+                required
+                className="w-full px-4 py-3 bg-gray-200 rounded-3xl border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50"
               />
-              {validationErrors.firstName && (
-                <p className="text-red-500 text-xs mt-1">{validationErrors.firstName}</p>
-              )}
             </div>
-            
+
+            {/* Last Name */}
             <div>
-              <label className="block text-sm font-medium text-[var(--komorebi-black)] mb-2">
-                Last Name
-              </label>
+              <label className="block text-sm font-medium text-[var(--komorebi-black)] mb-2">Last Name</label>
               <input
                 type="text"
                 name="lastName"
                 value={formData.lastName}
                 onChange={handleInputChange}
-                placeholder="Petro"
-                className={`w-full px-4 py-3 bg-gray-200 rounded-3xl border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50 ${
-                  validationErrors.lastName ? 'bg-red-100 border-red-400' : ''
-                }`}
+                required
+                className="w-full px-4 py-3 bg-gray-200 rounded-3xl border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50"
               />
-              {validationErrors.lastName && (
-                <p className="text-red-500 text-xs mt-1">{validationErrors.lastName}</p>
-              )}
             </div>
           </div>
 
           {/* Email */}
           <div>
-            <label className="block text-sm font-medium text-[var(--komorebi-black)] mb-2">
-              Email
-            </label>
+            <label className="block text-sm font-medium text-[var(--komorebi-black)] mb-2">Email</label>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleInputChange}
               placeholder="Enter your email"
-              className={`w-full px-4 py-3 bg-gray-200 rounded-3xl border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50 ${
-                validationErrors.email ? 'bg-red-100 border-red-400' : ''
-              }`}
+              required
+              className="w-full px-4 py-3 bg-gray-200 rounded-3xl border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50"
             />
-            {validationErrors.email && (
-              <p className="text-red-500 text-xs mt-1">{validationErrors.email}</p>
-            )}
           </div>
 
-          {/* Phone Number */}
+          {/* Phone */}
           <div>
-            <label className="block text-sm font-medium text-[var(--komorebi-black)] mb-2">
-              Phone Number
-            </label>
+            <label className="block text-sm font-medium text-[var(--komorebi-black)] mb-2">Phone</label>
             <input
               type="tel"
               name="phone"
               value={formData.phone}
               onChange={handleInputChange}
-              placeholder="+57 000 000 0000"
-              className={`w-full px-4 py-3 bg-gray-200 rounded-3xl border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50 ${
-                validationErrors.phone ? 'bg-red-100 border-red-400' : ''
-              }`}
+              placeholder="+57 300 000 0000"
+              required
+              className="w-full px-4 py-3 bg-gray-200 rounded-3xl border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50"
             />
-            {validationErrors.phone && (
-              <p className="text-red-500 text-xs mt-1">{validationErrors.phone}</p>
-            )}
           </div>
 
           {/* Location */}
           <div>
-            <label className="block text-sm font-medium text-[var(--komorebi-black)] mb-2">
-              Location
-            </label>
+            <label className="block text-sm font-medium text-[var(--komorebi-black)] mb-2">Location</label>
             <input
               type="text"
               name="location"
               value={formData.location}
               onChange={handleInputChange}
-              placeholder="Country, Region, City"
-              className={`w-full px-4 py-3 bg-gray-200 rounded-3xl border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50 ${
-                validationErrors.location ? 'bg-red-100 border-red-400' : ''
-              }`}
-            />
-            {validationErrors.location && (
-              <p className="text-red-500 text-xs mt-1">{validationErrors.location}</p>
-            )}
-          </div>
-
-          {/* Description (Optional) */}
-          <div>
-            <label className="block text-sm font-medium text-[var(--komorebi-black)] mb-2">
-              Description (Optional)
-            </label>
-            <textarea
-              name="description"
-              value={formData.description}
-              onChange={handleInputChange}
-              placeholder="Tell a little bit about yourself..."
-              rows={3}
-              className="w-full px-4 py-3 bg-gray-200 rounded-3xl border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50 resize-none"
+              placeholder="City, Country"
+              required
+              className="w-full px-4 py-3 bg-gray-200 rounded-3xl border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50"
             />
           </div>
-
+          
           {/* Password */}
           <div>
-            <label className="block text-sm font-medium text-[var(--komorebi-black)] mb-2">
-              Password
-            </label>
+            <label className="block text-sm font-medium text-[var(--komorebi-black)] mb-2">Password</label>
             <input
               type="password"
               name="password"
               value={formData.password}
               onChange={handleInputChange}
-              placeholder="Create a strong password"
-              className={`w-full px-4 py-3 bg-gray-200 rounded-3xl border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50 ${
-                validationErrors.password ? 'bg-red-100 border-red-400' : ''
-              }`}
+              placeholder="Choose a secure password"
+              required
+              minLength={6}
+              className="w-full px-4 py-3 bg-gray-200 rounded-3xl border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50"
             />
-            {validationErrors.password && (
-              <p className="text-red-500 text-xs mt-1">{validationErrors.password}</p>
-            )}
           </div>
-
-          {/* Confirm Password */}
-          <div>
-            <label className="block text-sm font-medium text-[var(--komorebi-black)] mb-2">
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              name="confirmPassword"
-              value={formData.confirmPassword}
+          
+          {/* Description (Optional) */}
+          <div className="pt-2">
+            <label className="block text-sm font-medium text-[var(--komorebi-black)] mb-2">About Me (Optional)</label>
+            <textarea
+              name="description"
+              value={formData.description}
               onChange={handleInputChange}
-              placeholder="Confirm your password"
-              className={`w-full px-4 py-3 bg-gray-200 rounded-3xl border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50 ${
-                validationErrors.confirmPassword ? 'bg-red-100 border-red-400' : ''
-              }`}
+              rows={3}
+              placeholder="Tell us a little about your interests..."
+              className="w-full px-4 py-3 bg-gray-200 rounded-2xl border-none outline-none text-[var(--komorebi-black)] placeholder:text-[var(--komorebi-black)]/50 resize-none"
             />
-            {validationErrors.confirmPassword && (
-              <p className="text-red-500 text-xs mt-1">{validationErrors.confirmPassword}</p>
-            )}
           </div>
 
           {/* Submit Button */}
@@ -299,28 +199,12 @@ const Register: React.FC = () => {
             className={`w-full py-4 rounded-3xl font-bold transition-all mt-6 ${
               isLoading 
                 ? 'bg-gray-400 cursor-not-allowed text-white' 
-                : 'btn-komorebi-yellow'
+                : 'btn-komorebi-yellow' // Asumiendo que esta clase existe
             }`}
           >
-            {isLoading ? 'Creating Account...' : 'Create Account'}
+            {isLoading ? 'Creating Account...' : 'Register'}
           </button>
         </form>
-
-        {/* Divider */}
-        <div className="flex items-center my-6">
-          <div className="flex-1 border-t border-gray-300"></div>
-          <span className="px-4 text-sm text-[var(--komorebi-black)]/60">OR CONTINUE WITH</span>
-          <div className="flex-1 border-t border-gray-300"></div>
-        </div>
-
-        {/* Google Sign Up */}
-        <button
-          onClick={handleGoogleSignUp}
-          className="w-full py-4 bg-white border rounded-3xl font-medium text-[var(--komorebi-black)] hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
-        >
-          <span className="text-xl">G</span>
-          Google
-        </button>
 
         {/* Sign In Link */}
         <div className="text-center mt-6">
@@ -330,13 +214,13 @@ const Register: React.FC = () => {
               to="/signin" 
               className="text-[var(--komorebi-yellow)] hover:underline font-medium"
             >
-              Sign in
+              Sign In
             </Link>
           </span>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;

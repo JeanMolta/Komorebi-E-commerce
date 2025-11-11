@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Heart, ShoppingCart } from 'lucide-react';
@@ -14,6 +14,17 @@ interface WishListItemProps {
 const WishListItem: React.FC<WishListItemProps> = ({ product }) => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  
+  // State for "Added" button that persists
+  const [isAdded, setIsAdded] = useState(false);
+
+  // Check localStorage on mount to see if item was previously added
+  useEffect(() => {
+    const addedItems = JSON.parse(localStorage.getItem('komorebi-added-items') || '{}');
+    if (addedItems[product.id]) {
+      setIsAdded(true);
+    }
+  }, [product.id]);
 
   const handleRemoveFromWishlist = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -23,6 +34,12 @@ const WishListItem: React.FC<WishListItemProps> = ({ product }) => {
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
     dispatch(addToCart(product));
+    
+    // Set added state and persist in localStorage
+    setIsAdded(true);
+    const addedItems = JSON.parse(localStorage.getItem('komorebi-added-items') || '{}');
+    addedItems[product.id] = true;
+    localStorage.setItem('komorebi-added-items', JSON.stringify(addedItems));
   };
 
   const handleProductClick = () => {
@@ -63,10 +80,19 @@ const WishListItem: React.FC<WishListItemProps> = ({ product }) => {
           </span>
           <button
             onClick={handleAddToCart}
-            className="p-2 bg-[var(--komorebi-black)] text-white rounded-lg hover:bg-gray-800 transition-colors duration-200 flex items-center gap-1"
-            aria-label="Add to cart"
+            disabled={isAdded}
+            className={`p-2 rounded-3xl transition-all duration-200 flex items-center gap-1 hover:scale-105 ${
+              isAdded 
+                ? 'bg-[var(--komorebi-yellow)] text-[var(--komorebi-black)] cursor-default'
+                : 'bg-[var(--komorebi-black)] text-white hover:bg-gray-800'
+            }`}
+            aria-label={isAdded ? "Added to cart" : "Add to cart"}
           >
-            <ShoppingCart size={18} />
+            {isAdded ? (
+              <span className="text-sm font-semibold">Added!</span>
+            ) : (
+              <ShoppingCart size={18} />
+            )}
           </button>
         </div>
       </div>

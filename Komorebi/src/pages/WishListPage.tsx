@@ -33,8 +33,8 @@ const WishListPage: React.FC = () => {
               Explore our products and add your favorites to your wishlist. They'll appear here for easy access later!
             </p>
             <Link
-              to="/"
-              className="inline-flex items-center gap-2 bg-[var(--komorebi-black)] text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors duration-200"
+              to="/home"
+              className="inline-flex items-center gap-2 btn-komorebi-yellow px-6 py-3 rounded-3xl transition-colors duration-200"
             >
               <ShoppingBag size={20} />
               Start Shopping
@@ -68,8 +68,8 @@ const WishListPage: React.FC = () => {
         {/* Actions */}
         <div className="mt-12 text-center">
           <Link
-            to="/"
-            className="inline-flex items-center gap-2 bg-[var(--komorebi-black)] text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors duration-200"
+            to="/home"
+            className="inline-flex items-center gap-2 btn-komorebi-yellow px-6 py-3 rounded-3xl transition-colors duration-200"
           >
             <ShoppingBag size={20} />
             Continue Shopping

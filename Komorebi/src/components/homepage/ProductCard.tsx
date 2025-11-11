@@ -1,6 +1,6 @@
 // src/components/homepage/ProductCard.tsx
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Heart } from 'lucide-react';
@@ -34,8 +34,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const imageUrl = product.image ?? `/images/products/${product.id}.jpg`;
   const fallback = '/images/products/placeholder.jpg';
 
-  // Track whether product has been added to cart
+  // Track whether product has been added to cart (persistent)
   const [added, setAdded] = useState(false);
+
+  // Check localStorage on mount to see if item was previously added
+  useEffect(() => {
+    const addedItems = JSON.parse(localStorage.getItem('komorebi-added-items') || '{}');
+    if (addedItems[product.id]) {
+      setAdded(true);
+    }
+  }, [product.id]);
 
   // Handle add to cart button click
   const handleAddClick = (e: React.MouseEvent) => {
@@ -45,10 +53,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     dispatch(addToCart(product));
     setAdded(true);
     
-    // Reset "Added" state after 2 seconds
-    setTimeout(() => {
-      setAdded(false);
-    }, 2000);
+    // Persist added state in localStorage
+    const addedItems = JSON.parse(localStorage.getItem('komorebi-added-items') || '{}');
+    addedItems[product.id] = true;
+    localStorage.setItem('komorebi-added-items', JSON.stringify(addedItems));
   };
 
   // Handle favorite toggle
@@ -113,12 +121,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           {/* Add button that changes appearance when clicked */}
           <button
             onClick={handleAddClick}
+            disabled={added}
             className={`px-4 py-2 rounded-full font-semibold transition-all duration-200 ${
               added
-                ? 'bg-yellow-600 text-white cursor-default'
+                ? 'bg-[var(--komorebi-yellow)] text-[var(--komorebi-black)] cursor-default'
                 : 'bg-[var(--komorebi-yellow)] text-[var(--komorebi-black)] hover:brightness-95'
             }`}
-            disabled={added} // Disable button when product is added
           >
             {added ? 'Added!' : 'Add'}
           </button>

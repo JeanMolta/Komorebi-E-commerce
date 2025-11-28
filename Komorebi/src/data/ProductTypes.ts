@@ -9,6 +9,7 @@ export interface Product {
   availability?: string;
   seller_id?: string;
   image_url?: string;
+  images?: string[];  // Array de URLs de imágenes adicionales
   vendor?: string;
   created_at?: string;
   updated_at?: string;

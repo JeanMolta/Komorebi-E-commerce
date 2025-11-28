@@ -70,6 +70,7 @@ export const createProduct = createAsyncThunk(
     seller_id: string
     category?: string
     image_url?: string
+    images?: string[]  // Array de todas las URLs de imágenes
     stock?: number
   }, { rejectWithValue }) => {
     try {
@@ -114,6 +115,8 @@ export const createProduct = createAsyncThunk(
         }
       }
 
+      console.log('Creating product with image_url:', productData.image_url)
+      
       const { data, error } = await supabase
         .from('products')
         .insert({
@@ -123,6 +126,7 @@ export const createProduct = createAsyncThunk(
           category_id: categoryId,
           seller_id: productData.seller_id,
           image_url: productData.image_url || '',
+          images: productData.images || [],  // Guardar array de imágenes en campo JSONB
           stock: productData.stock || 1,
           active: true,
           created_at: new Date().toISOString(),
@@ -133,15 +137,22 @@ export const createProduct = createAsyncThunk(
 
       if (error) throw error
 
+      console.log('Product created successfully:', data)
+      console.log('Stored image_url in database:', data.image_url)
+
       const newProduct: Product = {
         id: data.id,
         name: data.name,
         vendor: 'Your Store', // Will be filled from seller profile
         price: data.price,
-        image: data.image_url,
-        imageUrl: data.image_url,
+        image: data.image_url,            // Mantener para retrocompatibilidad
+        imageUrl: data.image_url,         // Mantener para retrocompatibilidad
+        image_url: data.image_url,        // Campo principal según ProductTypes
         category: productData.category || 'General',
-        description: data.description || ''
+        description: data.description || '',
+        seller_id: data.seller_id,
+        stock: data.stock,
+        active: data.active
       }
 
       return newProduct
@@ -158,16 +169,39 @@ export const fetchProducts = createAsyncThunk(
   'products/fetchProducts',
   async (_, { rejectWithValue }) => {
     try {
+      console.log('Fetching products from Supabase...')
+      
       const { data, error } = await supabase
         .from('products')
         .select(`
-          *,
+          id,
+          name,
+          description,
+          price,
+          category_id,
+          seller_id,
+          image_url,
+          images,
+          stock,
+          active,
+          created_at,
+          updated_at,
           categories (
             name
           )
         `)
 
-      if (error) throw error
+      if (error) {
+        console.error('Supabase error:', error)
+        throw error
+      }
+
+      if (!data) {
+        console.log('No products found, returning empty array')
+        return []
+      }
+
+      console.log('Products fetched:', data.length)
 
       // Mapear al formato del front
       const mappedProducts: Product[] = data.map((p: any) => ({
@@ -175,14 +209,20 @@ export const fetchProducts = createAsyncThunk(
         name: p.name,
         vendor: 'Komorebi Store',
         price: p.price,
-        image: p.image_url,
-        imageUrl: p.image_url,
+        image: p.image_url,           // Mantener para retrocompatibilidad
+        imageUrl: p.image_url,        // Mantener para retrocompatibilidad  
+        image_url: p.image_url,       // Campo principal según ProductTypes
+        images: p.images || [],       // Array de imágenes adicionales
         category: p.categories?.name || 'General',
-        description: p.description || ''
+        description: p.description || '',
+        seller_id: p.seller_id,
+        stock: p.stock,
+        active: p.active
       }))
 
       return mappedProducts
     } catch (err: any) {
+      console.error('Error fetching products:', err)
       return rejectWithValue(err.message)
     }
   }
@@ -199,7 +239,18 @@ export const fetchProductById = createAsyncThunk(
       const { data: product, error: productError } = await supabase
         .from('products')
         .select(`
-          *,
+          id,
+          name,
+          description,
+          price,
+          category_id,
+          seller_id,
+          image_url,
+          images,
+          stock,
+          active,
+          created_at,
+          updated_at,
           categories (
             name
           )
@@ -215,10 +266,15 @@ export const fetchProductById = createAsyncThunk(
         name: product.name,
         vendor: 'Komorebi Store',
         price: product.price,
-        image: product.image_url,
-        imageUrl: product.image_url,
+        image: product.image_url,           // Mantener para retrocompatibilidad
+        imageUrl: product.image_url,        // Mantener para retrocompatibilidad
+        image_url: product.image_url,       // Campo principal según ProductTypes
+        images: product.images || [],       // Array de imágenes adicionales
         category: product.categories?.name || 'General',
-        description: product.description || ''
+        description: product.description || '',
+        seller_id: product.seller_id,
+        stock: product.stock,
+        active: product.active
       }
 
       /* ───────── COMMENTS ───────── */

@@ -91,9 +91,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   // Initialize categories and storage on app startup
   useEffect(() => {
-    testSupabaseConnection();
+    // Test connection but don't let it block the app
+    testSupabaseConnection().catch(console.error);
     initializeCategories();
-    initializeStorage();
+    
+    // Initialize storage with better error handling
+    initializeStorage().then(() => {
+      console.log('✅ Storage system ready');
+    }).catch((error) => {
+      console.error('⚠️ Storage initialization failed:', error);
+    });
   }, []);
 
   return <>{children}</>;

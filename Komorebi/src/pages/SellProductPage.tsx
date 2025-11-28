@@ -128,29 +128,59 @@ const SellProductPage: React.FC = () => {
       
       console.log('Form data images length:', formData.images.length)
       
+      let allImageUrls: string[] = []
+      
       if (formData.images.length > 0) {
-        console.log('Attempting to upload image:', formData.images[0].name, 'Size:', formData.images[0].size)
+        console.log('📤 Starting multiple image upload for product creation...')
+        console.log('📄 Total images to upload:', formData.images.length)
+        
         try {
-          // Upload the first image as the main image
-          imageUrl = await uploadImage(formData.images[0], 'products')
-          console.log('Image uploaded successfully:', imageUrl)
-        } catch (imageError: any) {
-          console.error('Failed to upload image:', imageError)
+          // Upload all images
+          const uploadPromises = formData.images.map(async (image, index) => {
+            console.log(`⬆️ Uploading image ${index + 1}/${formData.images.length}: ${image.name}`)
+            return await uploadImage(image, 'products')
+          })
           
-          // More specific error message
-          let errorMessage = 'Warning: Failed to upload image. Product will be created with a placeholder.'
-          if (imageError.message?.includes('Bucket not found')) {
-            errorMessage = 'Warning: Storage not configured properly. Creating bucket and using placeholder for now.'
-          } else if (imageError.message?.includes('File size')) {
-            errorMessage = 'Warning: Image file is too large. Please use an image smaller than 5MB.'
+          const uploadedUrls = await Promise.all(uploadPromises)
+          console.log('✅ All images uploaded successfully:', uploadedUrls)
+          
+          // Filter out any failed uploads and keep valid URLs
+          allImageUrls = uploadedUrls.filter(url => 
+            url && 
+            url !== placeholderImage && 
+            url.includes('supabase') &&
+            url.includes('images')
+          )
+          
+          if (allImageUrls.length > 0) {
+            imageUrl = allImageUrls[0] // First image as main image
+            console.log('✅ Using main image URL:', imageUrl)
+            console.log('✅ All image URLs:', allImageUrls)
+          } else {
+            console.warn('⚠️ No valid image URLs, using placeholder')
           }
           
-          alert(errorMessage)
-          // Continue with placeholder if image upload fails
-          console.log('Using fallback placeholder due to upload failure')
+        } catch (imageError: any) {
+          console.error('❌ Failed to upload images:', imageError)
+          
+          // More specific error messages
+          let errorMessage = 'Warning: Failed to upload images. Product will be created with a placeholder.'
+          
+          if (imageError.message?.includes('Bucket not found')) {
+            errorMessage = '🪣 Storage bucket issue detected. Please check Supabase Storage configuration.'
+          } else if (imageError.message?.includes('File size')) {
+            errorMessage = '📏 One or more image files are too large. Please use images smaller than 5MB.'
+          } else if (imageError.message?.includes('RLS')) {
+            errorMessage = '🔒 Storage permissions issue. Check Row Level Security policies in Supabase.'
+          } else if (imageError.message?.includes('403') || imageError.message?.includes('Forbidden')) {
+            errorMessage = '🚫 Access denied to storage. Check your Supabase Storage policies.'
+          }
+          
+          alert(errorMessage + '\n\nDetailed error: ' + imageError.message)
+          console.log('🔄 Using fallback placeholder due to upload failure')
         }
       } else {
-        console.log('No images to upload, using placeholder')
+        console.log('📷 No images selected, using placeholder')
       }
 
       // Create product data for Supabase
@@ -160,6 +190,7 @@ const SellProductPage: React.FC = () => {
         price: Number(formData.price),
         seller_id: currentUser.id,
         image_url: imageUrl,
+        images: allImageUrls,  // Pasar todas las URLs de imágenes
         category: formData.category,
         condition: formData.condition,
         location: formData.location,

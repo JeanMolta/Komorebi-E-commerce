@@ -23,15 +23,43 @@ export const testSupabaseConnection = async (): Promise<void> => {
     
     // Test database access
     console.log('Testing database access...')
-    const { data: products, error: dbError } = await supabase
-      .from('products')
-      .select('count()')
-      .limit(1)
-    
-    if (dbError) {
-      console.error('Database access failed:', dbError)
-    } else {
-      console.log('Database accessible')
+    try {
+      const { data: products, error: dbError } = await supabase
+        .from('products')
+        .select('id, name')
+        .limit(1)
+      
+      if (dbError) {
+        console.error('Database access failed:', dbError)
+      } else {
+        console.log('Database accessible. Products table exists.')
+      }
+
+      // Test categories table
+      const { data: categories, error: catError } = await supabase
+        .from('categories')
+        .select('id, name')
+        .limit(1)
+      
+      if (catError) {
+        console.error('Categories table error:', catError)
+      } else {
+        console.log('Categories table accessible.')
+      }
+
+      // Test favorites table
+      const { data: favorites, error: favError } = await supabase
+        .from('favorites')
+        .select('id, user_id, product_id')
+        .limit(1)
+      
+      if (favError) {
+        console.error('Favorites table error:', favError)
+      } else {
+        console.log('Favorites table accessible.')
+      }
+    } catch (dbTestError) {
+      console.error('Database test error:', dbTestError)
     }
     
   } catch (error) {

@@ -16,12 +16,26 @@ export const loadFavorites = createAsyncThunk(
     try {
       const { data, error } = await supabase
         .from('favorites')
-        .select('product_data')
+        .select(`
+          product_id,
+          products (
+            id,
+            name,
+            price,
+            image_url,
+            category,
+            condition,
+            description,
+            location,
+            availability,
+            seller_id
+          )
+        `)
         .eq('user_id', userId)
 
       if (error) throw error
 
-      return data.map((f: any) => f.product_data)
+      return data.map((f: any) => f.products)
     } catch (err: any) {
       return rejectWithValue(err.message)
     }
@@ -35,8 +49,7 @@ export const addToFavorites = createAsyncThunk(
     try {
       const { error } = await supabase.from('favorites').insert({
         user_id: userId,
-        product_id: product.id,
-        product_data: product
+        product_id: product.id
       })
 
       if (error) throw error

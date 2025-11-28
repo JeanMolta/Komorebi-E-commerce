@@ -1,9 +1,15 @@
 export interface Product {
-  image: string;
   id: string;
-  imageUrl: string;
   name: string;
-  vendor: string;
   price: number;
-  category: string;
+  category?: string;
+  condition?: string;
+  description?: string;
+  location?: string;
+  availability?: string;
+  seller_id?: string;
+  image_url?: string;
+  vendor?: string;
+  created_at?: string;
+  updated_at?: string;
 }

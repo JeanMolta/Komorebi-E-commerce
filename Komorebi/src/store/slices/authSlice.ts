@@ -8,18 +8,23 @@ export interface User {
   email: string
   firstName: string
   lastName: string
-  phone: string
-  location: string
+  phone?: string
+  location?: string
   description?: string
-  createdAt: string
+  avatarUrl?: string
+  address?: string
+  preferredLanguage?: string
+  preferredCurrency?: string
+  biography?: string
+  createdAt?: string
 }
 
 export interface RegisterData {
   firstName: string
   lastName: string
   email: string
-  phone: string
-  location: string
+  phone?: string
+  location?: string
   description?: string
   password: string
 }
@@ -50,10 +55,13 @@ export const registerUser = createAsyncThunk(
   'auth/registerUser',
   async (userData: RegisterData, { rejectWithValue }) => {
     try {
-      // 1️⃣ Registrar en Supabase Auth
+      // 1️⃣ Registrar en Supabase Auth (sin confirmación de email)
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: userData.email,
-        password: userData.password
+        password: userData.password,
+        options: {
+          emailRedirectTo: undefined // Desactivar confirmación de email
+        }
       })
 
       if (authError) throw new Error(authError.message)
@@ -61,15 +69,19 @@ export const registerUser = createAsyncThunk(
 
       const userId = authData.user.id
 
-      // 2️⃣ Crear perfil en tabla profiles
+      // 2️⃣ Crear perfil en tabla profiles (o actualizar si ya existe)
       const { error: profileError } = await supabase
         .from('profiles')
-        .insert({
+        .upsert({
           id: userId,
+          first_name: userData.firstName,
+          last_name: userData.lastName,
+          email: userData.email,
+          phone: userData.phone,
           location: userData.location,
           description: userData.description || '',
           avatar_url: '',
-          user_type: 'client',
+          user_type: 'buyer',
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString()
         })
@@ -92,6 +104,44 @@ export const registerUser = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(
         error instanceof Error ? error.message : 'Registration failed'
+      )
+    }
+  }
+)
+
+// ⭐ UPDATE USER PROFILE (SUPABASE)
+export const updateUser = createAsyncThunk(
+  'auth/updateUser',
+  async (userData: Partial<User>, { rejectWithValue, getState }) => {
+    try {
+      const state = getState() as { auth: AuthState }
+      const currentUser = state.auth.currentUser
+      if (!currentUser) throw new Error('No authenticated user')
+
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update({
+          first_name: userData.firstName,
+          last_name: userData.lastName,
+          email: userData.email,
+          phone: userData.phone,
+          location: userData.location,
+          description: userData.description,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', currentUser.id)
+
+      if (profileError) throw new Error(profileError.message)
+
+      const updatedUser: User = {
+        ...currentUser,
+        ...userData
+      }
+
+      return updatedUser
+    } catch (error) {
+      return rejectWithValue(
+        error instanceof Error ? error.message : 'Update failed'
       )
     }
   }
@@ -127,11 +177,11 @@ export const loginUser = createAsyncThunk(
       const user: User = {
         id: userId,
         email: authData.user.email!,
-        firstName: '',
-        lastName: '',
-        phone: '',
-        location: profile.location,
-        description: profile.description,
+        firstName: profile.first_name || '',
+        lastName: profile.last_name || '',
+        phone: profile.phone || '',
+        location: profile.location || '',
+        description: profile.description || '',
         createdAt: profile.created_at
       }
 
@@ -149,6 +199,16 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    setCurrentUser: (state, action: PayloadAction<User>) => {
+      state.currentUser = action.payload
+      state.isAuthenticated = true
+      state.error = null
+    },
+    clearCurrentUser: (state) => {
+      state.currentUser = null
+      state.isAuthenticated = false
+      state.error = null
+    },
     logout: (state) => {
       supabase.auth.signOut()
       state.currentUser = null
@@ -195,10 +255,26 @@ const authSlice = createSlice({
         state.isLoading = false
         state.error = action.payload as string
       })
+
+      // UPDATE USER
+      .addCase(updateUser.pending, (state) => {
+        state.isLoading = true
+        state.error = null
+      })
+      .addCase(updateUser.fulfilled, (state, action: PayloadAction<User>) => {
+        state.isLoading = false
+        state.currentUser = action.payload
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload as string
+      })
   }
 })
 
 export const {
+  setCurrentUser,
+  clearCurrentUser,
   logout,
   clearError,
   clearRegistrationSuccess

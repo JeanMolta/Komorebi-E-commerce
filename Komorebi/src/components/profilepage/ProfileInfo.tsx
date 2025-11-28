@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Edit3, Save, X, User, Mail, Phone, MapPin, FileText } from 'lucide-react';
-import { selectCurrentUser } from '../../store/slices/authSlice';
+import { selectCurrentUser, updateUser } from '../../store/slices/authSlice';
 
 const ProfileInfo: React.FC = () => {
   const currentUser = useSelector(selectCurrentUser);
+  const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     firstName: currentUser?.firstName || '',
@@ -23,10 +24,13 @@ const ProfileInfo: React.FC = () => {
     }));
   };
 
-  const handleSave = () => {
-    // TODO: Implement updateUser action in authSlice
-    console.log('Saving user data:', formData);
-    setIsEditing(false);
+  const handleSave = async () => {
+    try {
+      await dispatch(updateUser(formData) as any);
+      setIsEditing(false);
+    } catch (error) {
+      console.error('Error updating profile:', error);
+    }
   };
 
   const handleCancel = () => {

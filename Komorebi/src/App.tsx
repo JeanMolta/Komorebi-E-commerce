@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/homepage/NavBar';
 import Footer from './components/homepage/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import AuthProvider from './components/AuthProvider';
 
 // Authentication pages 
 import SignIn from './pages/SignIn';
@@ -37,7 +38,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => (
 
 function App() {
   return (
-    <>
+    <AuthProvider>
       <ScrollToTop />
       <Routes>
         {/* AUTH ROUTES - No navbar/footer, SignIn as default */}
@@ -59,7 +60,7 @@ function App() {
         {/* 404 */}
         <Route path="*" element={<AuthLayout><div className="min-h-screen flex items-center justify-center"><h1 className="text-2xl">Page not found</h1></div></AuthLayout>} />
       </Routes>
-    </>
+    </AuthProvider>
   );
 }
 

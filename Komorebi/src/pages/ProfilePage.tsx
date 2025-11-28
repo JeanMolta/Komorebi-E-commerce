@@ -1,14 +1,21 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { Navigate, Link, NavLink } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { Navigate, Link, NavLink, useNavigate } from 'react-router-dom';
 import { LogOut, Settings, Shield } from 'lucide-react';
-import { selectIsAuthenticated, selectCurrentUser } from '../store/slices/authSlice';
+import { selectIsAuthenticated, selectCurrentUser, logout } from '../store/slices/authSlice';
 import ProfileInfo from '../components/profilepage/ProfileInfo';
 import ProfileStats from '../components/profilepage/ProfileStats';
 
 const ProfilePage: React.FC = () => {
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const currentUser = useSelector(selectCurrentUser);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/signin');
+  };
 
   // Redirect to login if not authenticated
   if (!isAuthenticated || !currentUser) {
@@ -35,12 +42,13 @@ const ProfilePage: React.FC = () => {
                 Settings
               </button>
               
-              <NavLink to="/register">
-              <button className="flex items-center gap-2 text-sm bg-red-100 text-red-700 px-4 py-2 rounded-3xl hover:bg-red-200 transition-colors duration-200">
+              <button 
+                onClick={handleLogout}
+                className="flex items-center gap-2 text-sm bg-red-100 text-red-700 px-4 py-2 rounded-3xl hover:bg-red-200 transition-colors duration-200"
+              >
                 <LogOut size={16} />
                 Logout
               </button>
-              </NavLink>
             </div>
           </div>
         </div>

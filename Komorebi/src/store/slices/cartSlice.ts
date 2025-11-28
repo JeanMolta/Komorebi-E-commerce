@@ -419,13 +419,6 @@ const cartSlice = createSlice({
       state.error = null
 
       saveCartToStorage(state)
-    },
-
-    clearCartState: (state) => {
-      state.items = []
-      state.total = 0
-      state.itemCount = 0
-      state.error = null
     }
   },
   extraReducers: (builder) => {

@@ -9,6 +9,8 @@ export interface Product {
   availability?: string;
   seller_id?: string;
   image_url?: string;
+  imageUrl?: string;  // Para compatibilidad
+  image?: string;     // Para compatibilidad 
   images?: string[];  // Array de URLs de imágenes adicionales
   vendor?: string;
   created_at?: string;

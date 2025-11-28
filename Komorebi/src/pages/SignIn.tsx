@@ -47,7 +47,32 @@ const SignIn: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--komorebi-offwhite)] ">
+    <div className="min-h-screen relative">
+      {/* Background image */}
+      <picture className="absolute inset-0 -z-10">
+        {/* Large desktop image (1280px+) */}
+        <source
+          srcSet="/images/HeroSectionImgNormal.jpg"
+          media="(min-width:1280px)"
+        />
+        {/* Tablet/medium desktop image (740px+) */}
+        <source
+          srcSet="/images/HeroSectionImg.jpg"
+          media="(min-width:740px)"
+        />
+        {/* Mobile fallback image */}
+        <img
+          src="/images/HeroSectionImgMobile.jpg"
+          alt="Background"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+          loading="eager"
+        />
+      </picture>
+
+      {/* Semi-transparent overlay */}
+      <div className="absolute inset-0 bg-[rgba(255,245,225,0.3)] -z-10" />
+
+      <div className="relative min-h-screen bg-transparent py-8">
       <div className="max-w-md mx-auto px-4 py-8 pt-20">
         
         {/* Header */}
@@ -67,13 +92,6 @@ const SignIn: React.FC = () => {
             <p className="text-sm">{error}</p>
           </div>
         )}
-
-        {/* Demo Credentials Info */}
-        <div className="bg-blue-[var(--komorebi-offwhite)] border border-[var(--komorebi-yellow)] rounded-3xl p-4 mb-6">
-          <h4 className="font-semibold text-[var(--komorebi-black)] mb-2">Demo Credentials:</h4>
-          <p className="text-sm text-[var(--komorebi-black)]">Email: demo@komorebi.com</p>
-          <p className="text-sm text-[var(--komorebi-black)]">Password: password123</p>
-        </div>
 
         {/* Sign In Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -137,6 +155,7 @@ const SignIn: React.FC = () => {
           </span>
         </div>
       </div>
+    </div>
     </div>
   )
 }

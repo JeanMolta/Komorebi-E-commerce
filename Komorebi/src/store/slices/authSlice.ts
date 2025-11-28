@@ -27,6 +27,7 @@ export interface RegisterData {
   location?: string
   description?: string
   password: string
+  avatarFile?: File | null  // Archivo de avatar para subir
 }
 
 export interface LoginData {
@@ -68,8 +69,22 @@ export const registerUser = createAsyncThunk(
       if (!authData.user) throw new Error("No se pudo crear el usuario")
 
       const userId = authData.user.id
+      let avatarUrl = ''
 
-      // 2️⃣ Crear perfil en tabla profiles (o actualizar si ya existe)
+      // 2️⃣ Subir avatar si se proporcionó
+      if (userData.avatarFile) {
+        try {
+          console.log('📤 Uploading avatar for new user...')
+          const { uploadImage } = await import('../../utils/imageUpload')
+          avatarUrl = await uploadImage(userData.avatarFile, 'avatars')
+          console.log('✅ Avatar uploaded:', avatarUrl)
+        } catch (avatarError) {
+          console.warn('⚠️ Avatar upload failed:', avatarError)
+          // Continue registration even if avatar fails
+        }
+      }
+
+      // 3️⃣ Crear perfil en tabla profiles (o actualizar si ya existe)
       const { error: profileError } = await supabase
         .from('profiles')
         .upsert({
@@ -80,7 +95,7 @@ export const registerUser = createAsyncThunk(
           phone: userData.phone,
           location: userData.location,
           description: userData.description || '',
-          avatar_url: '',
+          avatar_url: avatarUrl,
           user_type: 'buyer',
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString()
@@ -88,7 +103,7 @@ export const registerUser = createAsyncThunk(
 
       if (profileError) throw new Error(profileError.message)
 
-      // 3️⃣ Formar objeto User final
+      // 4️⃣ Formar objeto User final
       const newUser: User = {
         id: userId,
         email: userData.email,
@@ -97,6 +112,7 @@ export const registerUser = createAsyncThunk(
         phone: userData.phone,
         location: userData.location,
         description: userData.description,
+        avatarUrl: avatarUrl,
         createdAt: new Date().toISOString()
       }
 
@@ -104,6 +120,41 @@ export const registerUser = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(
         error instanceof Error ? error.message : 'Registration failed'
+      )
+    }
+  }
+) 
+
+// ⭐ UPDATE USER AVATAR (SUPABASE)
+export const updateUserAvatar = createAsyncThunk(
+  'auth/updateUserAvatar',
+  async (avatarFile: File, { rejectWithValue, getState }) => {
+    try {
+      const state = getState() as { auth: AuthState }
+      const currentUser = state.auth.currentUser
+      if (!currentUser) throw new Error('No authenticated user')
+
+      console.log('📤 Uploading new avatar...')
+      const { uploadImage } = await import('../../utils/imageUpload')
+      const avatarUrl = await uploadImage(avatarFile, 'avatars')
+      console.log('✅ Avatar uploaded:', avatarUrl)
+
+      // Update profile in database
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update({
+          avatar_url: avatarUrl,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', currentUser.id)
+
+      if (profileError) throw new Error(profileError.message)
+
+      return avatarUrl
+    } catch (error) {
+      console.error('❌ Avatar update failed:', error)
+      return rejectWithValue(
+        error instanceof Error ? error.message : 'Failed to update avatar'
       )
     }
   }
@@ -266,6 +317,22 @@ const authSlice = createSlice({
         state.currentUser = action.payload
       })
       .addCase(updateUser.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload as string
+      })
+
+      // UPDATE USER AVATAR
+      .addCase(updateUserAvatar.pending, (state) => {
+        state.isLoading = true
+        state.error = null
+      })
+      .addCase(updateUserAvatar.fulfilled, (state, action: PayloadAction<string>) => {
+        state.isLoading = false
+        if (state.currentUser) {
+          state.currentUser.avatarUrl = action.payload
+        }
+      })
+      .addCase(updateUserAvatar.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.payload as string
       })

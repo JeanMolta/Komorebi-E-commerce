@@ -11,6 +11,7 @@ import {
   selectIsAuthenticated 
 } from '../store/slices/authSlice';
 import type { RegisterData } from '../store/slices/authSlice'; // Importar el tipo de datos
+import AvatarUpload from '../components/shared/AvatarUpload';
 
 const Register: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -28,7 +29,8 @@ const Register: React.FC = () => {
     phone: '',
     location: '',
     description: '',
-    password: ''
+    password: '',
+    avatarFile: null
   });
 
   // Limpiar errores y éxito de registro al montar
@@ -59,6 +61,11 @@ const Register: React.FC = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  // Manejar cambios en el avatar
+  const handleAvatarChange = (file: File | null) => {
+    setFormData(prev => ({ ...prev, avatarFile: file }));
+  };
+
   // Manejar envío del formulario
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -70,7 +77,32 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--komorebi-offwhite)] py-8">
+    <div className="min-h-screen relative">
+      {/* Background image */}
+      <picture className="absolute inset-0 -z-10">
+        {/* Large desktop image (1280px+) */}
+        <source
+          srcSet="/images/HeroSectionImgNormal.jpg"
+          media="(min-width:1280px)"
+        />
+        {/* Tablet/medium desktop image (740px+) */}
+        <source
+          srcSet="/images/HeroSectionImg.jpg"
+          media="(min-width:740px)"
+        />
+        {/* Mobile fallback image */}
+        <img
+          src="/images/HeroSectionImgMobile.jpg"
+          alt="Background"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+          loading="eager"
+        />
+      </picture>
+
+      {/* Semi-transparent overlay */}
+      <div className="absolute inset-0 bg-[rgba(255,245,225,0.3)] -z-10" />
+
+      <div className="relative min-h-screen bg-transparent py-8">
       <div className="max-w-xl mx-auto px-4 pt-16 pb-8">
         
         {/* Header */}
@@ -92,7 +124,18 @@ const Register: React.FC = () => {
         )}
 
         {/* Registration Form */}
-        <form onSubmit={handleSubmit} className="space-y-4 bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+        <form onSubmit={handleSubmit} className="space-y-6 bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+          
+          {/* Profile Photo Section */}
+          <div className="text-center py-6 border-b border-gray-100">
+            <h3 className="text-lg font-semibold text-[var(--komorebi-black)] mb-4">Profile Photo</h3>
+            <AvatarUpload
+              onImageChange={handleAvatarChange}
+              disabled={isLoading}
+              size="large"
+              showChangeButton={true}
+            />
+          </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* First Name */}
@@ -221,6 +264,7 @@ const Register: React.FC = () => {
           </span>
         </div>
       </div>
+    </div>
     </div>
   );
 };

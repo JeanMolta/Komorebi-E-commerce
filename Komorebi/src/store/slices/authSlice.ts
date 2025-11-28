@@ -1,12 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import { supabase } from '../../lib/supabaseClient'
 
-// Types
+// User types
 export interface User {
   id: string
+  email: string
   firstName: string
   lastName: string
-  email: string
   phone: string
   location: string
   description?: string
@@ -36,7 +37,6 @@ interface AuthState {
   registrationSuccess: boolean
 }
 
-// Initial state
 const initialState: AuthState = {
   currentUser: null,
   isAuthenticated: false,
@@ -45,75 +45,112 @@ const initialState: AuthState = {
   registrationSuccess: false
 }
 
-// Async thunks
+// ⭐ REGISTER USER (SUPABASE)
 export const registerUser = createAsyncThunk(
   'auth/registerUser',
   async (userData: RegisterData, { rejectWithValue }) => {
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500))
-      
-      // Check if email already exists (mock validation)
-      if (userData.email === 'test@test.com') {
-        throw new Error('Email already exists')
-      }
+      // 1️⃣ Registrar en Supabase Auth
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email: userData.email,
+        password: userData.password
+      })
 
+      if (authError) throw new Error(authError.message)
+      if (!authData.user) throw new Error("No se pudo crear el usuario")
+
+      const userId = authData.user.id
+
+      // 2️⃣ Crear perfil en tabla profiles
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .insert({
+          id: userId,
+          location: userData.location,
+          description: userData.description || '',
+          avatar_url: '',
+          user_type: 'client',
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        })
+
+      if (profileError) throw new Error(profileError.message)
+
+      // 3️⃣ Formar objeto User final
       const newUser: User = {
-        id: `user_${Date.now()}`,
+        id: userId,
+        email: userData.email,
         firstName: userData.firstName,
         lastName: userData.lastName,
-        email: userData.email,
         phone: userData.phone,
         location: userData.location,
         description: userData.description,
         createdAt: new Date().toISOString()
       }
 
-      // In real app, this would be saved to backend
-      console.log('✅ User registered successfully:', newUser)
-      
       return newUser
     } catch (error) {
-      return rejectWithValue(error instanceof Error ? error.message : 'Registration failed')
+      return rejectWithValue(
+        error instanceof Error ? error.message : 'Registration failed'
+      )
     }
   }
 )
 
+// ⭐ LOGIN USER (SUPABASE)
 export const loginUser = createAsyncThunk(
   'auth/loginUser',
   async (loginData: LoginData, { rejectWithValue }) => {
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      
-      // Mock login validation
-      if (loginData.email === 'demo@komorebi.com' && loginData.password === 'password123') {
-        const user: User = {
-          id: 'user_demo',
-          firstName: 'Demo',
-          lastName: 'User',
-          email: 'demo@komorebi.com',
-          phone: '+57 300 000 0000',
-          location: 'Cali, Colombia',
-          description: 'Demo account for testing',
-          createdAt: '2024-01-01T00:00:00.000Z'
-        }
-        return user
-      } else {
-        throw new Error('Invalid email or password')
+      // 1️⃣ Login auth
+      const { data: authData, error: authError } =
+        await supabase.auth.signInWithPassword({
+          email: loginData.email,
+          password: loginData.password
+        })
+
+      if (authError) throw new Error(authError.message)
+      if (!authData.user) throw new Error('No se encontró usuario')
+
+      const userId = authData.user.id
+
+      // 2️⃣ Obtener perfil
+      const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', userId)
+        .single()
+
+      if (profileError) throw new Error(profileError.message)
+
+      // 3️⃣ Crear objeto User
+      const user: User = {
+        id: userId,
+        email: authData.user.email!,
+        firstName: '',
+        lastName: '',
+        phone: '',
+        location: profile.location,
+        description: profile.description,
+        createdAt: profile.created_at
       }
+
+      return user
     } catch (error) {
-      return rejectWithValue(error instanceof Error ? error.message : 'Login failed')
+      return rejectWithValue(
+        error instanceof Error ? error.message : 'Login failed'
+      )
     }
   }
 )
 
-// Auth slice
+// Slice
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
     logout: (state) => {
+      supabase.auth.signOut()
       state.currentUser = null
       state.isAuthenticated = false
       state.error = null
@@ -126,8 +163,8 @@ const authSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-    // Register user
     builder
+      // REGISTER
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true
         state.error = null
@@ -138,16 +175,13 @@ const authSlice = createSlice({
         state.currentUser = action.payload
         state.isAuthenticated = true
         state.registrationSuccess = true
-        state.error = null
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.payload as string
-        state.registrationSuccess = false
       })
-    
-    // Login user
-    builder
+
+      // LOGIN
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true
         state.error = null
@@ -156,7 +190,6 @@ const authSlice = createSlice({
         state.isLoading = false
         state.currentUser = action.payload
         state.isAuthenticated = true
-        state.error = null
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false
@@ -165,14 +198,25 @@ const authSlice = createSlice({
   }
 })
 
-// Actions
-export const { logout, clearError, clearRegistrationSuccess } = authSlice.actions
+export const {
+  logout,
+  clearError,
+  clearRegistrationSuccess
+} = authSlice.actions
 
-// Selectors
-export const selectCurrentUser = (state: { auth: AuthState }) => state.auth.currentUser
-export const selectIsAuthenticated = (state: { auth: AuthState }) => state.auth.isAuthenticated
-export const selectAuthLoading = (state: { auth: AuthState }) => state.auth.isLoading
-export const selectAuthError = (state: { auth: AuthState }) => state.auth.error
-export const selectRegistrationSuccess = (state: { auth: AuthState }) => state.auth.registrationSuccess
+export const selectCurrentUser = (state: { auth: AuthState }) =>
+  state.auth.currentUser
+
+export const selectIsAuthenticated = (state: { auth: AuthState }) =>
+  state.auth.isAuthenticated
+
+export const selectAuthLoading = (state: { auth: AuthState }) =>
+  state.auth.isLoading
+
+export const selectAuthError = (state: { auth: AuthState }) =>
+  state.auth.error
+
+export const selectRegistrationSuccess = (state: { auth: AuthState }) =>
+  state.auth.registrationSuccess
 
 export default authSlice.reducer

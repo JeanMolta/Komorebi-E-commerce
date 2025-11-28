@@ -10,7 +10,7 @@ import {
   selectProductError 
 } from '../store/slices/productSlice'
 import { addToCart } from '../store/slices/cartSlice'
-import { addToFavorites, removeFromFavorites, selectIsFavorite } from '../store/slices/favoriteSlice'
+import { addToFavorites, removeFromFavorites, selectIsFavorite } from '../store/slices/favoritesSlice'
 
 // Import user data directly for components
 import usersData from '../data/users.json'

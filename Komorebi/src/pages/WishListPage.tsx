@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Heart, ShoppingBag } from 'lucide-react';
 import WishListItem from '../components/wishlistpage/WishListItem';
-import { selectFavoriteItems, selectFavoriteCount } from '../store/slices/favoriteSlice';
+import { selectFavoriteItems, selectFavoriteCount } from '../store/slices/favoritesSlice';
 
 const WishListPage: React.FC = () => {
   const favoriteItems = useSelector(selectFavoriteItems);

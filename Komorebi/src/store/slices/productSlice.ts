@@ -1,10 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import type { Product } from '../../data/ProductTypes'
-import productsData from '../../data/products.json'
-import commentsData from '../../data/comments.json'
-import usersData from '../../data/users.json'
+import { supabase } from '../../lib/supabaseClient'
 
-// Interfaces para comments y reviews
+// Interfaces reales
 interface User {
   id: string
   name: string
@@ -43,66 +41,96 @@ const initialState: ProductState = {
   commentsLoading: false,
 }
 
-// Cargar todos los productos
+/* ============================================================
+   FETCH ALL PRODUCTS (Supabase)
+============================================================ */
 export const fetchProducts = createAsyncThunk(
   'products/fetchProducts',
-  async () => {
-    await new Promise(resolve => setTimeout(resolve, 500))
-    
-    const mappedProducts: Product[] = productsData.map(product => ({
-      id: product.id,
-      name: product.name,
-      vendor: product.vendor,
-      price: product.price,
-      image: product.image,
-      imageUrl: product.image,
-      category: product.category
-    }))
-    
-    return mappedProducts
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+
+      if (error) throw error
+
+      // Mapear al formato del front
+      const mappedProducts: Product[] = data.map((p: any) => ({
+        id: p.id,
+        name: p.name,
+        vendor: p.vendor,
+        price: p.price,
+        image: p.image,
+        imageUrl: p.image,
+        category: p.category
+      }))
+
+      return mappedProducts
+    } catch (err: any) {
+      return rejectWithValue(err.message)
+    }
   }
 )
 
-// Cargar producto por ID con sus comentarios
+/* ============================================================
+   FETCH PRODUCT + COMMENTS (Supabase)
+============================================================ */
 export const fetchProductById = createAsyncThunk(
   'products/fetchProductById',
-  async (productId: string) => {
-    console.log('🔍 ProductSlice - Buscando producto con ID:', productId)
-    console.log('📦 Productos disponibles:', productsData.map(p => p.id))
-    
-    await new Promise(resolve => setTimeout(resolve, 300))
-    
-    const foundProduct = productsData.find(p => p.id === productId)
-    console.log('🎯 Producto encontrado:', foundProduct)
-    
-    if (!foundProduct) {
-      console.log('❌ Producto no encontrado para ID:', productId)
-      throw new Error('Producto no encontrado')
+  async (productId: string, { rejectWithValue }) => {
+    try {
+      /* ───────── PRODUCTO ───────── */
+      const { data: product, error: productError } = await supabase
+        .from('products')
+        .select('*')
+        .eq('id', productId)
+        .single()
+
+      if (productError) throw productError
+      if (!product) throw new Error('Producto no encontrado')
+
+      const formattedProduct: Product = {
+        id: product.id,
+        name: product.name,
+        vendor: product.vendor,
+        price: product.price,
+        image: product.image,
+        imageUrl: product.image,
+        category: product.category
+      }
+
+      /* ───────── COMMENTS ───────── */
+      const { data: comments, error: commentsError } = await supabase
+        .from('comments')
+        .select('*')
+        .eq('productId', productId)
+        .order('createdAt', { ascending: false })
+
+      if (commentsError) throw commentsError
+
+      /* ───────── Añadir datos del usuario ───────── */
+      const commentsWithUser: Comment[] = []
+
+      for (const c of comments) {
+        const { data: userData } = await supabase
+          .from('users')
+          .select('*')
+          .eq('id', c.userId)
+          .single()
+
+        commentsWithUser.push({
+          ...c,
+          user: userData || { id: c.userId, name: 'Usuario Anónimo' }
+        })
+      }
+
+      return {
+        product: formattedProduct,
+        comments: commentsWithUser
+      }
+    } catch (err: any) {
+      return rejectWithValue(err.message)
     }
-    
-    // Obtener comentarios del producto
-    const productComments = commentsData
-      .filter(comment => comment.productId === productId)
-      .map(comment => {
-        const user = usersData.find(u => u.id === comment.userId)
-        return {
-          ...comment,
-          user: user || { id: comment.userId, name: 'Usuario Anónimo' }
-        }
-      })
-      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-    
-    const product: Product = {
-      id: foundProduct.id,
-      name: foundProduct.name,
-      vendor: foundProduct.vendor,
-      price: foundProduct.price,
-      image: foundProduct.image,
-      imageUrl: foundProduct.image,
-      category: foundProduct.category
-    }
-    
-    return { product, comments: productComments }
   }
 )
 
@@ -121,7 +149,7 @@ const productSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // FETCH ALL PRODUCTS
+    /* ───────── FETCH ALL PRODUCTS ───────── */
     builder
       .addCase(fetchProducts.pending, (state) => {
         state.loading = true
@@ -133,15 +161,15 @@ const productSlice = createSlice({
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false
-        state.error = action.error.message || 'Error al cargar productos'
+        state.error = (action.payload as string) || 'Error al cargar productos'
       })
-    
-    // FETCH SINGLE PRODUCT WITH COMMENTS
+
+    /* ───────── FETCH PRODUCT + COMMENTS ───────── */
     builder
       .addCase(fetchProductById.pending, (state) => {
         state.productLoading = true
-        state.productError = null
         state.commentsLoading = true
+        state.productError = null
       })
       .addCase(fetchProductById.fulfilled, (state, action) => {
         state.productLoading = false
@@ -152,7 +180,7 @@ const productSlice = createSlice({
       .addCase(fetchProductById.rejected, (state, action) => {
         state.productLoading = false
         state.commentsLoading = false
-        state.productError = action.error.message || 'Producto no encontrado'
+        state.productError = (action.payload as string) || 'Producto no encontrado'
       })
   }
 })
@@ -161,11 +189,11 @@ export const { clearErrors, clearCurrentProduct } = productSlice.actions
 export default productSlice.reducer
 
 // Selectores
-export const selectAllProducts = (state: { products: ProductState }) => state.products.products
-export const selectCurrentProduct = (state: { products: ProductState }) => state.products.currentProduct
-export const selectCurrentProductComments = (state: { products: ProductState }) => state.products.currentProductComments
-export const selectProductsLoading = (state: { products: ProductState }) => state.products.loading
-export const selectProductLoading = (state: { products: ProductState }) => state.products.productLoading
-export const selectCommentsLoading = (state: { products: ProductState }) => state.products.commentsLoading
-export const selectProductsError = (state: { products: ProductState }) => state.products.error
-export const selectProductError = (state: { products: ProductState }) => state.products.productError
+export const selectAllProducts = (state: any) => state.products.products
+export const selectCurrentProduct = (state: any) => state.products.currentProduct
+export const selectCurrentProductComments = (state: any) => state.products.currentProductComments
+export const selectProductsLoading = (state: any) => state.products.loading
+export const selectProductLoading = (state: any) => state.products.productLoading
+export const selectCommentsLoading = (state: any) => state.products.commentsLoading
+export const selectProductsError = (state: any) => state.products.error
+export const selectProductError = (state: any) => state.products.productError

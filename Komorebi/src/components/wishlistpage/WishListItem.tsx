@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Heart, ShoppingCart } from 'lucide-react';
 import type { Product } from '../../data/ProductTypes';
-import { removeFromFavorites } from '../../store/slices/favoriteSlice';
+import { removeFromFavorites } from '../../store/slices/favoritesSlice';
 import { addToCart } from '../../store/slices/cartSlice';
 import type { AppDispatch } from '../../store';
 

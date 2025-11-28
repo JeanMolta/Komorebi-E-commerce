@@ -20,18 +20,11 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
       {/* Content */}
       <div className="text-[var(--komorebi-black)]/80 leading-relaxed">
         <div className="space-y-4">
-          <p>
-            Experience the natural goodness of our carefully crafted cosmetic products. Each {product.name} is formulated with premium ingredients to deliver exceptional results while being gentle on your skin.
-          </p>
-          <div className="bg-[var(--komorebi-yellow)]/10 p-4 rounded-lg">
-            <h4 className="font-semibold text-[var(--komorebi-black)] mb-2">Why Choose This Product?</h4>
-            <ul className="space-y-1 text-sm">
-              <li>✨ Developed with natural ingredients</li>
-              <li>🧪 Scientifically tested and approved</li>
-              <li>🌿 Eco-friendly and sustainable</li>
-              <li>💯 Money-back guarantee</li>
-            </ul>
-          </div>
+          {product.description ? (
+            <p>{product.description}</p>
+          ) : (
+            <p>No description available for this product.</p>
+          )}
         </div>
       </div>
     </div>

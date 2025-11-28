@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAppDispatch } from '../../store/hooks'
-import { increaseQuantity, decreaseQuantity, removeFromCart } from '../../store/slices/cartSlice'
+import { increaseQuantityWithSync, decreaseQuantityWithSync, removeFromCartWithSync } from '../../store/slices/cartSlice'
 import type { CartItem } from '../../store/slices/cartSlice'
 
 interface CartItemCardProps {
@@ -11,15 +11,15 @@ const CartItemCard: React.FC<CartItemCardProps> = ({ item }) => {
   const dispatch = useAppDispatch()
 
   const handleIncrease = () => {
-    dispatch(increaseQuantity(item.id))
+    dispatch(increaseQuantityWithSync(item.id))
   }
 
   const handleDecrease = () => {
-    dispatch(decreaseQuantity(item.id))
+    dispatch(decreaseQuantityWithSync(item.id))
   }
 
   const handleRemove = () => {
-    dispatch(removeFromCart(item.id))
+    dispatch(removeFromCartWithSync(item.id))
   }
 
   return (

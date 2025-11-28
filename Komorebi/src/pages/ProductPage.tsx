@@ -3,14 +3,16 @@ import { useParams, Link } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 import { 
   fetchProductById, 
+  fetchProductReviews,
   clearCurrentProduct,
   selectCurrentProduct,
   selectCurrentProductComments,
+  selectCurrentProductReviews,
   selectProductLoading,
   selectProductError 
 } from '../store/slices/productSlice'
-import { addToCart } from '../store/slices/cartSlice'
-import { addToFavorites, removeFromFavorites, selectIsFavorite } from '../store/slices/favoriteSlice'
+import { addToCartWithSync } from '../store/slices/cartSlice'
+import { addToFavorites, removeFromFavorites, selectIsFavorite } from '../store/slices/favoritesSlice'
 
 // Import user data directly for components
 import usersData from '../data/users.json'
@@ -28,6 +30,7 @@ const ProductPage: React.FC = () => {
   
   const product = useAppSelector(selectCurrentProduct)
   const comments = useAppSelector(selectCurrentProductComments)
+  const reviews = useAppSelector(selectCurrentProductReviews)
   const isLoading = useAppSelector(selectProductLoading)
   const error = useAppSelector(selectProductError)
   const isFavorite = useAppSelector((state) => 
@@ -39,6 +42,7 @@ const ProductPage: React.FC = () => {
     
     if (id) {
       dispatch(fetchProductById(id))
+      dispatch(fetchProductReviews(id))
     }
     
     // Cleanup function
@@ -51,22 +55,9 @@ const ProductPage: React.FC = () => {
   const handleAddToCart = (quantity: number = 1) => {
     if (product) {
       for (let i = 0; i < quantity; i++) {
-        dispatch(addToCart(product))
+        dispatch(addToCartWithSync(product))
       }
       console.log('🛒 Added to cart:', product.name, 'quantity:', quantity)
-    }
-  }
-
-  // Handle toggle favorite
-  const handleToggleFavorite = (productId: string) => {
-    if (product) {
-      if (isFavorite) {
-        dispatch(removeFromFavorites(productId))
-        console.log('💔 Removed from favorites:', product.name)
-      } else {
-        dispatch(addToFavorites(product))
-        console.log('💖 Added to favorites:', product.name)
-      }
     }
   }
 
@@ -140,7 +131,6 @@ const ProductPage: React.FC = () => {
             <ProductActions 
               product={product}
               onAddToCart={(productId: string, quantity: number) => handleAddToCart(quantity)}
-              onToggleFavorite={handleToggleFavorite}
             />
           </div>
         </div>
@@ -151,7 +141,8 @@ const ProductPage: React.FC = () => {
         {/* Discussion Section */}
         <ProductDiscussion 
           product={product} 
-          comments={comments} 
+          comments={comments}
+          reviews={reviews}
           users={usersData} 
         />
       </div>

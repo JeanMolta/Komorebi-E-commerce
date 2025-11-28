@@ -1,14 +1,38 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { Navigate, Link, NavLink } from 'react-router-dom';
-import { LogOut, Settings, Shield } from 'lucide-react';
-import { selectIsAuthenticated, selectCurrentUser } from '../store/slices/authSlice';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Navigate, Link, NavLink, useNavigate } from 'react-router-dom';
+import { LogOut, Settings, Shield, Camera } from 'lucide-react';
+import { selectIsAuthenticated, selectCurrentUser, logout, updateUserAvatar, selectAuthLoading } from '../store/slices/authSlice';
 import ProfileInfo from '../components/profilepage/ProfileInfo';
 import ProfileStats from '../components/profilepage/ProfileStats';
+import AvatarUpload from '../components/shared/AvatarUpload';
 
 const ProfilePage: React.FC = () => {
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const currentUser = useSelector(selectCurrentUser);
+  const isLoading = useSelector(selectAuthLoading);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [isUpdatingAvatar, setIsUpdatingAvatar] = useState(false);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/signin');
+  };
+
+  const handleAvatarChange = async (file: File | null) => {
+    if (file && currentUser) {
+      setIsUpdatingAvatar(true);
+      try {
+        await dispatch(updateUserAvatar(file));
+        console.log('✅ Avatar updated successfully');
+      } catch (error) {
+        console.error('❌ Failed to update avatar:', error);
+      } finally {
+        setIsUpdatingAvatar(false);
+      }
+    }
+  };
 
   // Redirect to login if not authenticated
   if (!isAuthenticated || !currentUser) {
@@ -20,27 +44,50 @@ const ProfilePage: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <h1 className="text-4xl font-bold text-[var(--komorebi-black)] mb-2">
-                Welcome back, {currentUser.firstName}!
-              </h1>
-              <p className="text-gray-600">
-                Manage your account settings and view your activity
-              </p>
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+            {/* Profile Info with Avatar */}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-6">
+              {/* Avatar Section */}
+              <div className="flex-shrink-0">
+                <AvatarUpload
+                  currentAvatar={currentUser.avatarUrl}
+                  onImageChange={handleAvatarChange}
+                  disabled={isLoading || isUpdatingAvatar}
+                  size="large"
+                  showChangeButton={true}
+                />
+              </div>
+              
+              {/* User Info */}
+              <div className="min-w-0">
+                <h1 className="text-3xl lg:text-4xl font-bold text-[var(--komorebi-black)] mb-2">
+                  Welcome back, {currentUser.firstName}!
+                </h1>
+                <p className="text-gray-600 mb-2">
+                  Manage your account settings and view your activity
+                </p>
+                {currentUser.location && (
+                  <p className="text-sm text-gray-500">
+                    📍 {currentUser.location}
+                  </p>
+                )}
+              </div>
             </div>
-            <div className="mt-4 sm:mt-0 flex gap-3">
+            
+            {/* Action Buttons */}
+            <div className="flex gap-3 flex-shrink-0">
               <button className="flex items-center gap-2 text-sm bg-gray-100 text-gray-700 px-4 py-2 rounded-3xl hover:bg-gray-200 transition-colors duration-200">
                 <Settings size={16} />
                 Settings
               </button>
               
-              <NavLink to="/register">
-              <button className="flex items-center gap-2 text-sm bg-red-100 text-red-700 px-4 py-2 rounded-3xl hover:bg-red-200 transition-colors duration-200">
+              <button 
+                onClick={handleLogout}
+                className="flex items-center gap-2 text-sm bg-red-100 text-red-700 px-4 py-2 rounded-3xl hover:bg-red-200 transition-colors duration-200"
+              >
                 <LogOut size={16} />
                 Logout
               </button>
-              </NavLink>
             </div>
           </div>
         </div>

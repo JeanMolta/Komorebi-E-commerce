@@ -1,4 +1,10 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { useAppDispatch } from '../store/hooks'
+import { createProduct } from '../store/slices/productSlice'
+import { selectCurrentUser } from '../store/slices/authSlice'
+import { uploadImage } from '../utils/imageUpload'
 import SellPageHeader from '../components/sellpage/SellPageHeader'
 import ProductInformationForm from '../components/sellpage/ProductInformationForm'
 import ProductImagesUpload from '../components/sellpage/ProductImagesUpload'
@@ -16,6 +22,15 @@ interface ProductFormData {
 }
 
 const SellProductPage: React.FC = () => {
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+  const currentUser = useSelector(selectCurrentUser)
+  
+  // Redirect if not authenticated
+  if (!currentUser) {
+    navigate('/signin')
+    return null
+  }
   
   // Form state
   const [formData, setFormData] = useState<ProductFormData>({
@@ -106,31 +121,106 @@ const SellProductPage: React.FC = () => {
     setIsDraft(saveAsDraft)
     
     try {
-      // Here you would implement the actual submission logic
-      // For now, just simulate the process
-      await new Promise(resolve => setTimeout(resolve, 2000))
+      // Upload images first if there are any
+      // Create a reliable placeholder that works offline
+      const placeholderImage = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjQ0NDQ0NDIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM2NjY2NjYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiPk5vIEltYWdlPC90ZXh0Pgo8L3N2Zz4K'
+      let imageUrl = placeholderImage
       
-      console.log('Product data:', {
-        ...formData,
-        isDraft: saveAsDraft,
-        imageCount: formData.images.length
-      })
+      console.log('Form data images length:', formData.images.length)
       
-      // TODO: Dispatch to productSlice to add new product
-      // dispatch(addProduct(productData))
+      let allImageUrls: string[] = []
       
-      alert(saveAsDraft ? 'Product saved as draft!' : 'Product published successfully!')
+      if (formData.images.length > 0) {
+        console.log('📤 Starting multiple image upload for product creation...')
+        console.log('📄 Total images to upload:', formData.images.length)
+        
+        try {
+          // Upload all images
+          const uploadPromises = formData.images.map(async (image, index) => {
+            console.log(`⬆️ Uploading image ${index + 1}/${formData.images.length}: ${image.name}`)
+            return await uploadImage(image, 'products')
+          })
+          
+          const uploadedUrls = await Promise.all(uploadPromises)
+          console.log('✅ All images uploaded successfully:', uploadedUrls)
+          
+          // Filter out any failed uploads and keep valid URLs
+          allImageUrls = uploadedUrls.filter(url => 
+            url && 
+            url !== placeholderImage && 
+            url.includes('supabase') &&
+            url.includes('images')
+          )
+          
+          if (allImageUrls.length > 0) {
+            imageUrl = allImageUrls[0] // First image as main image
+            console.log('✅ Using main image URL:', imageUrl)
+            console.log('✅ All image URLs:', allImageUrls)
+          } else {
+            console.warn('⚠️ No valid image URLs, using placeholder')
+          }
+          
+        } catch (imageError: any) {
+          console.error('❌ Failed to upload images:', imageError)
+          
+          // More specific error messages
+          let errorMessage = 'Warning: Failed to upload images. Product will be created with a placeholder.'
+          
+          if (imageError.message?.includes('Bucket not found')) {
+            errorMessage = '🪣 Storage bucket issue detected. Please check Supabase Storage configuration.'
+          } else if (imageError.message?.includes('File size')) {
+            errorMessage = '📏 One or more image files are too large. Please use images smaller than 5MB.'
+          } else if (imageError.message?.includes('RLS')) {
+            errorMessage = '🔒 Storage permissions issue. Check Row Level Security policies in Supabase.'
+          } else if (imageError.message?.includes('403') || imageError.message?.includes('Forbidden')) {
+            errorMessage = '🚫 Access denied to storage. Check your Supabase Storage policies.'
+          }
+          
+          alert(errorMessage + '\n\nDetailed error: ' + imageError.message)
+          console.log('🔄 Using fallback placeholder due to upload failure')
+        }
+      } else {
+        console.log('📷 No images selected, using placeholder')
+      }
+
+      // Create product data for Supabase
+      const productData = {
+        name: formData.title,
+        description: formData.description,
+        price: Number(formData.price),
+        seller_id: currentUser.id,
+        image_url: imageUrl,
+        images: allImageUrls,  // Pasar todas las URLs de imágenes
+        category: formData.category,
+        condition: formData.condition,
+        location: formData.location,
+        availability: saveAsDraft ? 'draft' : 'available'
+      }
       
-      // Reset form on success
-      setFormData({
-        title: '',
-        description: '',
-        price: '',
-        category: '',
-        condition: '',
-        location: '',
-        images: []
-      })
+      console.log('Product data to be created:', productData)
+      
+      // Dispatch create product
+      const result = await dispatch(createProduct(productData))
+      
+      if (createProduct.fulfilled.match(result)) {
+        alert(saveAsDraft ? 'Product saved as draft!' : 'Product published successfully!')
+        
+        // Reset form on success
+        setFormData({
+          title: '',
+          description: '',
+          price: '',
+          category: '',
+          condition: '',
+          location: '',
+          images: []
+        })
+        
+        // Navigate to home to see the new product
+        navigate('/home')
+      } else {
+        throw new Error('Failed to create product')
+      }
       
     } catch (error) {
       console.error('Error submitting product:', error)

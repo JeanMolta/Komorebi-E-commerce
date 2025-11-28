@@ -1,44 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { ShoppingCart, Heart } from 'lucide-react';
-import { useAppDispatch } from '../../store/hooks';
-import { addToCart } from '../../store/slices/cartSlice';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { addToCartWithSync, selectCartItems } from '../../store/slices/cartSlice';
+import { addToFavorites, removeFromFavorites, selectIsFavorite } from '../../store/slices/favoritesSlice';
+import { selectCurrentUser } from '../../store/slices/authSlice';
 import type { Product } from '../../data/ProductTypes';
 
 interface ProductActionsProps {
   product: Product;
   onAddToCart?: (productId: string, quantity: number) => void;
-  onToggleFavorite?: (productId: string) => void;
 }
 
 const ProductActions: React.FC<ProductActionsProps> = ({ 
   product, 
   onAddToCart,
-  onToggleFavorite
 }) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const currentUser = useAppSelector(selectCurrentUser);
+  const isFavorite = useAppSelector((state) => selectIsFavorite(state, product.id));
+  
   const [quantity, setQuantity] = useState(1);
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [isAdded, setIsAdded] = useState(false);
-
-  // Check localStorage on mount to see if item was previously added
-  useEffect(() => {
-    const addedItems = JSON.parse(localStorage.getItem('komorebi-added-items') || '{}');
-    if (addedItems[product.id]) {
-      setIsAdded(true);
-    }
-  }, [product.id]);
+  
+  // Check if product is in cart
+  const cartItems = useAppSelector(selectCartItems);
+  const isInCart = cartItems.some(item => item.id === product.id);
 
   const handleAddToCart = () => {
     // Add each item individually to respect quantity
     for (let i = 0; i < quantity; i++) {
-      dispatch(addToCart(product));
+      dispatch(addToCartWithSync(product));
     }
-    
-    // Set added state and persist in localStorage
-    setIsAdded(true);
-    const addedItems = JSON.parse(localStorage.getItem('komorebi-added-items') || '{}');
-    addedItems[product.id] = true;
-    localStorage.setItem('komorebi-added-items', JSON.stringify(addedItems));
     
     if (onAddToCart) {
       onAddToCart(product.id, quantity);
@@ -48,14 +41,16 @@ const ProductActions: React.FC<ProductActionsProps> = ({
   };
 
   const handleToggleFavorite = () => {
-    const newFavoriteState = !isFavorite;
-    setIsFavorite(newFavoriteState);
-    
-    if (onToggleFavorite) {
-      onToggleFavorite(product.id);
+    if (!currentUser) {
+      // Redirect to login if not authenticated
+      navigate('/signin');
+      return;
+    }
+
+    if (isFavorite) {
+      dispatch(removeFromFavorites({ userId: currentUser.id, productId: product.id }));
     } else {
-      console.log('💖 Agregando a favoritos:', product.id);
-      alert(`${product.name} ${newFavoriteState ? 'agregado a' : 'removido de'} favoritos!`);
+      dispatch(addToFavorites({ userId: currentUser.id, product }));
     }
   };
 
@@ -95,15 +90,15 @@ const ProductActions: React.FC<ProductActionsProps> = ({
         
         <button 
           onClick={handleAddToCart}
-          disabled={isAdded}
+          disabled={isInCart}
           className={`flex-1 py-3 px-6 rounded-3xl font-semibold flex items-center justify-center transition-all duration-200 ${
-            isAdded
+            isInCart
               ? 'bg-[var(--komorebi-yellow)] text-[var(--komorebi-black)] cursor-default'
               : 'btn-komorebi-yellow hover:brightness-95'
           }`}
         >
           <ShoppingCart className="w-5 h-5 mr-2" />
-          {isAdded ? 'Added!' : 'Add to Cart'}
+          {isInCart ? 'Added!' : 'Add to Cart'}
         </button>
       </div>
 

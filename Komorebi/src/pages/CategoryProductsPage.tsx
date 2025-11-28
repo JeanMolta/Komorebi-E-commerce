@@ -1,27 +1,29 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import ProductCard from '../components/homepage/ProductCard'; 
-import productsData from '../data/products.json'; 
-
-interface Product {
-  id: string;
-  name: string;
-  vendor: string;
-  price: number;
-  image: string; 
-  category: string; 
-}
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { fetchProducts, selectAllProducts, selectProductsLoading } from '../store/slices/productSlice';
+import type { Product } from '../data/ProductTypes';
 
 const CategoryProductsPage: React.FC = () => {
+  const dispatch = useAppDispatch();
+  
   // Obtenemos los parámetros de ambas rutas: /categories/:categoryId y /search/:searchTerm
   const { categoryId, searchTerm: encodedSearchTerm } = useParams<{ categoryId?: string, searchTerm?: string }>();
   // Usamos useLocation para forzar un re-render si la ruta cambia
   const location = useLocation();
 
-  // Decodificamos el término de búsqueda, si existe
-  const searchTerm = encodedSearchTerm ? decodeURIComponent(encodedSearchTerm.replace(/\+/g, ' ')) : undefined;
+  // Redux selectors
+  const productsArray = useAppSelector(selectAllProducts);
+  const loading = useAppSelector(selectProductsLoading);
 
-  const productsArray: Product[] = productsData as Product[]; 
+  // Fetch products when component mounts
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
+
+  // Decodificamos el término de búsqueda, si existe
+  const searchTerm = encodedSearchTerm ? decodeURIComponent(encodedSearchTerm.replace(/\+/g, ' ')) : undefined; 
 
   const products: Product[] = useMemo(() => {
     // Lógica para FILTRAR
@@ -66,6 +68,17 @@ const CategoryProductsPage: React.FC = () => {
     );
   }
 
+  // Show loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen p-8 mt-20 text-center">
+        <div className="flex justify-center items-center h-32">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--komorebi-yellow)]"></div>
+        </div>
+      </div>
+    );
+  }
+
   // Si no se encuentran productos
   if (products.length === 0) {
     return (
@@ -85,9 +98,9 @@ const CategoryProductsPage: React.FC = () => {
         <p className="text-lg text-gray-600">Explore our delicious products.</p>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
+      <div className="grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(250px,1fr))] max-w-[1200px] mx-auto">
         {products.map(product => (
-          <ProductCard key={product.id} product={product as any} /> 
+          <ProductCard key={product.id} product={product} /> 
         ))}
       </div>
     </div>

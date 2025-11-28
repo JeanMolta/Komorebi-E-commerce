@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Heart, ShoppingCart, Package, Calendar } from 'lucide-react';
-import { selectFavoriteCount } from '../../store/slices/favoriteSlice';
+import { selectFavoriteCount } from '../../store/slices/favoritesSlice';
 import { selectCartItemCount } from '../../store/slices/cartSlice';
 import { selectCurrentUser } from '../../store/slices/authSlice';
 

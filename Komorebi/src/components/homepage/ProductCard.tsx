@@ -4,9 +4,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Heart } from 'lucide-react';
-import { useAppDispatch } from '../../store/hooks';
-import { addToCart } from '../../store/slices/cartSlice';
-import { addToFavorites, removeFromFavorites, selectIsFavorite } from '../../store/slices/favoriteSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { addToCartWithSync, selectCartItems } from '../../store/slices/cartSlice';
+import { addToFavorites, removeFromFavorites, selectIsFavorite } from '../../store/slices/favoritesSlice';
+import { selectCurrentUser } from '../../store/slices/authSlice';
 import type { Product } from '../../data/ProductTypes';
 import type { RootState } from '../../store';
 
@@ -26,46 +27,41 @@ const formatPrice = (price: number): string => {
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const currentUser = useAppSelector(selectCurrentUser);
   
   // Check if product is in favorites
   const isFavorite = useSelector((state: RootState) => selectIsFavorite(state, product.id));
   
+  // Check if product is in cart
+  const cartItems = useAppSelector(selectCartItems);
+  const isInCart = cartItems.some(item => item.id === product.id);
+  
   // Set image URL from product data or use default path
-  const imageUrl = product.image ?? `/images/products/${product.id}.jpg`;
+  const imageUrl = product.image_url ?? `/images/products/${product.id}.jpg`;
   const fallback = '/images/products/placeholder.jpg';
-
-  // Track whether product has been added to cart (persistent)
-  const [added, setAdded] = useState(false);
-
-  // Check localStorage on mount to see if item was previously added
-  useEffect(() => {
-    const addedItems = JSON.parse(localStorage.getItem('komorebi-added-items') || '{}');
-    if (addedItems[product.id]) {
-      setAdded(true);
-    }
-  }, [product.id]);
 
   // Handle add to cart button click
   const handleAddClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent card click from firing
     
     // Add product to cart using Redux
-    dispatch(addToCart(product));
-    setAdded(true);
-    
-    // Persist added state in localStorage
-    const addedItems = JSON.parse(localStorage.getItem('komorebi-added-items') || '{}');
-    addedItems[product.id] = true;
-    localStorage.setItem('komorebi-added-items', JSON.stringify(addedItems));
+    dispatch(addToCartWithSync(product));
   };
 
   // Handle favorite toggle
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
+    
+    if (!currentUser) {
+      // Redirect to login if not authenticated
+      navigate('/signin');
+      return;
+    }
+
     if (isFavorite) {
-      dispatch(removeFromFavorites(product.id));
+      dispatch(removeFromFavorites({ userId: currentUser.id, productId: product.id }));
     } else {
-      dispatch(addToFavorites(product));
+      dispatch(addToFavorites({ userId: currentUser.id, product }));
     }
   };
 
@@ -121,14 +117,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           {/* Add button that changes appearance when clicked */}
           <button
             onClick={handleAddClick}
-            disabled={added}
+            disabled={isInCart}
             className={`px-4 py-2 rounded-full font-semibold transition-all duration-200 ${
-              added
+              isInCart
                 ? 'bg-[var(--komorebi-yellow)] text-[var(--komorebi-black)] cursor-default'
                 : 'bg-[var(--komorebi-yellow)] text-[var(--komorebi-black)] hover:brightness-95'
             }`}
           >
-            {added ? 'Added!' : 'Add'}
+            {isInCart ? 'Added!' : 'Add'}
           </button>
         </div>
       </div>

@@ -3,11 +3,12 @@ import { Search, Heart, ShoppingCart, User, Menu, X } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom"; // Corregida la importación a 'react-router-dom'
 import NotificationMenu from "./NotificationMenu";
 import { useAppSelector } from "../../store/hooks";
-import { selectIsAuthenticated } from "../../store/slices/authSlice";
+import { selectIsAuthenticated, selectCurrentUser } from "../../store/slices/authSlice";
 
 export default function Navbar() {
   const navigate = useNavigate();
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
+  const currentUser = useAppSelector(selectCurrentUser);
 
   const [isSticky, setIsSticky] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -115,10 +116,18 @@ export default function Navbar() {
               </NavLink>
               
               <NavLink to="/profile">
-                <User
-                  size={22}
-                  className="cursor-pointer hover:text-[var(--komorebi-yellow)] transition-colors"
-                />
+                {isAuthenticated && currentUser?.avatarUrl ? (
+                  <img 
+                    src={currentUser.avatarUrl}
+                    alt={`${currentUser.firstName}'s avatar`}
+                    className="w-8 h-8 rounded-full object-cover border-2 border-white hover:border-[var(--komorebi-yellow)] transition-all cursor-pointer"
+                  />
+                ) : (
+                  <User
+                    size={22}
+                    className="cursor-pointer hover:text-[var(--komorebi-yellow)] transition-colors"
+                  />
+                )}
               </NavLink>
             </div>
 
@@ -229,7 +238,15 @@ export default function Navbar() {
                   onClick={() => handleNavClick("/profile")}
                   className="inline-flex items-center gap-2 text-[var(--komorebi-black)] hover:text-[var(--komorebi-yellow)] mr-4"
                 >
-                  <User size={20} /> 
+                  {isAuthenticated && currentUser?.avatarUrl ? (
+                    <img 
+                      src={currentUser.avatarUrl}
+                      alt={`${currentUser.firstName}'s avatar`}
+                      className="w-6 h-6 rounded-full object-cover border border-gray-300"
+                    />
+                  ) : (
+                    <User size={20} />
+                  )}
                 </button>
               </div>
             </div>

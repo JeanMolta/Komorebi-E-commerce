@@ -5,11 +5,11 @@ import Navbar from './components/homepage/NavBar';
 import Footer from './components/homepage/Footer';
 import ScrollToTop from './components/ScrollToTop';
 
-// Authentication pages (NO navbar/footer)
+// Authentication pages 
 import SignIn from './pages/SignIn';
 import Register from './pages/Register';
 
-// Main app pages (WITH navbar/footer)
+// Main app pages
 import HomePage from './pages/HomePage';
 import ProductPage from './pages/ProductPage';
 import CartPage from './pages/CartPage';
@@ -21,7 +21,6 @@ import ProfilePage from './pages/ProfilePage';
 
 import './index.css'
 
-// Layout component for main app pages (with navbar and footer)
 const MainLayout = ({ children }: { children: React.ReactNode }) => (
   <>
     <Navbar />
@@ -30,7 +29,6 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => (
   </>
 );
 
-// Layout component for auth pages (clean, no navbar/footer)
 const AuthLayout = ({ children }: { children: React.ReactNode }) => (
   <>
     {children}
@@ -58,7 +56,7 @@ function App() {
         <Route path="/sell" element={<MainLayout><SellProductPage /></MainLayout>} />
         <Route path="/profile" element={<MainLayout><ProfilePage /></MainLayout>} />
         
-        {/* 404 - Clean layout */}
+        {/* 404 */}
         <Route path="*" element={<AuthLayout><div className="min-h-screen flex items-center justify-center"><h1 className="text-2xl">Page not found</h1></div></AuthLayout>} />
       </Routes>
     </>

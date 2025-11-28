@@ -247,5 +247,14 @@ export const {
 export const selectCartItems = (state: RootState) => state.cart.items
 export const selectCartTotal = (state: RootState) => state.cart.total
 export const selectCartItemCount = (state: RootState) => state.cart.itemCount
+export const selectCartSubtotal = (state: RootState) => state.cart.total
+export const selectCartShipping = (state: RootState) => state.cart.total > 0 ? (state.cart.total > 100 ? 0 : 15) : 0
+export const selectCartTaxes = (state: RootState) => state.cart.total * 0.08
+export const selectCartFinalTotal = (state: RootState) => {
+  const subtotal = state.cart.total
+  const shipping = subtotal > 0 ? (subtotal > 100 ? 0 : 15) : 0
+  const taxes = subtotal * 0.08
+  return subtotal + shipping + taxes
+}
 
 export default cartSlice.reducer

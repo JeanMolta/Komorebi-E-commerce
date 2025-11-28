@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { Heart } from 'lucide-react';
 import { useAppDispatch } from '../../store/hooks';
 import { addToCart } from '../../store/slices/cartSlice';
-import { addtofavorites, removeFromFavorites, selectIsFavorite } from '../../store/slices/favoritesSlice';
+import { addToFavorites, removeFromFavorites, selectIsFavorite } from '../../store/slices/favoritesSlice';
 import type { Product } from '../../data/ProductTypes';
 import type { RootState } from '../../store';
 
@@ -65,7 +65,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     if (isFavorite) {
       dispatch(removeFromFavorites(Product.id));
     } else {
-      dispatch(addtofavorites(product));
+      dispatch(addToFavorites(product));
     }
   };
 

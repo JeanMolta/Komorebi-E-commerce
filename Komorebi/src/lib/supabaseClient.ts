@@ -65,7 +65,7 @@ export interface Notifications {
   title: string
   message: string
   read: boolean
-  aditional_data: string
+  additional_data: string
 }
 
 export interface Orders {
@@ -100,7 +100,7 @@ export interface Profiles {
 export interface Reviews {
   id: string
   user_id: string
-  calification: number
+  rating: number
   title: string
   comment: string
   verify: boolean

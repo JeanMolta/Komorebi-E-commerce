@@ -29,7 +29,7 @@ export const loadFavorites = createAsyncThunk(
 )
 
 // Add favorite
-export const addtofavorites = createAsyncThunk(
+export const addToFavorites = createAsyncThunk(
   'favorites/addFavorite',
   async ({ userId, product }: { userId: string; product: Product }, { rejectWithValue }) => {
     try {
@@ -101,7 +101,7 @@ const favoriteSlice = createSlice({
 
     // Add favorite
     builder
-      .addCase(addtofavorites.fulfilled, (state, action) => {
+      .addCase(addToFavorites.fulfilled, (state, action) => {
         state.items.push(action.payload)
       })
 

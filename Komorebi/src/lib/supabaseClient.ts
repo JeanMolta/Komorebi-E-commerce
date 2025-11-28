@@ -2,13 +2,18 @@
 import { createClient } from '@supabase/supabase-js'
 
 // 🔐 Variables del entorno (desde archivo .env)
-const SUPABASE_URL = (import.meta.env.VITE_SUPABASE_URL || '') as string
-const SUPABASE_ANON_KEY = (import.meta.env.VITE_SUPABASE_ANON_KEY || '') as string
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://vxtdnsearhyvwamkibrg.supabase.co'
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4dGRuc2Vhcmh5dndhbWtpYnJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwNjYwOTQsImV4cCI6MjA3OTY0MjA5NH0.XdmfjndVp7NFBXcW2yUVcoTJhgxrkLlwfoos2seLPzo'
 
 // Validación por si no cargan las variables
 if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
   console.error("❌ ERROR: No se encontraron variables .env de Supabase")
 }
+
+console.log("🔍 Debug Supabase Config:", { 
+  url: SUPABASE_URL ? "✅ Configurado" : "❌ Faltante", 
+  key: SUPABASE_ANON_KEY ? "✅ Configurado" : "❌ Faltante" 
+})
 
 // 🌐 Cliente Supabase
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)

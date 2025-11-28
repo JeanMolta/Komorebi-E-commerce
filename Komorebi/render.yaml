@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: komorebi-ecommerce
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: 18
+      - key: VITE_SUPABASE_URL
+        value: https://vxtdnsearhyvwamkibrg.supabase.co
+      - key: VITE_SUPABASE_ANON_KEY
+        value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4dGRuc2Vhcmh5dndhbWtpYnJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwNjYwOTQsImV4cCI6MjA3OTY0MjA5NH0.XdmfjndVp7NFBXcW2yUVcoTJhgxrkLlwfoos2seLPzo

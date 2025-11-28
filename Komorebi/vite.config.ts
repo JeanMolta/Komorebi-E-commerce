@@ -11,7 +11,8 @@ export default defineConfig({
   },
   preview: {
     host: '0.0.0.0',
-    port: Number(process.env.PORT) || 4173
+    port: Number(process.env.PORT) || 4173,
+    allowedHosts: ['komorebi-e-commerce.onrender.com']
   },
   build: {
     outDir: 'dist',
